@@ -1,4 +1,4 @@
-import BlueOverlayImage from "../components/BlueOverlayImage";
+import BlueOverlayImage from "../../components/BlueOverlayImage";
 
 export default function ValleyPage() {
   return (
