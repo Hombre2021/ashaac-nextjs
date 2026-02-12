@@ -1,0 +1,144 @@
+.badgeClickable {
+  pointer-events: auto;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  z-index: 1000;
+}
+.badgeClickable:hover {
+  transform: translateY(-8px) scale(1.07);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  z-index: 2000;
+}
+.heroActionButtons {
+  position: absolute;
+  top: 15%;
+  left: 79.2%;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  z-index: 20;
+  align-items: flex-start;
+}
+
+.heroRedButton {
+  background: #095f91;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: bold;
+  padding: 20px 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: background 0.2s, transform 0.2s;
+  margin-bottom: 0;
+}
+.heroRedButton:hover {
+  background: #095f91;
+  transform: translateY(-2px) scale(1.04);
+}
+/* Removed misplaced properties that were outside of any selector */
+.heroContainer{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+/* Independent hero man overlay */
+.overlayImage {
+  position: absolute;
+  z-index: 2; /* hero man stays low */
+}
+.heroManOverlay {
+  right: 0;
+  bottom: 0;
+  width: 443px;
+  height: 620px;
+  display: flex;
+  align-items: flex-end;
+  z-index: 10; /* below badges */
+}
+
+.badgeOverlay {
+  position: absolute;
+  z-index: 50;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.badgeOverlay:hover {
+  transform: translateY(-8px) scale(1.07);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  z-index: 2000;
+}
+
+.bbbAccredited {
+  top: 520px;
+  right: 900px;
+  width: 300px;   /* Change this value to your desired width */
+  height: auto;   /* Keeps the aspect ratio */
+}
+
+.googleVerified {
+   top: 520px;
+  right: 1204px;
+  width: 310px;   /* Change this value to your desired width */
+  height: auto;   /* Keeps the aspect ratio */
+}
+
+.googleFivestar {
+   top: 520px;
+  right: 597px;
+  width: 300px;   /* Change this value to your desired width */
+  height: auto;   /* Keeps the aspect ratio */
+}
+
+.heroTitle {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 2.3rem;
+  line-height: 2.8; /* Increase for more space above/below, decrease for less */
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0,0,0,1.5);
+  z-index: 2;
+  width: 80%;
+}
+
+.heroSubtitle {
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 500;
+  text-align: left;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  z-index: 2;
+    max-width: 400px;
+  }
+
+.heroLeftTitle {
+  position: absolute;
+  top: 90%;
+  left: -295%;
+  color: white;
+  font-size: 2.4rem;
+  font-weight: 500;
+  text-align: left;
+  text-shadow: 0 2px 8px rgba(0,0,0,1.5);
+  z-index: 2;
+  max-width: none;
+  width: auto;
+  white-space: nowrap; /* Prevents line breaks */
+}                                                                                                                                                                                                                                                                                                                       

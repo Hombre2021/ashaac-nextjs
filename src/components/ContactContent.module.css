@@ -1,0 +1,41 @@
+.redButtonGroupHorizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin: 48px auto 56px auto; /* Decent margin above footer, lifted buttons */
+  z-index: 100;
+  position: relative;
+}
+.redButtonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin: 48px auto 56px auto;
+}
+
+
+.redButton {
+  display: inline-block;
+  background: #095f91;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+    border-radius: 8px;
+  padding: 18px 32px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.18s cubic-bezier(.4,1.4,.6,1.0);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.redButton:hover, .redButton:focus {
+  background: #095f91;
+  color: #fff;
+  outline: none;
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}

@@ -1,0 +1,17 @@
+.moreTestimonialsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 0 0;
+}
+
+.moreTestimonialsLink {
+  color: #c00;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.moreTestimonialsLink:hover {
+  color: #a00;
+}

@@ -1,0 +1,167 @@
+/* Badge images (Google-fivestar, Google-verified, BBB-acredited) */
+.badgeImage {
+  height: 48px;
+  width: auto;
+  margin: 0 8px;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border-radius: 6px;
+}
+.badgeImage:hover {
+  transform: translateY(-6px) scale(1.07);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  z-index: 10;
+}
+.whiteStripeOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;    /* Vertically centers content */
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.whiteStripeContent {
+  position: absolute;
+  top: 0;
+  left: -40;
+  height: 771px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 110;
+}
+
+.whiteStripeInner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 410px; /* 4 inches at 96px/inch */
+  padding-right: 24px;
+  height: 90px;
+  gap: 24px;
+  z-index: 120;
+  margin-top: -669px; /* Move 7 inches up (7*96px) */
+}
+
+.whiteStripeNav {
+  display: flex;
+  gap: 24px;
+  flex: 0 1 auto;
+}
+
+.whiteStripeLink {
+  color: #111;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.50rem;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4); /* 0.4 is a good starting opacity */
+  /* ...other styles... */
+}
+.whiteStripeLink:hover {
+  color: #d32f2f;
+  transform: translateY(-2px) scale(1.04);
+  transition: color 0.2s, transform 0.2s;
+}
+
+.whiteStripeButtons {
+  display: flex;
+  gap: 24px;
+}
+
+
+.callWhiteStripeButton {
+  background: #095f91 !important;
+  color: #fff !important;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 18px 18px;
+  font-size: 1.64rem;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  display: inline-block;
+  line-height: 1.6;
+}
+.callWhiteStripeButton:hover {
+  background: #095f91 !important;
+  transform: translateY(-2px) scale(1.04);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.requestWhiteStripeButton {
+  background: #095f91 !important;
+  color: #fff !important;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 18px 18px;
+  font-size: 1.64rem;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  display: inline-block;
+  line-height: 1.6;
+}
+.requestWhiteStripeButton:hover {
+  background: #095f91 !important;
+  transform: translateY(-2px) scale(1.04);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.applyWhiteStripeButton {
+  background: #095f91 !important;
+  color: #fff !important;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 18px 18px;
+  font-size: 1.64rem;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  display: inline-block;
+  line-height: 1.6;
+}
+.applyWhiteStripeButton:hover {
+  background: #095f91 !important;
+  transform: translateY(-2px) scale(1.04);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.vanLogo {
+  cursor: pointer;
+  transition: top 0.2s;
+  position: absolute;
+  top: -2px;
+  left: 170px;
+  height: 110px;
+  width: auto;
+  z-index: 2;
+}
+.vanLogo:hover {
+  top: 2px;
+}

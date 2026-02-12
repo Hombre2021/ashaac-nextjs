@@ -1,0 +1,67 @@
+.googleReviewsSection {
+  width: 100%;
+  background: #f8f8f8;
+  padding: 56px 0 48px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.googleReviewsTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #c00;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.googleReviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.googleReviewCard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 28px 32px;
+  font-size: 1.08rem;
+  color: #222;
+  font-weight: 400;
+  position: relative;
+}
+
+.googleReviewHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.googleReviewName {
+  font-weight: 600;
+  color: #c00;
+  font-size: 1.1rem;
+}
+
+.googleReviewDetails {
+  font-size: 0.98rem;
+  color: #888;
+}
+
+.googleReviewText {
+  margin-bottom: 12px;
+}
+
+.googleReviewOwnerReply {
+  font-size: 0.98rem;
+  color: #2a2a2a;
+  background: #fffbe6;
+  border-left: 4px solid #c00;
+  padding: 10px 16px;
+  border-radius: 6px;
+}

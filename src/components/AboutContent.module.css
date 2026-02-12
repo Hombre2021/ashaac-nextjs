@@ -1,0 +1,30 @@
+.aboutSection {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 56px 0 48px 0;
+}
+
+.aboutText {
+  max-width: 1200px;
+  width: 100%;
+  font-size: 1.18rem;
+  color: #222;
+  line-height: 1.7;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  padding: 36px 64px;
+}
+
+.aboutText h3 {
+  color: #c00;
+  font-size: 1.35rem;
+  margin-top: 32px;
+  margin-bottom: 10px;
+}
+
+.aboutText p {
+  margin-bottom: 18px;
+}
