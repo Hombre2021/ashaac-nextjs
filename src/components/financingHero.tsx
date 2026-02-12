@@ -30,8 +30,8 @@ const FinancingPage: NextPage = () => {
                  your own financing.
             </li>
             <li>
-              2. You already spoke with one of our technitians and got a
-                 quote/estimate on your installation, so yoCall. OK. Thanks.u know how much you are
+              2. You already spoke with one of our technicians and got a
+                 quote/estimate on your installation, so you know how much you are
                  applying for.
             </li>
       <li>
