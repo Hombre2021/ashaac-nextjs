@@ -1,12 +1,13 @@
 
+import sharedStyles from "./SharedContentSection.module.css";
 import styles from "./AboutContent.module.css";
 import AboutCompanySection from "./AboutCompanySection";
 
 export default function AboutContent() {
   return (
     <>
-      <section className={styles.aboutSection}>
-        <div className={styles.aboutText}>
+      <section className={sharedStyles.sectionBase}>
+        <div className={`${sharedStyles.contentBase} ${styles.aboutText}`}>
           <p>Welcome to All Solutions Heating and Air Conditioning! We’re experts in HVAC, focusing on putting in new systems and swapping old ones. When it comes to keeping your place comfy in all seasons, we’re your go-to.</p>
           <h3>Our Specialty, Installations and Replacements</h3>
           <p>We’re the pros when it comes to installing and replacing HVAC systems. We understand how vital it is to have a reliable heating and cooling setup in your home or office. If you want the classic furnace and AC combo or something more flexible like mini-split systems, heat pumps, or window units, we’ve got your back. We have a wide range of products and a team of skilled technicians to handle all installations smoothly and professionally.</p>

@@ -1,0 +1,282 @@
+/**
+ * CONTACTBUTTONS COMPONENT - RESPONSIVE LAYOUT
+ * 
+ * Structure:
+ * 1. DESKTOP (default, no media query)
+ * 2. TABLET PORTRAIT
+ * 3. TABLET LANDSCAPE
+ * 4. MOBILE PORTRAIT
+ * 5. MOBILE LANDSCAPE
+ * 
+ * Each section is INDEPENDENT - changes in one do NOT affect others
+ */
+
+/* ============================================
+   DESKTOP (Default - min-width: 1200px)
+   ============================================ */
+
+.blueButtonGroupHorizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin: 48px auto 56px auto;
+  z-index: 100;
+  position: relative;
+}
+
+.blueButton {
+  display: inline-block;
+  background: #095f91;
+  color: #fff;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 18px 32px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.18s cubic-bezier(.4,1.4,.6,1.0);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(0) scale(1);
+  will-change: transform;
+  white-space: nowrap;
+}
+
+.blueButton:hover,
+.blueButton:focus {
+  background: #095f91;
+  color: #fff;
+  outline: none;
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.blueButton[href^="mailto:"]:hover,
+.blueButton[href^="mailto:"]:focus {
+  background: #095f91;
+  color: #fff;
+  outline: none;
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================
+   TABLET PORTRAIT (480px - 1023px | portrait)
+   ============================================ */
+
+@media (min-width: 480px) and (max-width: 1023px) and (orientation: portrait) {
+  .blueButtonGroupHorizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin: 40px auto 48px auto;
+    z-index: 100;
+    position: relative;
+    flex-wrap: wrap;
+  }
+
+  .blueButton {
+    display: inline-block;
+    background: #095f91;
+    color: #fff;
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 28px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.18s cubic-bezier(.4,1.4,.6,1.0);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(0) scale(1);
+    will-change: transform;
+    white-space: nowrap;
+  }
+
+  .blueButton:hover,
+  .blueButton:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .blueButton[href^="mailto:"]:hover,
+  .blueButton[href^="mailto:"]:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* ============================================
+   TABLET LANDSCAPE (768px - 1199px | landscape)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+  .blueButtonGroupHorizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    margin: 32px auto 40px auto;
+    z-index: 100;
+    position: relative;
+  }
+
+  .blueButton {
+    display: inline-block;
+    background: #095f91;
+    color: #fff;
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 28px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.18s cubic-bezier(.4,1.4,.6,1.0);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(0) scale(1);
+    will-change: transform;
+    white-space: nowrap;
+  }
+
+  .blueButton:hover,
+  .blueButton:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .blueButton[href^="mailto:"]:hover,
+  .blueButton[href^="mailto:"]:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* ============================================
+   MOBILE PORTRAIT (max-width: 479px | portrait)
+   ============================================ */
+
+@media (max-width: 479px) and (orientation: portrait) {
+  .blueButtonGroupHorizontal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px auto 40px auto;
+    z-index: 100;
+    position: relative;
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .blueButton {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    background: #095f91;
+    color: #fff;
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.18s cubic-bezier(.4,1.4,.6,1.0);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(0) scale(1);
+    will-change: transform;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .blueButton:hover,
+  .blueButton:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .blueButton[href^="mailto:"]:hover,
+  .blueButton[href^="mailto:"]:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* ============================================
+   MOBILE LANDSCAPE (max-width: 767px | landscape)
+   ============================================ */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .blueButtonGroupHorizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 24px auto 32px auto;
+    z-index: 100;
+    position: relative;
+    flex-wrap: wrap;
+  }
+
+  .blueButton {
+    display: inline-block;
+    background: #095f91;
+    color: #fff;
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.18s cubic-bezier(.4,1.4,.6,1.0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transform: translateY(0) scale(1);
+    will-change: transform;
+    white-space: nowrap;
+  }
+
+  .blueButton:hover,
+  .blueButton:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .blueButton[href^="mailto:"]:hover,
+  .blueButton[href^="mailto:"]:focus {
+    background: #095f91;
+    color: #fff;
+    outline: none;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+}

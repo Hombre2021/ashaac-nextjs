@@ -1,9 +1,10 @@
+import sharedStyles from "./SharedContentSection.module.css";
 import styles from "./PrivacyPolicyContent.module.css";
 
 export default function PrivacyPolicyContent() {
   return (
-    <section className={styles.privacySection}>
-      <div className={styles.privacyText}>
+    <section className={sharedStyles.sectionBase}>
+      <div className={`${sharedStyles.contentBase} ${styles.privacyText}`}>
         <h1 style={{ textAlign: "center", fontSize: 32, marginBottom: 32 }}>Privacy Policy</h1>
         <p><strong>All Solutions Heating and Air Conditioning LLC</strong><br />
           4434 W 8790 S, West Jordan, Utah 84088<br />

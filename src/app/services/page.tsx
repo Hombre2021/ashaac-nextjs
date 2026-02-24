@@ -1,3 +1,4 @@
+import Image from "next/image";
 import HomepageHeader from "../../components/HomepageHeader";
 import ServicesHero from "../../components/ServicesHero";
 import ServicesContent from "../../components/ServicesContent";
@@ -7,7 +8,7 @@ export default function ServicesPage() {
   return (
     <>
       <HomepageHeader />
-      <ServicesHero />Dial. 
+      <ServicesHero />
       <ServicesContent />
       <div style={{
         width: '100%',
@@ -20,17 +21,23 @@ export default function ServicesPage() {
         gap: 32,
       }}>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-          <img
+          <Image
             src="/images/services/ac-downtown.webp"
             alt="AC Downtown"
-            style={{ borderRadius: 14, boxShadow: '0 2px 16px rgba(0,0,0,0.10)', width: '100%', maxWidth: 340, height: 'auto', objectFit: 'cover' }}
+            width={340}
+            height={220}
+            sizes="(max-width: 768px) 100vw, 340px"
+            style={{ borderRadius: 14, boxShadow: "0 2px 16px rgba(0,0,0,0.10)", width: "100%", maxWidth: 340, height: "auto", objectFit: "cover" }}
           />
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-          <img
+          <Image
             src="/images/services/Heat-pump-WJ.webp"
             alt="Heat Pump West Jordan"
-            style={{ borderRadius: 14, boxShadow: '0 2px 16px rgba(0,0,0,0.10)', width: '100%', maxWidth: 340, height: 'auto', objectFit: 'cover' }}
+            width={340}
+            height={220}
+            sizes="(max-width: 768px) 100vw, 340px"
+            style={{ borderRadius: 14, boxShadow: "0 2px 16px rgba(0,0,0,0.10)", width: "100%", maxWidth: 340, height: "auto", objectFit: "cover" }}
           />
         </div>
       </div>
@@ -59,17 +66,23 @@ export default function ServicesPage() {
         gap: 32,
       }}>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-          <img
+          <Image
             src="/images/services/mini-split.webp"
             alt="Mini Split"
-            style={{ borderRadius: 14, boxShadow: '0 2px 16px rgba(0,0,0,0.10)', width: '100%', maxWidth: 340, height: 'auto', objectFit: 'cover' }}
+            width={340}
+            height={220}
+            sizes="(max-width: 768px) 100vw, 340px"
+            style={{ borderRadius: 14, boxShadow: "0 2px 16px rgba(0,0,0,0.10)", width: "100%", maxWidth: 340, height: "auto", objectFit: "cover" }}
           />
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-          <img
+          <Image
             src="/images/services/mini-split-room2.webp"
             alt="Mini Split Room"
-            style={{ borderRadius: 14, boxShadow: '0 2px 16px rgba(0,0,0,0.10)', width: '100%', maxWidth: 340, height: 'auto', objectFit: 'cover' }}
+            width={340}
+            height={220}
+            sizes="(max-width: 768px) 100vw, 340px"
+            style={{ borderRadius: 14, boxShadow: "0 2px 16px rgba(0,0,0,0.10)", width: "100%", maxWidth: 340, height: "auto", objectFit: "cover" }}
           />
         </div>
       </div>

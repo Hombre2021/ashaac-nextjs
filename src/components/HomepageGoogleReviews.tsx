@@ -1,4 +1,5 @@
 import styles from "./HomepageGoogleReviews.module.css";
+import SectionShell from "./SectionShell";
 
 const googleReviews = [
   {
@@ -65,20 +66,23 @@ const googleReviews = [
 
 export default function HomepageGoogleReviews() {
   return (
-    <section className={styles.googleReviewsSection}>
-      <h2 className={styles.googleReviewsTitle}>Google Reviews</h2>
-      <div className={styles.googleReviewsList}>
+    <SectionShell
+      sectionClassName={styles.googleReviewsSection}
+      titleClassName={styles.googleReviewsTitle}
+      listClassName={styles.googleReviewsList}
+      title="Google Reviews"
+      data-label="GoogleReviewsSection"
+    >
         {googleReviews.map((r, idx) => (
-          <div key={idx} className={styles.googleReviewCard}>
+          <div key={idx} className={styles.googleReviewCard} data-label={`GoogleReview${idx + 1}`}>
             <div className={styles.googleReviewHeader}>
-              <span className={styles.googleReviewName}>{r.name}</span>
-              <span className={styles.googleReviewDetails}>{r.details}</span>
+              <span className={styles.googleReviewName} data-label={`ReviewerName${idx + 1}`}>{r.name}</span>
+              <span className={styles.googleReviewDetails} data-label={`ReviewerDetails${idx + 1}`}>{r.details}</span>
             </div>
-            <div className={styles.googleReviewText}>{r.text}</div>
-            <div className={styles.googleReviewOwnerReply}><strong>Owner reply:</strong> {r.ownerReply}</div>
+            <div className={styles.googleReviewText} data-label={`ReviewText${idx + 1}`}>{r.text}</div>
+            <div className={styles.googleReviewOwnerReply} data-label={`OwnerReply${idx + 1}`}><strong>Owner reply:</strong> {r.ownerReply}</div>
           </div>
         ))}
-      </div>
-    </section>
+    </SectionShell>
   );
 }

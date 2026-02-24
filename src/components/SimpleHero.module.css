@@ -1,0 +1,274 @@
+/**
+ * SIMPLEHERO COMPONENT - RESPONSIVE LAYOUT
+ * 
+ * Structure:
+ * 1. DESKTOP (default, no media query)
+ * 2. TABLET PORTRAIT
+ * 3. TABLET LANDSCAPE
+ * 4. MOBILE PORTRAIT
+ * 5. MOBILE LANDSCAPE
+ * 
+ * Each section is INDEPENDENT - changes in one do NOT affect others
+ */
+
+/* ============================================
+   DESKTOP (Default - min-width: 1200px)
+   ============================================ */
+
+.heroContainer {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.heroBg {
+  z-index: 1;
+  aspect-ratio: 16 / 9;
+}
+
+.blueOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 123, 255, 0.35);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.heroTitle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: bold;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  z-index: 3;
+  letter-spacing: 2px;
+  text-align: center;
+  max-width: 90%;
+}
+
+.heroSubtitle {
+  position: absolute;
+  top: calc(50% + 48px);
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: #fff;
+  font-size: clamp(1rem, 3vw, 2rem);
+  font-weight: 700;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.85);
+  z-index: 3;
+  letter-spacing: 1.2px;
+  text-align: center;
+  white-space: pre-line;
+  max-width: 85%;
+}
+
+/* ============================================
+   TABLET PORTRAIT (480px - 1023px | portrait)
+   ============================================ */
+
+@media (min-width: 480px) and (max-width: 1023px) and (orientation: portrait) {
+  .heroContainer {
+    height: 56vh;
+    min-height: 320px;
+    padding: 0 20px;
+  }
+
+  .heroBg {
+    aspect-ratio: 16 / 9;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+    letter-spacing: 1.5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+  }
+
+  .heroSubtitle {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    position: absolute;
+    top: calc(50% + 40px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    max-width: 85%;
+  }
+}
+
+/* ============================================
+   TABLET LANDSCAPE (768px - 1199px | landscape)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+  .heroContainer {
+    height: 65vh;
+    min-height: 300px;
+    padding: 0 28px;
+  }
+
+  .heroBg {
+    aspect-ratio: 16 / 9;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.8rem, 4vw, 2.3rem);
+    letter-spacing: 1.5px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 88%;
+  }
+
+  .heroSubtitle {
+    font-size: clamp(0.95rem, 2.5vw, 1.4rem);
+    position: absolute;
+    top: calc(45% + 35px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    max-width: 85%;
+  }
+}
+
+/* ============================================
+   MOBILE PORTRAIT (max-width: 479px | portrait)
+   ============================================ */
+
+@media (max-width: 479px) and (orientation: portrait) {
+  .heroContainer {
+    height: 52vh;
+    min-height: 300px;
+    padding: 0 16px;
+  }
+
+  .heroBg {
+    aspect-ratio: 1 / 1;
+  }
+
+  .blueOverlay {
+    background: rgba(0, 123, 255, 0.4);
+  }
+
+  .heroTitle {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    letter-spacing: 1px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    text-align: center;
+    margin-top: 8vh;
+    max-width: 100%;
+  }
+
+  .heroSubtitle {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    text-align: center;
+    margin-top: 12px;
+    max-width: 100%;
+  }
+}
+
+/* ============================================
+   MOBILE LANDSCAPE (max-width: 767px | landscape)
+   ============================================ */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .heroContainer {
+    height: 70vh;
+    min-height: 260px;
+    padding: 0 24px;
+  }
+
+  .heroBg {
+    aspect-ratio: 16 / 9;
+  }
+
+  .blueOverlay {
+    background: rgba(0, 123, 255, 0.4);
+  }
+
+  .heroTitle {
+    font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+    letter-spacing: 1px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    text-align: center;
+    margin-top: 6vh;
+    max-width: 100%;
+  }
+
+  .heroSubtitle {
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    text-align: center;
+    margin-top: 10px;
+    max-width: 100%;
+  }
+}
+
+/* ============================================
+   ALL iPHONES LANDSCAPE (shared 667x375 structure)
+   667-932w × 320-430h, touch phones only
+   ============================================ */
+
+@media (orientation: landscape) and (min-width: 667px) and (max-width: 932px) and (min-height: 320px) and (max-height: 430px) and (hover: none) and (pointer: coarse) {
+  .heroContainer {
+    height: 70vh !important;
+    min-height: 260px !important;
+    padding: 0 24px !important;
+  }
+
+  .heroBg {
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  .blueOverlay {
+    background: rgba(0, 123, 255, 0.4) !important;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.4rem, 3.5vw, 2.1rem) !important;
+    letter-spacing: 1px !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    text-align: center !important;
+    margin-top: 6vh !important;
+    max-width: 100% !important;
+  }
+
+  .heroSubtitle {
+    font-size: clamp(0.85rem, 2vw, 1.1rem) !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    text-align: center !important;
+    margin-top: 10px !important;
+    max-width: 100% !important;
+  }
+}

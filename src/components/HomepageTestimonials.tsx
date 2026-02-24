@@ -1,4 +1,5 @@
 import styles from "./HomepageTestimonials.module.css";
+import SectionShell from "./SectionShell";
 
 const testimonials = [
   {
@@ -21,20 +22,23 @@ const testimonials = [
 
 export default function HomepageTestimonials() {
   return (
-    <section className={styles.testimonialsSection}>
-      <h2 className={styles.testimonialsTitle}>Testimonials</h2>
-      <div className={styles.testimonialsList}>
+    <SectionShell
+      sectionClassName={styles.testimonialsSection}
+      titleClassName={styles.testimonialsTitle}
+      listClassName={styles.testimonialsList}
+      title="Testimonials"
+      data-label="TestimonialsSection"
+    >
         {testimonials.map((t, idx) => (
-          <div key={idx} className={styles.testimonialCard}>
-            <div className={styles.testimonialText}>
+          <div key={idx} className={styles.testimonialCard} data-label={`Testimonial${idx + 1}`}>
+            <div className={styles.testimonialText} data-label={`TestimonialText${idx + 1}`}>
               {t.text}
             </div>
             {t.name !== "General" && (
-              <div className={styles.testimonialName}>— {t.name}</div>
+              <div className={styles.testimonialName} data-label={`TestimonialAuthor${idx + 1}`}>— {t.name}</div>
             )}
           </div>
         ))}
-      </div>
-    </section>
+    </SectionShell>
   );
 }

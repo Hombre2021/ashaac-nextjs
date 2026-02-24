@@ -1,98 +1,20 @@
-.redStripe {
-  width: 100%;
-  background: #c00;
-  color: #fff;
-  padding: 22px 18px;
-  margin: 48px 0 0 0;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
+/**
+ * SERVICESCONTENT COMPONENT - RESPONSIVE LAYOUT
+ * 
+ * Structure:
+ * 1. DESKTOP (default, no media query)
+ * 2. TABLET PORTRAIT
+ * 3. TABLET LANDSCAPE
+ * 4. MOBILE PORTRAIT
+ * 5. MOBILE LANDSCAPE
+ * 
+ * Each section is INDEPENDENT - changes in one do NOT affect others
+ */
 
-.redStripeText {
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-.maintenanceRow {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 32px;
-  margin: 40px 0 0 0;
-}
+/* ============================================
+   DESKTOP (Default - min-width: 1200px)
+   ============================================ */
 
-.maintenanceImageCol {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.maintenanceImage {
-  border-radius: 14px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-}
-
-.maintenanceTextCol {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 180px;
-  margin-top: 80px; /* Increase this value to lower the text further */
-}
-
-.maintenanceTitle {
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: #1a3a6b;
-  margin-bottom: 10px;
-}
-
-.maintenanceDescription {
-  font-size: 1.08rem;
-  color: #222;
-  line-height: 1.6;
-}
-.heatingExperienceBlock {
-  margin-top: 32px;
-  padding: 0 12px;
-}
-
-.heatingExperienceTitle {
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: #1a3a6b;
-  margin-bottom: 10px;
-}
-
-.heatingExperienceDescription {
-  font-size: 1.08rem;
-  color: #222;
-  line-height: 1.6;
-}
-.heatingServicesBlock {
-  margin-top: 32px;
-  padding: 0 12px;
-}
-
-.heatingServicesTitle {
-  font-size: 1.45rem;
-  font-weight: 600;
-  color: #1a3a6b;
-  margin-bottom: 10px;
-}
-
-.heatingServicesDescription {
-  font-size: 1.12rem;
-  color: #222;
-  line-height: 1.6;
-}
 .servicesSection {
   width: 100%;
   max-width: 1100px;
@@ -104,7 +26,7 @@
 }
 
 .furnaceImagesRow {
-  width: 100%;
+  width: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -121,10 +43,11 @@
 
 .furnaceImage {
   border-radius: 14px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-  width: 100%;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  width: auto;
   max-width: 340px;
   height: auto;
+  aspect-ratio: auto;
 }
 
 .furnaceTextBlock {
@@ -133,14 +56,442 @@
 }
 
 .furnaceTitle {
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 4vw, 2rem);
   font-weight: 700;
   color: #1a3a6b;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
+  text-align: center;
 }
 
 .furnaceDescription {
-  font-size: 1.18rem;
+  font-size: clamp(1.05rem, 2vw, 1.18rem);
   color: #222;
   margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.heatingServicesBlock {
+  margin-top: 32px;
+  padding: 0 12px;
+}
+
+.heatingServicesTitle {
+  font-size: clamp(1.3rem, 3vw, 1.45rem);
+  font-weight: 600;
+  color: #1a3a6b;
+  margin-bottom: 10px;
+}
+
+.heatingServicesDescription {
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  color: #222;
+  line-height: 1.6;
+}
+
+.heatingExperienceBlock {
+  margin-top: 32px;
+  padding: 0 12px;
+}
+
+.heatingExperienceTitle {
+  font-size: clamp(1.3rem, 3vw, 1.35rem);
+  font-weight: 600;
+  color: #1a3a6b;
+  margin-bottom: 10px;
+}
+
+.heatingExperienceDescription {
+  font-size: clamp(1rem, 2vw, 1.08rem);
+  color: #222;
+  line-height: 1.6;
+}
+
+.redStripe {
+  width: 100%;
+  background: #095f91;
+  color: #fff;
+  padding: 22px 24px;
+  margin: 48px 0 0 0;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.redStripeText {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+.maintenanceRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;
+  margin: 40px 0 0 0;
+}
+
+.maintenanceImageCol {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.maintenanceImage {
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  width: auto;
+  max-width: 340px;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+.maintenanceTextCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.maintenanceTitle {
+  font-size: clamp(1.2rem, 3vw, 1.35rem);
+  font-weight: 600;
+  color: #1a3a6b;
+  margin-bottom: 0;
+}
+
+.maintenanceDescription {
+  font-size: clamp(1rem, 2vw, 1.08rem);
+  color: #222;
+  line-height: 1.6;
+}
+
+/* ============================================
+   TABLET PORTRAIT (480px - 1023px | portrait)
+   ============================================ */
+
+@media (min-width: 480px) and (max-width: 1023px) and (orientation: portrait) {
+  .servicesSection {
+    margin: 40px auto 0 auto;
+    padding: 0 20px 40px 20px;
+  }
+
+  .furnaceImagesRow {
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .furnaceImageLeft,
+  .furnaceImageRight {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .furnaceImage {
+    max-width: 100%;
+  }
+
+  .furnaceTitle {
+    font-size: clamp(1.4rem, 3.5vw, 1.7rem);
+    margin-bottom: 10px;
+  }
+
+  .furnaceDescription {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  }
+
+  .heatingServicesTitle {
+    font-size: clamp(1.1rem, 2.8vw, 1.25rem);
+  }
+
+  .heatingServicesDescription {
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+  }
+
+  .heatingExperienceTitle {
+    font-size: clamp(1.1rem, 2.8vw, 1.2rem);
+  }
+
+  .heatingExperienceDescription {
+    font-size: clamp(0.95rem, 2vw, 1.02rem);
+  }
+
+  .redStripeText {
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+  }
+
+  .maintenanceRow {
+    flex-direction: column;
+    gap: 28px;
+    margin: 32px 0 0 0;
+  }
+
+  .maintenanceTitle {
+    font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+  }
+
+  .maintenanceDescription {
+    font-size: clamp(0.95rem, 2vw, 1.02rem);
+  }
+}
+
+/* ============================================
+   TABLET LANDSCAPE (768px - 1199px | landscape)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+  .servicesSection {
+    margin: 40px auto 0 auto;
+    padding: 0 20px 40px 20px;
+  }
+
+  .furnaceImagesRow {
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+
+  .furnaceTitle {
+    font-size: clamp(1.4rem, 3vw, 1.65rem);
+  }
+
+  .furnaceDescription {
+    font-size: clamp(1rem, 2vw, 1.1rem);
+  }
+
+  .heatingServicesTitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  }
+
+  .heatingServicesDescription {
+    font-size: clamp(0.95rem, 1.8vw, 1.08rem);
+  }
+
+  .heatingExperienceTitle {
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  }
+
+  .heatingExperienceDescription {
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  }
+
+  .redStripeText {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+  }
+
+  .maintenanceRow {
+    gap: 36px;
+  }
+
+  .maintenanceTitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+
+  .maintenanceDescription {
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  }
+}
+
+/* ============================================
+   MOBILE PORTRAIT (max-width: 479px | portrait)
+   ============================================ */
+
+@media (max-width: 479px) and (orientation: portrait) {
+  .servicesSection {
+    margin: 32px auto 0 auto;
+    padding: 0 16px 32px 16px;
+  }
+
+  .furnaceImagesRow {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .furnaceImageLeft,
+  .furnaceImageRight {
+    width: 100%;
+  }
+
+  .furnaceImage {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .furnaceTitle {
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+    margin-bottom: 8px;
+  }
+
+  .furnaceDescription {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+
+  .heatingServicesBlock {
+    margin-top: 24px;
+    padding: 0 8px;
+  }
+
+  .heatingServicesTitle {
+    font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+    margin-bottom: 8px;
+  }
+
+  .heatingServicesDescription {
+    font-size: clamp(0.9rem, 2.3vw, 1rem);
+  }
+
+  .heatingExperienceBlock {
+    margin-top: 20px;
+    padding: 0 8px;
+  }
+
+  .heatingExperienceTitle {
+    font-size: clamp(0.95rem, 2.8vw, 1.08rem);
+    margin-bottom: 8px;
+  }
+
+  .heatingExperienceDescription {
+    font-size: clamp(0.9rem, 2.3vw, 0.98rem);
+  }
+
+  .redStripe {
+    padding: 18px 16px;
+    margin: 32px 0 0 0;
+    border-radius: 8px;
+  }
+
+  .redStripeText {
+    font-size: clamp(0.95rem, 2.3vw, 1.05rem);
+    letter-spacing: 0px;
+  }
+
+  .maintenanceRow {
+    flex-direction: column;
+    gap: 20px;
+    margin: 28px 0 0 0;
+  }
+
+  .maintenanceImageCol {
+    width: 100%;
+  }
+
+  .maintenanceImage {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .maintenanceTextCol {
+    gap: 10px;
+  }
+
+  .maintenanceTitle {
+    font-size: clamp(0.95rem, 2.8vw, 1.08rem);
+  }
+
+  .maintenanceDescription {
+    font-size: clamp(0.9rem, 2.2vw, 0.98rem);
+  }
+}
+
+/* ============================================
+   MOBILE LANDSCAPE (max-width: 767px | landscape)
+   ============================================ */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .servicesSection {
+    margin: 28px auto 0 auto;
+    padding: 0 16px 28px 16px;
+  }
+
+  .furnaceImagesRow {
+    flex-direction: row;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .furnaceImage {
+    max-width: 160px;
+    border-radius: 10px;
+  }
+
+  .furnaceTitle {
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    margin-bottom: 6px;
+  }
+
+  .furnaceDescription {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+  }
+
+  .heatingServicesBlock {
+    margin-top: 16px;
+    padding: 0 8px;
+  }
+
+  .heatingServicesTitle {
+    font-size: clamp(0.9rem, 2.3vw, 1rem);
+    margin-bottom: 6px;
+  }
+
+  .heatingServicesDescription {
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  }
+
+  .heatingExperienceBlock {
+    margin-top: 16px;
+    padding: 0 8px;
+  }
+
+  .heatingExperienceTitle {
+    font-size: clamp(0.9rem, 2.3vw, 0.98rem);
+    margin-bottom: 6px;
+  }
+
+  .heatingExperienceDescription {
+    font-size: clamp(0.85rem, 1.8vw, 0.93rem);
+  }
+
+  .redStripe {
+    padding: 14px 14px;
+    margin: 24px 0 0 0;
+    border-radius: 6px;
+  }
+
+  .redStripeText {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    letter-spacing: 0px;
+  }
+
+  .maintenanceRow {
+    flex-direction: row;
+    gap: 16px;
+    margin: 20px 0 0 0;
+  }
+
+  .maintenanceImageCol {
+    flex: 0 0 140px;
+  }
+
+  .maintenanceImage {
+    max-width: 140px;
+    border-radius: 8px;
+  }
+
+  .maintenanceTextCol {
+    flex: 1;
+    gap: 8px;
+  }
+
+  .maintenanceTitle {
+    font-size: clamp(0.85rem, 2.3vw, 0.98rem);
+  }
+
+  .maintenanceDescription {
+    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+  }
 }

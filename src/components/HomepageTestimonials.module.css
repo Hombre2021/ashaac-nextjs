@@ -1,3 +1,12 @@
+/**
+ * TESTIMONIALS COMPONENT - RESPONSIVE LAYOUT
+ * Desktop, Tablet Portrait/Landscape, Mobile Portrait/Landscape
+ */
+
+/* ============================================
+   DESKTOP (Default - min-width: 1200px)
+   ============================================ */
+
 .testimonialsSection {
   width: 100%;
   background: #fff;
@@ -8,9 +17,9 @@
 }
 
 .testimonialsTitle {
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 5vw, 2rem);
   font-weight: 700;
-  color: #c00;
+  color: #095f91;
   margin-bottom: 32px;
   text-align: center;
 }
@@ -21,26 +30,159 @@
   gap: 32px;
   max-width: 900px;
   width: 100%;
+  padding: 0 24px;
 }
 
 .testimonialCard {
   background: #f8f8f8;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   padding: 28px 32px;
-  font-size: 1.15rem;
+  font-size: clamp(1.05rem, 2vw, 1.15rem);
   color: #222;
-  font-weight: 400;
-  position: relative;
+  line-height: 1.7;
 }
 
 .testimonialText {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  line-height: 1.7;
 }
 
 .testimonialName {
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.8vw, 1rem);
   font-weight: 600;
-  color: #c00;
+  color: #095f91;
   text-align: right;
+}
+
+/* ============================================
+   TABLET PORTRAIT (480px - 1023px | portrait)
+   ============================================ */
+
+@media (min-width: 480px) and (max-width: 1023px) and (orientation: portrait) {
+  .testimonialsSection {
+    padding: 48px 0 40px 0;
+  }
+
+  .testimonialsTitle {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+    margin-bottom: 28px;
+  }
+
+  .testimonialsList {
+    gap: 24px;
+    padding: 0 20px;
+    max-width: 100%;
+  }
+
+  .testimonialCard {
+    padding: 24px 24px;
+    font-size: clamp(1rem, 2vw, 1.08rem);
+    line-height: 1.6;
+  }
+
+  .testimonialText {
+    margin-bottom: 16px;
+  }
+
+  .testimonialName {
+    font-size: clamp(0.9rem, 1.8vw, 0.98rem);
+  }
+}
+
+/* ============================================
+   TABLET LANDSCAPE (768px - 1199px | landscape)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+  .testimonialsSection {
+    padding: 48px 0 40px 0;
+  }
+
+  .testimonialsTitle {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+    margin-bottom: 28px;
+  }
+
+  .testimonialsList {
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  .testimonialCard {
+    padding: 24px 28px;
+    font-size: clamp(1rem, 2vw, 1.1rem);
+  }
+
+  .testimonialName {
+    font-size: clamp(0.9rem, 1.8vw, 0.98rem);
+  }
+}
+
+/* ============================================
+   MOBILE PORTRAIT (max-width: 479px | portrait)
+   ============================================ */
+
+@media (max-width: 479px) and (orientation: portrait) {
+  .testimonialsSection {
+    padding: 40px 0 32px 0;
+  }
+
+  .testimonialsTitle {
+    font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+    margin-bottom: 24px;
+  }
+
+  .testimonialsList {
+    gap: 20px;
+    padding: 0 16px;
+  }
+
+  .testimonialCard {
+    padding: 20px 18px;
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+    line-height: 1.6;
+  }
+
+  .testimonialText {
+    margin-bottom: 14px;
+  }
+
+  .testimonialName {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+  }
+}
+
+/* ============================================
+   MOBILE LANDSCAPE (max-width: 767px | landscape)
+   ============================================ */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .testimonialsSection {
+    padding: 32px 0 28px 0;
+  }
+
+  .testimonialsTitle {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    margin-bottom: 20px;
+  }
+
+  .testimonialsList {
+    gap: 18px;
+    padding: 0 16px;
+  }
+
+  .testimonialCard {
+    padding: 18px 16px;
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    line-height: 1.6;
+  }
+
+  .testimonialText {
+    margin-bottom: 12px;
+  }
+
+  .testimonialName {
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  }
 }

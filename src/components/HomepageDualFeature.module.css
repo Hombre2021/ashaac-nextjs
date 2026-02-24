@@ -8,9 +8,9 @@
 
 .dualFeatureContent {
   display: flex;
-  flex-direction: row;
-  gap: 64px;
-  max-width: 1100px;
+  flex-direction: column;
+  gap: 48px;
+  max-width: 2200px;
   width: 100%;
   justify-content: center;
   align-items: flex-start;
@@ -20,15 +20,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1 1 0;
-  max-width: 400px;
+  width: 100%;
+  max-width: 2200px;
 }
 
-.featureImage {
+.doubleFurnaceWestJordanWrap {
+  position: relative;
+  width: 100%;
+  height: 1040px;
+}
+
+.doubleFurnaceWestJordanImage {
   border-radius: 14px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+  object-fit: contain;
+  object-position: center;
+}
+
+.doubleAcCondenserWrap {
+  position: relative;
   width: 100%;
-  height: auto;
+  height: 520px;
+}
+
+.doubleAcCondenserImage {
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+  object-fit: contain;
+  object-position: center;
 }
 
 .featureDescription {
@@ -37,4 +56,178 @@
   font-weight: 500;
   color: #333;
   text-align: center;
+}
+
+@media (max-width: 480px) {
+  .dualFeatureSection {
+    padding: 32px 0;
+  }
+
+  .dualFeatureContent {
+    flex-direction: column;
+    gap: 32px;
+    padding: 0 20px;
+    align-items: center;
+  }
+
+  .featureColumn {
+    max-width: 100%;
+  }
+
+  .doubleFurnaceWestJordanWrap,
+  .doubleAcCondenserWrap {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+  }
+
+  .doubleFurnaceWestJordanWrap {
+    aspect-ratio: 1 / 1;
+  }
+
+  .doubleAcCondenserWrap {
+    aspect-ratio: 2 / 1;
+  }
+
+  .doubleFurnaceWestJordanImage,
+  .doubleAcCondenserImage {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .featureDescription {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   FORCE MOBILE LAYOUT ON ALL APPLE PORTRAIT DEVICES
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 481px) and (max-width: 1024px) {
+  .dualFeatureSection {
+    padding: 32px 0 !important;
+  }
+
+  .dualFeatureContent {
+    flex-direction: column !important;
+    gap: 32px !important;
+    padding: 0 20px !important;
+    align-items: center !important;
+  }
+
+  .featureColumn {
+    max-width: 100% !important;
+  }
+
+  .doubleFurnaceWestJordanWrap,
+  .doubleAcCondenserWrap {
+    width: 100% !important;
+    max-width: 420px !important;
+    height: auto !important;
+  }
+
+  .doubleFurnaceWestJordanWrap {
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  .doubleAcCondenserWrap {
+    aspect-ratio: 2 / 1 !important;
+  }
+
+  .doubleFurnaceWestJordanImage,
+  .doubleAcCondenserImage {
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .featureDescription {
+    font-size: 1rem !important;
+  }
+}
+
+/* ============================================
+   SCALED UP FOR LARGER TABLETS
+   iPad Air, iPad Pro 11" (820-920px portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 820px) and (max-width: 920px) {
+  .dualFeatureSection {
+    padding: 40px 0 !important;
+  }
+
+  .dualFeatureContent {
+    flex-direction: column !important;
+    gap: 40px !important;
+    padding: 0 25px !important;
+    align-items: center !important;
+  }
+
+  .doubleFurnaceWestJordanWrap,
+  .doubleAcCondenserWrap {
+    width: 100% !important;
+    max-width: 520px !important;
+    height: auto !important;
+  }
+
+  .featureDescription {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* ============================================
+   SCALED UP FOR EXTRA LARGE TABLETS
+   iPad Pro 12.9", Surface Pro 7 (1024px+ portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 1024px) and (max-width: 1366px) {
+  .dualFeatureSection {
+    padding: 48px 0 !important;
+  }
+
+  .dualFeatureContent {
+    flex-direction: column !important;
+    gap: 48px !important;
+    padding: 0 30px !important;
+    align-items: center !important;
+  }
+
+  .doubleFurnaceWestJordanWrap,
+  .doubleAcCondenserWrap {
+    width: 100% !important;
+    max-width: 650px !important;
+    height: auto !important;
+  }
+
+  .featureDescription {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .dualFeatureSection {
+    padding: 28px 0;
+  }
+
+  .dualFeatureContent {
+    flex-direction: column;
+    gap: 28px;
+    padding: 0 28px;
+    align-items: center;
+  }
+
+  .featureColumn {
+    max-width: 100%;
+  }
+
+  .doubleFurnaceWestJordanWrap,
+  .doubleAcCondenserWrap {
+    width: 100%;
+    max-width: 360px;
+    height: 270px;
+  }
+
+  .featureDescription {
+    font-size: 1rem;
+  }
 }

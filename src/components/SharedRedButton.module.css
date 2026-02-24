@@ -1,0 +1,64 @@
+.redButton {
+  background: #095f91;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 20px 48px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: background 0.2s, transform 0.2s;
+  text-align: center;
+}
+
+.redButton:hover {
+  background: #095f91;
+  transform: translateY(-2px) scale(1.04);
+}
+
+@media (max-width: 480px) {
+  .redButton {
+    font-size: 1.4rem;
+    padding: 24px 36px;
+    text-align: center;
+  }
+}
+
+/* ============================================
+   FORCE MOBILE LAYOUT ON ALL APPLE PORTRAIT DEVICES
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 481px) and (max-width: 1024px) {
+  .redButton {
+    font-size: 1.4rem !important;
+    padding: 24px 36px !important;
+    text-align: center !important;
+  }
+}
+
+/* ============================================
+   SCALED UP FOR LARGER TABLETS
+   iPad Air, iPad Pro 11" (820-920px portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 820px) and (max-width: 920px) {
+  .redButton {
+    font-size: 1.7rem !important;
+    padding: 28px 40px !important;
+    text-align: center !important;
+  }
+}
+
+/* ============================================
+   SCALED UP FOR EXTRA LARGE TABLETS
+   iPad Pro 12.9", Surface Pro 7 (1024px+ portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 1024px) and (max-width: 1366px) {
+  .redButton {
+    font-size: 2rem !important;
+    padding: 32px 44px !important;
+    text-align: center !important;
+  }
+}

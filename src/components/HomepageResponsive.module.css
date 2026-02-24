@@ -1,0 +1,52 @@
+.viewport {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--background);
+  overflow-x: hidden;
+}
+
+.stageShell {
+  width: calc(var(--base-width) * var(--scale));
+  max-width: 100%;
+  min-height: calc(var(--base-height) * var(--scale));
+  height: calc(var(--content-height) * var(--scale));
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+}
+
+.stage {
+  width: var(--base-width);
+  min-height: var(--base-height);
+  transform: scale(var(--scale));
+  transform-origin: top center;
+}
+
+/* All mobile devices - fill screen without wrapper */
+@media (orientation: portrait) and (max-width: 1024px) {
+  .stageShell {
+    width: 100% !important;
+  }
+  
+  .stage {
+    width: 100% !important;
+    transform: none !important;
+  }
+}
+
+/* Mobile landscape - fill screen without wrapper */
+@media (orientation: landscape) and (max-width: 1024px) {
+  .stageShell {
+    width: 100% !important;
+  }
+  
+  .stage {
+    width: 100% !important;
+    transform: none !important;
+  }
+}

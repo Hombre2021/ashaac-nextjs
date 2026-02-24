@@ -1,3 +1,14 @@
+/**
+ * HOMEPAGEFOOTER COMPONENT - RESPONSIVE LAYOUT
+ * 
+ * Desktop, Tablet Portrait/Landscape, Mobile Portrait/Landscape
+ * Each section is INDEPENDENT
+ */
+
+/* ============================================
+   DESKTOP (Default - min-width: 1200px)
+   ============================================ */
+
 .footerContainer {
   width: 100%;
   background: #222;
@@ -6,7 +17,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1.05rem;
+  font-size: clamp(1rem, 2vw, 1.05rem);
 }
 
 .footerTop {
@@ -18,6 +29,7 @@
   align-items: flex-start;
   margin-bottom: 32px;
   padding: 0 24px;
+  gap: 24px;
 }
 
 .logoAndMotto {
@@ -27,16 +39,25 @@
   gap: 12px;
 }
 
-.logoFull {
+.van2ImageWrap {
   background: #fff;
   border-radius: 8px;
   padding: 6px 12px;
+  width: 120px;
+  height: 60px;
+  position: relative;
+}
+
+.van2Image {
+  object-fit: contain;
 }
 
 .motto {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2vw, 1.1rem);
   font-weight: 600;
   color: #fff;
+  line-height: 1.4;
+  max-width: 300px;
 }
 
 .shareSection {
@@ -47,30 +68,29 @@
 }
 
 .shareTitle {
-  font-size: 1.08rem;
+  font-size: clamp(0.95rem, 1.8vw, 1.08rem);
   font-weight: 500;
   color: #fff;
   background: #095f91;
   border: none;
   border-radius: 6px;
-  padding: 8px 18px;
+  padding: 10px 20px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
-  margin-bottom: 0;
+  white-space: nowrap;
 }
+
 .shareTitle:hover {
-  background: #095f91;
+  background: #0a7ab8;
   color: #fffbe6;
 }
 
 .copiedMsg {
-  color: #fffbe6;
-  font-size: 0.98rem;
-  margin-top: 6px;
-  background: #c00;
+  color: #fff;
+  font-size: clamp(0.85rem, 1.5vw, 0.98rem);
+  background: #095f91;
   border-radius: 4px;
-  padding: 2px 10px;
-  display: inline-block;
+  padding: 4px 12px;
 }
 
 .footerLinksRow {
@@ -80,39 +100,280 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 32px;
+  gap: 48px;
   padding: 0 24px 32px 24px;
 }
 
 .footerLinksCol {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  flex: 1;
 }
 
 .footerLinksTitle {
-  font-size: 1.08rem;
+  font-size: clamp(1rem, 2vw, 1.08rem);
   font-weight: 600;
   margin-bottom: 8px;
   color: #fff;
 }
 
-.footerLinksCol a, .footerLinksCol div {
+.footerLinksCol a,
+.footerLinksCol div {
   color: #fff;
   text-decoration: none;
-  font-size: 1.02rem;
+  font-size: clamp(0.95rem, 1.8vw, 1.02rem);
   transition: color 0.2s;
+  line-height: 1.4;
 }
+
 .footerLinksCol a:hover {
-  color: #c00;
+  color: #095f91;
+  text-decoration: underline;
 }
 
 .footerCopyright {
   width: 100%;
   text-align: center;
-  font-size: 0.98rem;
+  font-size: clamp(0.85rem, 1.5vw, 0.98rem);
   color: #bbb;
   background: #181818;
-  padding: 18px 0 0 0;
-  margin-top: 18px;
+  padding: 20px 0;
+}
+
+/* ============================================
+   TABLET PORTRAIT (480px - 1023px | portrait)
+   ============================================ */
+
+@media (min-width: 480px) and (max-width: 1023px) and (orientation: portrait) {
+  .footerContainer {
+    padding: 40px 0 0 0;
+    font-size: clamp(0.95rem, 2vw, 1rem);
+  }
+
+  .footerTop {
+    flex-direction: column;
+    margin-bottom: 28px;
+    padding: 0 20px;
+  }
+
+  .motto {
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+    max-width: 100%;
+  }
+
+  .shareSection {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .shareTitle {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footerLinksRow {
+    flex-direction: column;
+    gap: 32px;
+    padding: 0 20px 28px 20px;
+  }
+
+  .footerLinksCol {
+    width: 100%;
+  }
+
+  .footerLinksCol a,
+  .footerLinksCol div {
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+  }
+}
+
+/* ============================================
+   TABLET LANDSCAPE (768px - 1199px | landscape)
+   ============================================ */
+
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+  .footerContainer {
+    padding: 36px 0 0 0;
+  }
+
+  .footerTop {
+    margin-bottom: 28px;
+    padding: 0 20px;
+  }
+
+  .motto {
+    max-width: 280px;
+  }
+
+  .shareTitle {
+    font-size: clamp(0.9rem, 1.6vw, 1rem);
+  }
+
+  .footerLinksRow {
+    gap: 40px;
+    padding: 0 20px 28px 20px;
+  }
+
+  .footerLinksCol a,
+  .footerLinksCol div {
+    font-size: clamp(0.9rem, 1.6vw, 0.98rem);
+  }
+}
+
+/* ============================================
+   MOBILE PORTRAIT (max-width: 479px | portrait)
+   ============================================ */
+
+@media (max-width: 479px) and (orientation: portrait) {
+  .footerContainer {
+    padding: 32px 0 0 0;
+  }
+
+  .footerTop {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 24px;
+    padding: 0 16px;
+    gap: 18px;
+  }
+
+  .van2ImageWrap {
+    width: 120px;
+    height: 60px;
+  }
+
+  .motto {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+
+  .shareSection {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .shareTitle {
+    width: 100%;
+    text-align: center;
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  }
+
+  .copiedMsg {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+  }
+
+  .footerLinksRow {
+    flex-direction: column;
+    gap: 28px;
+    padding: 0 16px 24px 16px;
+  }
+
+  .footerLinksCol {
+    width: 100%;
+    gap: 6px;
+  }
+
+  .footerLinksTitle {
+    font-size: clamp(0.9rem, 2.3vw, 1rem);
+    margin-bottom: 4px;
+  }
+
+  .footerLinksCol a,
+  .footerLinksCol div {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+  }
+
+  .footerLinksCol a:hover {
+    color: #ffcccb;
+  }
+}
+
+/* ============================================
+   MOBILE LANDSCAPE (max-width: 767px | landscape)
+   ============================================ */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .footerContainer {
+    padding: 24px 0 0 0;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+  }
+
+  .footerTop {
+    flex-direction: row;
+    margin-bottom: 18px;
+    padding: 0 14px;
+    gap: 14px;
+  }
+
+  .van2ImageWrap {
+    width: 110px;
+    height: 55px;
+  }
+
+  .motto {
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+  }
+
+  .shareTitle {
+    font-size: clamp(0.75rem, 1.6vw, 0.9rem);
+    padding: 6px 12px;
+  }
+
+  .footerLinksRow {
+    gap: 20px;
+    padding: 0 14px 20px 14px;
+  }
+
+  .footerLinksCol {
+    gap: 4px;
+  }
+
+  .footerLinksTitle {
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+    margin-bottom: 4px;
+  }
+
+  .footerLinksCol a,
+  .footerLinksCol div {
+    font-size: clamp(0.75rem, 1.4vw, 0.88rem);
+  }
+
+  .footerCopyright {
+    font-size: clamp(0.7rem, 1.3vw, 0.85rem);
+    padding: 12px 0;
+  }
+}
+/* ============================================
+   ASUS ZENBOOK FOLD (853x1280 portrait) — 25% FONT INCREASE
+   ============================================ */
+
+@media (orientation: portrait) and (width: 853px) and (height: 1280px) {
+  .footerContainer {
+    font-size: clamp(1.25rem, 2vw, 1.3125rem);
+  }
+
+  .motto {
+    font-size: clamp(1.25rem, 2vw, 1.375rem);
+  }
+
+  .shareTitle {
+    font-size: clamp(1.1875rem, 1.8vw, 1.35rem);
+  }
+
+  .copiedMsg {
+    font-size: clamp(1.0625rem, 1.5vw, 1.225rem);
+  }
+
+  .footerLinksTitle {
+    font-size: clamp(1.25rem, 2vw, 1.35rem);
+  }
+
+  .footerLinksCol a,
+  .footerLinksCol div {
+    font-size: clamp(1.1875rem, 1.8vw, 1.275rem);
+  }
+
+  .footerCopyright {
+    font-size: clamp(1.0625rem, 1.5vw, 1.225rem);
+  }
 }

@@ -1,17 +1,4 @@
-.badgeClickable {
-  pointer-events: auto;
-  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
-  cursor: pointer;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  z-index: 1000;
-}
-.badgeClickable:hover {
-  transform: translateY(-8px) scale(1.07);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-  z-index: 2000;
-}
-.heroActionButtons {
+.hablamosWrap {
   position: absolute;
   top: 15%;
   left: 79.2%;
@@ -22,7 +9,7 @@
   align-items: flex-start;
 }
 
-.heroRedButton {
+.hablamosEspbutton {
   background: #095f91;
   color: #fff;
   font-size: 1.15rem;
@@ -35,110 +22,1329 @@
   transition: background 0.2s, transform 0.2s;
   margin-bottom: 0;
 }
-.heroRedButton:hover {
+
+.hablamosEspbutton:hover {
   background: #095f91;
   transform: translateY(-2px) scale(1.04);
 }
-/* Removed misplaced properties that were outside of any selector */
-.heroContainer{
+
+.heroWrap {
   position: relative;
   width: 100%;
   height: 100vh;
   min-height: 600px;
   overflow: hidden;
 }
-/* Independent hero man overlay */
-.overlayImage {
-  position: absolute;
-  z-index: 2; /* hero man stays low */
+
+@media (max-width: 480px) {
+  .heroWrap {
+    height: 100vh;
+    min-height: 667px;
+  }
 }
-.heroManOverlay {
+
+.commercialImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroManWrap {
+  position: absolute;
   right: 0;
   bottom: 0;
   width: 443px;
   height: 620px;
   display: flex;
   align-items: flex-end;
-  z-index: 10; /* below badges */
+  z-index: 10;
 }
 
-.badgeOverlay {
+.heroManImage {
+  object-fit: contain;
+}
+
+.badgeLayer {
+  position: relative;
+  z-index: 50;
+}
+
+.badgeBase {
   position: absolute;
   z-index: 50;
   pointer-events: auto;
   cursor: pointer;
+  display: block;
+  line-height: 0;
   transition: transform 0.2s cubic-bezier(0.4,0,0.2,1),
               box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
   border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
-.badgeOverlay:hover {
+.badgeBase:hover {
   transform: translateY(-8px) scale(1.07);
   box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   z-index: 2000;
 }
 
-.bbbAccredited {
+.badgeImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bbbAccreditedBadge {
   top: 520px;
   right: 900px;
-  width: 300px;   /* Change this value to your desired width */
-  height: auto;   /* Keeps the aspect ratio */
+  width: 300px;
+  height: 195px;
 }
 
-.googleVerified {
-   top: 520px;
+.googleVerifiedBadge {
+  top: 520px;
   right: 1204px;
-  width: 310px;   /* Change this value to your desired width */
-  height: auto;   /* Keeps the aspect ratio */
+  width: 300px;
+  height: 191px;
 }
 
-.googleFivestar {
-   top: 520px;
+.googleFivestarBadge {
+  top: 520px;
   right: 597px;
-  width: 300px;   /* Change this value to your desired width */
-  height: auto;   /* Keeps the aspect ratio */
+  width: 300px;
+  height: 196px;
 }
 
-.heroTitle {
+.welcomeTitle {
   position: absolute;
   top: 12%;
   left: 50%;
   transform: translateX(-50%);
   color: white;
   font-size: 2.3rem;
-  line-height: 2.8; /* Increase for more space above/below, decrease for less */
+  line-height: 2.2;
   font-weight: bold;
   text-align: center;
   text-shadow: 0 2px 8px rgba(0,0,0,1.5);
-  z-index: 2;
+  z-index: 5;
   width: 80%;
 }
 
-.heroSubtitle {
+.professionalSubtitle {
   position: absolute;
-  top: 25%;
+  top: 20%;
   left: 5%;
   color: white;
   font-size: 1.7rem;
   font-weight: 500;
   text-align: left;
   text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-  z-index: 2;
-    max-width: 400px;
-  }
+  z-index: 5;
+  max-width: 400px;
+}
 
-.heroLeftTitle {
+.installTagline {
+  position: absolute;
+  top: calc(10% + 3em);
+  left: 67%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  font-size: 2.4rem;
+  font-weight: 500;
+  text-shadow: 0 2px 8px rgba(0,0,0,1.5);
+  z-index: 5;
+  max-width: none;
+  width: auto;
+  white-space: nowrap;
+}
+
+.installLine {
+  font-size: 1.62rem;
+}
+
+.zeroInterestLine {
+  font-size: 1.62rem;
+}
+
+.becauseTagline,
+.becauseTaglineMobile {
   position: absolute;
   top: 90%;
-  left: -295%;
+  left: -305%;
   color: white;
   font-size: 2.4rem;
   font-weight: 500;
   text-align: left;
   text-shadow: 0 2px 8px rgba(0,0,0,1.5);
-  z-index: 2;
+  z-index: 5;
   max-width: none;
   width: auto;
-  white-space: nowrap; /* Prevents line breaks */
-}                                                                                                                                                                                                                                                                                                                       
+  white-space: nowrap;
+}
+
+.becauseLineTop,
+.becauseLineBottom {
+  display: inline;
+}
+
+@media (orientation: landscape) and (hover: none) and (pointer: coarse) {
+  .becauseTagline {
+    text-align: center !important;
+    white-space: normal !important;
+    line-height: 1.3 !important;
+  }
+
+  .becauseLineTop,
+  .becauseLineBottom {
+    display: block !important;
+    white-space: nowrap !important;
+  }
+}
+/* ============================================
+   MOBILE PORTRAIT (max-width: 480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  /* Vertical Stack Layout for 375x667px */
+
+  .welcomeTitle {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+  }
+
+  .professionalSubtitle {
+    font-size: 0.95rem;
+    top: 24%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .installTagline {
+    font-size: 1rem;
+    top: 34%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .installLine {
+    font-size: 1rem;
+  }
+
+  .zeroInterestLine {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .becauseTaglineMobile {
+    font-size: 0.99rem;
+    position: absolute;
+    top: 15%;
+    left: -160px;
+    right: 128px;
+    width: auto;
+    text-align: center;
+    white-space: normal;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,1.5);
+    z-index: 15;
+    max-width: none;
+  }
+
+  /* Badges: centered, horizontal, smaller */
+  .badgeLayer {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    z-index: 50;
+  }
+
+  .badgeBase {
+    position: relative;
+    width: auto;
+    height: auto;
+    top: auto;
+    right: auto;
+    left: auto;
+    flex: 0 0 auto;
+  }
+
+  .googleFivestarBadge {
+    width: 118px;
+    height: 77px;
+    top: auto;
+    right: auto;
+  }
+
+  .bbbAccreditedBadge {
+    width: 118px;
+    height: 77px;
+    top: auto;
+    right: auto;
+  }
+
+  .googleVerifiedBadge {
+    width: 118px;
+    height: 75px;
+    top: auto;
+    right: auto;
+  }
+
+  /* Hero man: small, bottom-right, at the edge of background */
+  .heroManWrap {
+    width: 150px;
+    height: 213px;
+    right: 0;
+    bottom: 0;
+    opacity: 0.9;
+  }
+
+  /* Call/Text button: fixed at top, accessible */
+  .callTextWrap {
+    position: fixed;
+    top: 37px;
+    left: 50%;
+    transform: translateX(calc(-50% + 19px));
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    z-index: 101;
+    align-items: center;
+  }
+
+  .hablamosEspbutton {
+    background: #095f91;
+    color: #fff;
+    font-size: 0.97rem;
+    font-weight: bold;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background 0.2s, transform 0.2s;
+    margin-bottom: 0;
+    white-space: normal;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    line-height: 1.2;
+  }
+
+  .hablamosEspbutton:hover {
+    background: #0d4a70;
+    transform: translateY(-2px) scale(1.04);
+  }
+
+  /* Hide badges and hero man when mobile menu is open */
+  :global(body.mobile-menu-open) .badgeLayer,
+  :global(body.mobile-menu-open) .heroManWrap {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   FORCE MOBILE LAYOUT ON ALL APPLE PORTRAIT DEVICES
+   iPad Mini, iPad Air, iPad Pro in portrait = 375×667 mobile layout
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 481px) and (max-width: 1366px) {
+  
+  /* Force mobile hero dimensions */
+  .heroWrap {
+    height: 100vh !important;
+    min-height: 667px !important;
+  }
+
+  /* Force mobile text sizes and positions */
+  .welcomeTitle {
+    font-size: 1.5rem !important;
+    line-height: 1.5 !important;
+    top: 15% !important;
+    width: 90% !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 1.2rem !important;
+    top: 24% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+    max-width: 90% !important;
+    width: 90% !important;
+  }
+
+  .installTagline {
+    font-size: 1.3rem !important;
+    top: 34% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+    width: 90% !important;
+    white-space: normal !important;
+  }
+
+  .installLine {
+    font-size: 1rem !important;
+  }
+
+  .zeroInterestLine {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+  }
+
+  .becauseTaglineMobile {
+    font-size: 1.1rem !important;
+    position: absolute !important;
+    top: calc(70% - 300px) !important;
+    left: calc(-40% - 35px) !important;
+    right: 50% !important;
+    width: auto !important;
+    text-align: center !important;
+    white-space: normal !important;
+    color: white !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,1.5) !important;
+    z-index: 15 !important;
+    max-width: 350px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Force mobile badge layout */
+  .badgeLayer {
+    position: absolute !important;
+    top: calc(58% - 100px) !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100% !important;
+    height: 150px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 3px !important;
+    z-index: 50 !important;
+  }
+
+  .badgeBase {
+    position: relative !important;
+    width: 32% !important;
+    height: 130px !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+  }
+
+  .bbbAccreditedBadge,
+  .googleVerifiedBadge,
+  .googleFivestarBadge {
+    width: 100% !important;
+    height: 100% !important;
+    top: auto !important;
+    right: auto !important;
+  }
+
+  /* Force mobile hero man size */
+  .heroManWrap {
+    width: 300px !important;
+    height: 426px !important;
+    right: -15px !important;
+  }
+
+  /* Force mobile Call/Text button */
+  .callTextWrap {
+    position: fixed !important;
+    top: 37px !important;
+    left: 153px !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    z-index: 101 !important;
+  }
+
+  .hablamosEspbutton {
+    font-size: 0.97rem !important;
+    padding: 10px 12px !important;
+    height: 45px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.2 !important;
+    white-space: normal !important;
+  }
+}
+
+/* ============================================
+   SAMSUNG GALAXY A51/71 (412x914 portrait) — 50% HERO MAN INCREASE
+   ============================================ */
+
+@media (orientation: portrait) and (width: 412px) and (height: 914px) {
+  .heroManWrap {
+    width: 280.34px !important;
+    height: 392.34px !important;
+  }
+
+  .badgeLayer {
+    top: calc(58% - 70px) !important;
+  }
+
+  .becauseTaglineMobile {
+    top: calc(15% - 35px) !important;
+  }
+}
+
+/* ============================================
+   SAMSUNG GALAXY A51/71 (914x412 landscape) — CENTER BADGES & TAGLINE
+   ============================================ */
+
+@media (orientation: landscape) and (width: 914px) and (height: 412px) {
+  .bbbAccreditedBadge {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .googleVerifiedBadge {
+    left: calc(50% - 204px) !important;
+    right: auto !important;
+  }
+
+  .googleFivestarBadge {
+    left: calc(50% + 70px) !important;
+    right: auto !important;
+  }
+
+  .becauseTagline {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+/* ============================================
+   SMALL TABLETS / LARGE PHONES (portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 520px) and (max-width: 600px) and (min-height: 680px) and (max-height: 820px) {
+  .callTextWrap {
+    left: 141px !important;
+  }
+}
+
+/* ============================================
+   SCALED UP FOR LARGER TABLETS
+   iPad Air, iPad Pro 11" (820-920px portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 820px) and (max-width: 920px) {
+  .hablamosWrap {
+    top: calc(15% - 60px) !important;
+  }
+
+  .becauseTagline {
+    top: calc(62% - 250px) !important;
+    right: calc(360px + 232px) !important;
+    left: auto !important;
+    max-width: 380px !important;
+    white-space: normal !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+  }
+
+  
+  /* Scale up text sizes */
+  .welcomeTitle {
+    font-size: 2rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 1.5rem !important;
+  }
+
+  .installTagline {
+    font-size: 1.6rem !important;
+  }
+
+  .installLine {
+    font-size: 1.2rem !important;
+  }
+
+  .zeroInterestLine {
+    font-size: 1.2rem !important;
+  }
+
+  .becauseTaglineMobile {
+    font-size: 2rem !important;
+    max-width: 400px !important;
+    left: calc(-85% - 85px) !important;
+  }
+
+  /* Scale up hero man */
+  .heroManWrap {
+    width: 360px !important;
+    height: 511px !important;
+  }
+
+  /* Scale up badges */
+  .badgeBase {
+    width: 32% !important;
+    height: 160px !important;
+  }
+
+  /* Scale up Call/Text button */
+  .hablamosEspbutton {
+    font-size: 1.1rem !important;
+    padding: 12px 14px !important;
+    height: 50px !important;
+  }
+}
+
+/* ============================================
+   SCALED UP FOR EXTRA LARGE TABLETS
+   iPad Pro 12.9", Surface Pro 7 (1024px+ portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 1024px) and (max-width: 1366px) {
+  .hablamosWrap {
+    top: calc(15% - 60px) !important;
+  }
+
+  .becauseTagline {
+    top: calc(62% - 250px) !important;
+    right: calc(420px + 240px) !important;
+    left: auto !important;
+    max-width: 410px !important;
+    white-space: normal !important;
+    line-height: 1.5 !important;
+    text-align: left !important;
+  }
+
+  
+  /* Scale up text sizes significantly */
+  .welcomeTitle {
+    font-size: 2.4rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 1.8rem !important;
+  }
+
+  .installTagline {
+    font-size: 1.9rem !important;
+  }
+
+  .installLine {
+    font-size: 1.8rem !important;
+  }
+
+  .zeroInterestLine {
+    font-size: 1.8rem !important;
+  }
+
+  .becauseTaglineMobile {
+    font-size: 2.4rem !important;
+    max-width: 480px !important;
+    line-height: 1.8 !important;
+    left: calc(-90% - 85px) !important;
+  }
+
+  /* Scale up hero man */
+  .heroManWrap {
+    width: 357px !important;
+    height: 508px !important;
+  }
+
+  /* Scale up badges */
+  .badgeBase {
+    width: 32% !important;
+    height: 180px !important;
+  }
+
+  /* Scale up Call/Text button */
+  .hablamosEspbutton {
+    font-size: 1.25rem !important;
+    padding: 14px 16px !important;
+    height: 55px !important;
+  }
+}
+
+/* ============================================
+   RESPONSIVE 768px PORTRAIT (1200px+ height) — FONT ADJUSTMENTS
+   Covers 768x1295, 768x1630, and similar sizes
+   ============================================ */
+
+@media (orientation: portrait) and (width: 768px) and (min-height: 1200px) {
+  .hablamosEspbutton {
+    font-size: 1.725rem !important;
+  }
+
+  .welcomeTitle {
+    font-size: 3.45rem !important;
+    top: calc(12% - 40px) !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 2.55rem !important;
+  }
+
+  .installTagline {
+    font-size: 3.6rem !important;
+    top: calc(38%) !important;
+  }
+
+  .installLine {
+    font-size: 2.43rem !important;
+  }
+
+  .zeroInterestLine {
+    font-size: 2.43rem !important;
+  }
+
+  .becauseTagline,
+  .becauseTaglineMobile {
+    font-size: 3.6rem !important;
+  }
+}
+
+/* ============================================
+   SURFACE DUO (540x720 portrait)
+   ============================================ */
+
+@media (orientation: portrait) and (width: 540px) and (height: 720px) {
+  .callTextWrapSurfaceDuo {
+    left: 122px !important;
+    top: 33px !important;
+  }
+
+  /* Reduce hero man to half size for Surface Duo */
+  .heroManWrap {
+    width: 150px !important;
+    height: 213px !important;
+  }
+
+  /* Lower Because Tagline by 50px on Surface Duo */
+  .becauseTaglineMobile {
+    top: calc(135% - 250px) !important;
+    left: calc(-109% - 85px) !important;
+  }
+
+  /* Lower badges by 60px on Surface Duo */
+  .bbbAccreditedBadge,
+  .googleVerifiedBadge,
+  .googleFivestarBadge {
+    top: 128px !important;
+  }
+
+  /* Lower Install Tagline by 60px on Surface Duo */
+  .installTagline {
+    top: calc(30% + 3em + 60px) !important;
+  }
+
+  /* Lower Professional Subtitle by 30px on Surface Duo */
+  .professionalSubtitle {
+    top: calc(27% + 30px) !important;
+  }
+
+  /* Hide badges when menu opens on Surface Duo */
+  :global(body.mobile-menu-open) .badgeLayer {
+    display: none !important;
+  }
+}
+
+/* ============================================
+  ALL iPHONES LANDSCAPE (shared 667x375 structure)
+  667-932w × 320-430h, touch phones only
+  ============================================ */
+
+@media (orientation: landscape) and (min-width: 667px) and (max-width: 932px) and (min-height: 320px) and (max-height: 430px) and (hover: none) and (pointer: coarse) {
+  .heroWrap {
+    overflow: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Diminish welcome title to half size and lower 3px */
+  .welcomeTitle {
+    font-size: 1.15rem !important;
+    top: calc(12% + 3px) !important;
+  }
+
+  /* Lower Install Tagline 95px down total */
+  .installTagline {
+    top: calc(10% + 3em + 95px) !important;
+  }
+
+  /* Raise Because Tagline 35px higher and reduce size by 50% total, arrange in 2 lines, move 160px right total */
+  .becauseTagline {
+    top: calc(65% - 35px) !important;
+    left: calc(-305% + 160px) !important;
+    font-size: 1.15rem !important;
+    max-width: 200px !important;
+    white-space: normal !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Move badges side by side like other landscape devices */
+  .badgeBase {
+    width: 132px !important;
+    height: 94px !important;
+  }
+
+  .bbbAccreditedBadge {
+    top: 380px !important;
+    right: 335px !important;
+  }                                                                                                                                           
+
+  .googleVerifiedBadge {
+    top: 380px !important;
+    right: 470px !important;
+  }
+
+  .googleFivestarBadge {
+    top: 380px !important;
+    right: 200px !important;
+  }
+
+  /* Lower Hablamos button 22px down total */
+  .hablamosWrap {
+    top: calc(15% + 22px) !important;
+  }
+
+  /* Match Hablamos button size to Call/Text button */
+  .hablamosEspbutton {
+    font-size: 0.97rem !important;
+    padding: 10px 12px !important;
+    height: 45px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.2 !important;
+    white-space: normal !important;
+  }
+
+  /* Increase hero man size by 50% */
+  .heroManWrap {
+    width: 167px !important;
+    height: 233px !important;
+  }
+}
+
+/* ============================================
+   NEST HUB (1024x600 landscape)
+   ============================================ */
+
+@media (orientation: landscape) and (width: 1024px) and (height: 600px) {
+  /* Scale hero section to fit landscape display */
+  .heroWrap {
+    height: 100vh !important;
+    min-height: 600px !important;
+  }
+
+  /* Scale main title */
+  .welcomeTitle {
+    font-size: 1.4rem !important;
+    top: 13% !important;
+    width: 70% !important;
+  }
+
+  /* Scale professional subtitle */
+  .professionalSubtitle {
+    font-size: 1.2rem !important;
+    top: 22% !important;
+    left: 2% !important;
+    max-width: 350px !important;
+  }
+
+  /* Scale install tagline */
+  .installTagline {
+    font-size: 1.8rem !important;
+    top: calc(12% + 2em) !important;
+    left: 62% !important;
+  }
+
+  .installLine,
+  .zeroInterestLine {
+    font-size: 1.2rem !important;
+  }
+
+  /* Scale desktop Because tagline */
+  .becauseTagline {
+    font-size: 1.2rem !important;
+    top: 85% !important;
+    left: 50% !important;
+    transform: translateX(-160%) !important;
+  }
+
+  /* Scale desktop Hablamos button */
+  .hablamosWrap {
+    top: 16% !important;
+    left: 86% !important;
+  }
+
+  .hablamosEspbutton {
+    font-size: 0.8rem !important;
+    padding: 10px 10px !important;
+  }
+
+  /* Scale hero man */
+  .heroManWrap {
+    width: 350px !important;
+    height: 490px !important;
+  }
+
+  /* Scale and reposition badges */
+  .bbbAccreditedBadge,
+  .googleVerifiedBadge,
+  .googleFivestarBadge {
+    width: 200px !important;
+    height: 140px !important;
+    }
+
+  .bbbAccreditedBadge {
+    top: 360px !important;
+    right: 585px !important;
+  }
+
+  .googleVerifiedBadge {
+    top: 360px !important;
+    right: 789px !important;
+  }
+
+  .googleFivestarBadge {
+    top: 360px !important;
+    right: 380px !important;
+  }
+}
+
+/* ============================================
+   iPAD MINI (1024x768 landscape) — MIMIC NEST HUB STRUCTURE
+   ============================================ */
+
+@media (orientation: landscape) and (width: 1024px) and (height: 768px) {
+  .heroWrap {
+    height: 100vh !important;
+    min-height: 600px !important;
+  }
+
+  .welcomeTitle {
+    font-size: 1.4rem !important;
+    top: 13% !important;
+    width: 70% !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 1.2rem !important;
+    top: 22% !important;
+    left: 2% !important;
+    max-width: 350px !important;
+  }
+
+  .installTagline {
+    font-size: 1.8rem !important;
+    top: calc(12% + 2em) !important;
+    left: 62% !important;
+  }
+
+  .installLine,
+  .zeroInterestLine {
+    font-size: 1.2rem !important;
+  }
+
+  .becauseTagline {
+    font-size: 1.2rem !important;
+    top: 85% !important;
+    left: calc(-195% + 40px) !important;
+  }
+
+  .hablamosWrap {
+    top: 16% !important;
+    left: 86% !important;
+  }
+
+  .hablamosEspbutton {
+    font-size: 0.8rem !important;
+    padding: 10px 10px !important;
+  }
+
+  .heroManWrap {
+    width: 350px !important;
+    height: 490px !important;
+  }
+
+  .bbbAccreditedBadge,
+  .googleVerifiedBadge,
+  .googleFivestarBadge {
+    width: 200px !important;
+    height: 140px !important;
+  }
+
+  .bbbAccreditedBadge {
+    top: 360px !important;
+    right: 585px !important;
+  }
+
+  .googleVerifiedBadge {
+    top: 360px !important;
+    right: 789px !important;
+  }
+
+  .googleFivestarBadge {
+    top: 360px !important;
+    right: 380px !important;
+  }
+}
+
+/* ============================================
+   iPAD AIR (1180x820 landscape) — MIMIC NEST HUB STRUCTURE
+   ============================================ */
+
+@media (orientation: landscape) and (width: 1180px) and (height: 820px) {
+  .heroWrap {
+    height: 100vh !important;
+    min-height: 600px !important;
+  }
+
+  .welcomeTitle {
+    font-size: 1.4rem !important;
+    top: 13% !important;
+    width: 70% !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 1.2rem !important;
+    top: 22% !important;
+    left: 2% !important;
+    max-width: 350px !important;
+  }
+
+  .installTagline {
+    font-size: 1.8rem !important;
+    top: calc(12% + 2em) !important;
+    left: 62% !important;
+  }
+
+  .installLine,
+  .zeroInterestLine {
+    font-size: 1.2rem !important;
+  }
+
+  .becauseTagline {
+    font-size: 1.2rem !important;
+    top: 85% !important;
+    left: calc(-195% + 40px) !important;
+  }
+
+  .hablamosWrap {
+    top: 16% !important;
+    left: 86% !important;
+  }
+
+  .hablamosEspbutton {
+    font-size: 0.8rem !important;
+    padding: 10px 10px !important;
+  }
+
+  .heroManWrap {
+    width: 350px !important;
+    height: 490px !important;
+  }
+
+  .bbbAccreditedBadge,
+  .googleVerifiedBadge,
+  .googleFivestarBadge {
+    width: 200px !important;
+    height: 140px !important;
+  }
+
+  .bbbAccreditedBadge {
+    top: 360px !important;
+    right: 585px !important;
+  }
+
+  .googleVerifiedBadge {
+    top: 360px !important;
+    right: 789px !important;
+  }
+
+  .googleFivestarBadge {
+    top: 360px !important;
+    right: 380px !important;
+  }
+}
+
+
+/* ============================================
+   NEST HUB MAX (1280x800 landscape)
+   ============================================ */
+
+@media (orientation: landscape) and (width: 1280px) and (height: 800px) {
+  /* Scale hero section to fit landscape display */
+  .heroWrap {
+    width: 100%;
+    height: 100% !important;
+    }
+
+  /* Scale main title */
+  .welcomeTitle {
+    font-size: 1.8rem !important;
+    top: calc(13% + 6px) !important;
+    width: 70% !important;
+  }
+
+  /* Scale professional subtitle */
+  .professionalSubtitle {
+    font-size: 1.5rem !important;
+    top: 22% !important;
+    left: 2% !important;
+    max-width: 450px !important;
+  }
+
+  /* Scale install tagline */
+  .installTagline {
+    font-size: 2.3rem !important;
+    top: calc(12% + 2em) !important;
+    left: 62% !important;
+  }
+
+  .installLine,
+  .zeroInterestLine {
+    font-size: 1.5rem !important;
+  }
+
+  /* Scale desktop Because tagline */
+  .becauseTagline {
+    font-size: 1.5rem !important;
+    top: 85% !important;
+    left: 50% !important;
+    transform: translateX(-160%) !important;
+  }
+
+  /* Scale desktop Hablamos button */
+  .hablamosWrap {
+    top: calc(16% + 10px) !important;
+    left: 86% !important;
+  }
+
+  .hablamosEspbutton {
+    font-size: 1rem !important;
+    padding: 13px 13px !important;
+  }
+
+  /* Scale hero man */
+  .heroManWrap {
+    width: 450px !important;
+    height: 630px !important;
+  }
+
+  /* Scale and reposition badges */
+  .bbbAccreditedBadge,
+  .googleVerifiedBadge,
+  .googleFivestarBadge {
+    width: 260px !important;
+    height: 180px !important;
+  }
+
+  .bbbAccreditedBadge {
+    top: 460px !important;
+    right: 705px !important;
+  }
+
+  .googleVerifiedBadge {
+    top: 460px !important;
+    right: 971px !important;
+  }
+
+  .googleFivestarBadge {
+    top: 460px !important;
+    right: 440px !important;
+  }
+
+  /* Center and fill commercial background image */
+  .commercialImage {
+    object-fit: cover !important;
+    object-position: calc(50% + 25px) center !important;
+  }
+
+  .heroWrap {
+    width: 100% !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+}
+
+  /* ============================================
+     iPAD PRO (1366x1024 landscape) — MATCH HEADER BUTTON PADDING
+     ============================================ */
+
+  @media (orientation: landscape) and (width: 1366px) and (height: 1024px) {
+    .hablamosWrap {
+      left: calc(86.2%)  !important;
+    }
+
+    .hablamosEspbutton {
+      padding: 4px 8px !important;
+    }
+
+    .bbbAccreditedBadge {
+      right: 710px !important;
+    }
+
+    .googleVerifiedBadge {
+      right: 1014px !important;
+    }
+
+    .googleFivestarBadge {
+      right: 407px !important;
+    }
+
+    .becauseTagline {
+      white-space: normal !important;
+      line-height: 1.3 !important;
+      max-width: 570px !important;
+      left: calc(-305% + 620px) !important;
+      top: calc(90% - 200px) !important;
+      text-align: center !important;
+    }
+  }
+
+  /* ============================================
+     ASUS ZENBOOK FOLD (1280x853 landscape) — MATCH iPAD PRO STRUCTURE
+     ============================================ */
+
+  @media (orientation: landscape) and (width: 1280px) and (height: 853px) {
+    .heroWrap {
+      overflow: hidden !important;
+      max-width: 100vw !important;
+    }
+
+    .welcomeTitle {
+      top: calc(12% + 3px) !important;
+    }
+
+    .hablamosWrap {
+      left: calc(86.2%)  !important;
+      top: calc(20%) !important;
+    }
+
+    .hablamosEspbutton {
+      background: #095f91 !important;
+      color: #fff !important;
+      font-size: 1.25rem !important;
+      border-radius: 8px !important;
+      line-height: 1.6 !important;
+      font-family: 'Montserrat', Arial, sans-serif !important;
+      font-weight: bold !important;
+      border: none !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+      cursor: pointer !important;
+      letter-spacing: 0.01em !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s !important;
+      padding: 0px 0px !important;
+    }
+
+    .heroManWrap {
+      right: -20px !important;
+    }
+
+    .bbbAccreditedBadge {
+      top: 375px !important;
+      width: 270px !important;
+      height: 175.5px !important;
+      right: 680px !important;
+        }
+
+    .googleVerifiedBadge {
+      top: 375px !important;
+      width: 270px !important;
+      height: 171.9px !important;
+      right: 954px !important;
+          }
+
+    .googleFivestarBadge {
+      top: 375px !important;
+      width: 270px !important;
+      height: 176.4px !important;
+      right: 407px !important;
+    }
+
+    .becauseTagline {
+      white-space: normal !important;
+      line-height: 1.3 !important;
+      max-width: 570px !important;
+      left: calc(-305% + 620px) !important;
+      top: calc(90% - 200px) !important;
+      text-align: center !important;
+    }
+  }
+
+  /* ============================================
+     SURFACE PRO 7 (1368x912 landscape) — MATCH iPAD PRO STRUCTURE
+     ============================================ */
+
+  @media (orientation: landscape) and (width: 1368px) and (height: 912px) {
+    .heroWrap {
+      overflow: hidden !important;
+      max-width: 100vw !important;
+    }
+
+    .hablamosWrap {
+      left: calc(86.2%)  !important;
+    }
+
+    .hablamosEspbutton {
+      padding: 4px 8px !important;
+    }
+
+    .bbbAccreditedBadge {
+      top: 440px !important;
+      right: 710px !important;
+    }
+
+    .googleVerifiedBadge {
+      top: 440px !important;
+      right: 1014px !important;
+    }
+
+    .googleFivestarBadge {
+      top: 440px !important;
+      right: 407px !important;
+    }
+
+    .becauseTagline {
+      white-space: normal !important;
+      line-height: 1.3 !important;
+      max-width: 570px !important;
+      left: calc(-305% + 620px) !important;
+      top: calc(90% - 160px) !important;
+      text-align: center !important;
+    }
+  }
+
