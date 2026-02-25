@@ -77,6 +77,7 @@ export default function HomepageHeader() {
                 <Link href="/" className={styles.headermenuLink} data-label="NavHome">Home</Link>
                 <Link href="/about" className={styles.headermenuLink} data-label="NavAbout">About</Link>
                 <Link href="/services" className={styles.headermenuLink} data-label="NavServices">Services</Link>
+                <Link href="/projects" className={styles.headermenuLink} data-label="NavProjects">Projects</Link>
                 <Link href="/reviews" className={styles.headermenuLink} data-label="NavReviews">Reviews</Link>
                 <Link href="/contact" className={styles.headermenuLink} data-label="NavContact">Contact</Link>
               </nav>
@@ -125,6 +126,7 @@ export default function HomepageHeader() {
                 <Link href="/" className={styles.headermenuLink} data-label="NavHomeMobile">Home</Link>
                 <Link href="/about" className={styles.headermenuLink} data-label="NavAboutMobile">About</Link>
                 <Link href="/services" className={styles.headermenuLink} data-label="NavServicesMobile">Services</Link>
+                <Link href="/projects" className={styles.headermenuLink} data-label="NavProjectsMobile">Projects</Link>
                 <Link href="/reviews" className={styles.headermenuLink} data-label="NavReviewsMobile">Reviews</Link>
                 <Link href="/contact" className={styles.headermenuLink} data-label="NavContactMobile">Contact</Link>
               </nav>

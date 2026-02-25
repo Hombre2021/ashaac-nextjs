@@ -40,6 +40,7 @@ export default function HomepageFooter() {
           <div className={styles.footerLinksTitle} data-label="QuickLinksTitle">Quick Link</div>
           <Link href="/about" data-label="LinkAbout">About Us</Link>
           <Link href="/services" data-label="LinkServices">Services</Link>
+          <Link href="/projects" data-label="LinkProjects">Projects</Link>
           <Link href="/reviews" data-label="LinkReviews">Reviews</Link>
           <Link href="/contact" data-label="LinkContact">Contact Us</Link>
         </div>
