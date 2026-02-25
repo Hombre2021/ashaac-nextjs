@@ -1,12 +1,73 @@
+import type { Metadata } from "next";
 import HomepageHeader from "@/components/HomepageHeader";
 import AboutHero from "@/components/AboutHero";
 import HomepageFooter from "@/components/HomepageFooter";
 
 import ContentContainer from "@/components/ContentContainer";
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What areas do you serve?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We proudly serve West Jordan, Salt Lake County, and surrounding Utah communities.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What HVAC services do you provide?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We provide HVAC installation, furnace and AC replacement, mini-split and heat pump installation, diagnostics, repairs, and maintenance for residential and commercial systems.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you offer free estimates?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. We provide free estimates for new installations and replacements.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you offer financing?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. We offer financing options to help make HVAC installation more affordable.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How can I contact you?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Call or text 801-755-3040 or 801-512-7103, email contact@ashaac.com, or visit 4434 W 8790 S, West Jordan, Utah 84088.",
+      },
+    },
+  ],
+};
+
+export const metadata: Metadata = {
+  title: "HVAC FAQs",
+  description:
+    "Frequently asked questions about HVAC installation, repairs, maintenance, warranties, and service areas in West Jordan and Salt Lake County.",
+  alternates: {
+    canonical: "/faqs",
+  },
+};
+
 export default function FaqsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <HomepageHeader />
       <AboutHero title="FAQ’s" />
       <ContentContainer title="FAQ’s">

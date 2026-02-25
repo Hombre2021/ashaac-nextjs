@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import HomepageHeader from "@/components/HomepageHeader";
 import AboutHero from "@/components/AboutHero";
 import HomepageFooter from "@/components/HomepageFooter";
 import ContentContainer from "@/components/ContentContainer";
+
+export const metadata: Metadata = {
+  title: "Legal Policies and Customer Rights",
+  description:
+    "Review service agreements, maintenance terms, financing disclosure, website disclaimer, and customer rights from All Solutions Heating and Air Conditioning.",
+  alternates: {
+    canonical: "/legal-policies",
+  },
+};
 
 export default function LegalPoliciesPage() {
   return (

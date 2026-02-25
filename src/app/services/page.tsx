@@ -1,8 +1,18 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import HomepageHeader from "../../components/HomepageHeader";
 import ServicesHero from "../../components/ServicesHero";
 import ServicesContent from "../../components/ServicesContent";
 import HomepageFooter from "../../components/HomepageFooter";
+
+export const metadata: Metadata = {
+  title: "HVAC Services: Installation, Repair & Maintenance",
+  description:
+    "Explore our HVAC services in West Jordan and Salt Lake County: furnace and AC installation, heat pumps, mini-splits, repairs, and maintenance.",
+  alternates: {
+    canonical: "/services",
+  },
+};
 
 export default function ServicesPage() {
   return (
