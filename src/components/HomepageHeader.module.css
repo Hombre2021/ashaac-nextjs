@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: auto;
+  pointer-events: none;
   z-index: 110;
 }
 
@@ -61,6 +61,7 @@
   height: 48px;
   gap: 12px;
   position: relative;
+  pointer-events: auto;
 }
 
 .desktopOnly {
@@ -493,7 +494,7 @@
    667-932w × 320-430h, touch phones only
    ============================================ */
 
-@media (orientation: landscape) and (min-width: 667px) and (max-width: 932px) and (min-height: 320px) and (max-height: 430px) and (hover: none) and (pointer: coarse) {
+@media (orientation: landscape) and (min-width: 667px) and (max-width: 950px) and (min-height: 320px) and (max-height: 460px) and (hover: none) and (pointer: coarse) {
   .desktopOnly {
     display: none !important;
   }
@@ -1353,5 +1354,191 @@
     background: #0d4a70 !important;
     transform: translateY(-2px) scale(1.02) !important;
   }
+}
+
+/* ============================================
+   ANDROID PHONES LANDSCAPE (final override)
+   Ensures mobile header wins over tablet/desktop rules
+   ============================================ */
+
+@media (orientation: landscape) and (max-width: 1300px) and (max-height: 600px) and (hover: none) and (pointer: coarse) {
+  .desktopOnly {
+    display: none !important;
+  }
+
+  .mobileOnly {
+    display: flex !important;
+  }
+
+  .headermenuToggle {
+    top: 27px !important;
+    right: 14px !important;
+    padding: 4px 9px !important;
+    gap: 5px !important;
+    z-index: 10130 !important;
+  }
+
+  .mobileHeaderCallButton {
+    top: 27px !important;
+    font-size: 0.97rem !important;
+    min-height: 45px !important;
+    padding: 8px 12px !important;
+  }
+
+  .headermenuLine {
+    width: 24px !important;
+    height: 2.5px !important;
+  }
+
+  .headermenuLabel {
+    font-size: 0.8rem !important;
+  }
+
+  .headermenuNavMobile {
+    top: 84px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 84px) !important;
+    padding: 20px !important;
+    z-index: 10050 !important;
+  }
+
+  .headermenuLink {
+    font-size: 1.2rem !important;
+    padding: 12px 0 !important;
+  }
+
+  .van2ImageWrap {
+    left: 5px !important;
+    transform: none !important;
+    height: 60px !important;
+    width: 120px !important;
+    top: -1px !important;
+  }
+
+  .whitestripeImageWrap {
+    width: calc(100% - 20px) !important;
+    height: 60px !important;
+    max-height: 60px !important;
+    left: 10px !important;
+    right: 10px !important;
+  }
+
+  .whitestripeInner {
+    height: 48px !important;
+    padding-left: 20px !important;
+    padding-right: 70px !important;
+    gap: 12px !important;
+  }
+
+  .headerbuttonsDesktop {
+    display: none !important;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 980px) and (max-width: 1120px) and (min-height: 430px) and (max-height: 560px) {
+  .desktopOnly {
+    display: none !important;
+  }
+
+  .mobileOnly {
+    display: flex !important;
+  }
+
+  .headermenuToggle {
+    top: 27px !important;
+    right: 14px !important;
+    z-index: 10130 !important;
+  }
+
+  .mobileHeaderCallButton {
+    top: 27px !important;
+    font-size: 0.97rem !important;
+    min-height: 45px !important;
+    padding: 8px 12px !important;
+  }
+
+  .headermenuNavMobile {
+    top: 84px !important;
+    height: calc(100vh - 84px) !important;
+  }
+
+  .whitestripeImageWrap {
+    width: calc(100% - 20px) !important;
+    height: 60px !important;
+    left: 10px !important;
+    right: 10px !important;
+  }
+
+  .van2ImageWrap {
+    left: 5px !important;
+    width: 120px !important;
+    height: 60px !important;
+    top: -1px !important;
+  }
+}
+
+:global(body.android-landscape-phone) .desktopOnly {
+  display: none !important;
+}
+
+:global(body.android-landscape-phone) .mobileOnly {
+  display: flex !important;
+}
+
+:global(body.android-landscape-phone) .headerbuttonsDesktop {
+  display: none !important;
+}
+
+:global(body.android-landscape-phone) .headermenuToggle {
+  top: calc(27px + 11px) !important;
+  right: 14px !important;
+  z-index: 10130 !important;
+}
+
+:global(body.android-landscape-phone) .mobileHeaderCallButton {
+  top: calc(27px + 11px) !important;
+  font-size: calc(0.97rem + 2px) !important;
+  min-height: 45px !important;
+  padding: 8px 12px !important;
+}
+
+:global(body.android-landscape-phone) .headermenuLabel {
+  font-size: calc(0.8rem + 2px) !important;
+}
+
+:global(body.android-landscape-phone) .headermenuNavMobile {
+  top: 84px !important;
+  height: calc(100vh - 84px) !important;
+}
+
+:global(body.android-landscape-phone) .whitestripeImageWrap {
+  width: calc(100% - 20px) !important;
+  height: 60px !important;
+  left: 10px !important;
+  right: 10px !important;
+}
+
+:global(body.android-landscape-phone) .van2ImageWrap {
+  left: 5px !important;
+  width: 120px !important;
+  height: 60px !important;
+  top: -1px !important;
+}
+
+.forceHideDesktop {
+  display: none !important;
+}
+
+.forceShowMobile {
+  display: flex !important;
+}
+
+.forceLandscapeHamburger {
+  top: 27px !important;
+  right: 14px !important;
+  z-index: 10130 !important;
 }
 

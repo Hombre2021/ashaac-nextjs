@@ -6,10 +6,26 @@ import styles from './HomepageHero.module.css';
 
 export default function HomepageHero() {
   const [isMobile, setIsMobile] = useState(false);
+  const [isLandscapePhone, setIsLandscapePhone] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 1366 && window.matchMedia('(orientation: portrait)').matches);
+      const isPortraitMobile = window.innerWidth <= 1366 && window.matchMedia('(orientation: portrait)').matches;
+      const isLandscapePhone =
+        window.matchMedia('(orientation: landscape)').matches &&
+        window.innerHeight > 0 &&
+        window.innerWidth / window.innerHeight >= 1.8 &&
+        window.innerHeight <= 800;
+
+      setIsLandscapePhone(isLandscapePhone);
+
+      if (isLandscapePhone) {
+        document.body.classList.add('android-landscape-phone');
+      } else {
+        document.body.classList.remove('android-landscape-phone');
+      }
+
+      setIsMobile(isPortraitMobile || isLandscapePhone);
     };
 
     checkMobile();
@@ -17,6 +33,7 @@ export default function HomepageHero() {
 
     return () => {
       window.removeEventListener('resize', checkMobile);
+      document.body.classList.remove('android-landscape-phone');
     };
   }, []);
 
@@ -44,7 +61,7 @@ export default function HomepageHero() {
         Professional installation and top-quality repairs in West Jordan and Salt Lake County, Utah
       </div>
 
-      {!isMobile && (
+      {(!isMobile || isLandscapePhone) && (
         <div className={styles.hablamosWrap} data-label="HeroActionButtons">
           <button className={styles.hablamosEspbutton} data-label="SpanishButton">
             Hablamos Español

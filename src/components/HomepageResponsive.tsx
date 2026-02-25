@@ -53,10 +53,15 @@ export default function HomepageResponsive() {
 
   const isPortrait = viewport.height >= viewport.width && viewport.width > 0;
   const isPortraitMobile = isPortrait && viewport.width <= 768;
-  const isLandscapePhone = !isPortrait && viewport.width < 768;
+  const isLandscapePhone =
+    !isPortrait &&
+    viewport.width > 0 &&
+    viewport.height > 0 &&
+    viewport.height <= 800 &&
+    viewport.width / viewport.height >= 1.8;
 
-  const layout = isPortraitMobile ? "mobile" : "desktop";
-  const isFullDesktop = !isPortrait || (layout === "desktop" && viewport.width >= 1200);
+  const layout = isPortraitMobile || isLandscapePhone ? "mobile" : "desktop";
+  const isFullDesktop = layout === "desktop" && viewport.width >= 1200;
   const base = layout === "mobile" ? MOBILE_BASE : DESKTOP_BASE;
   const scaleMode: ScaleMode = layout === "mobile" ? "fit-width" : isLandscapePhone ? "fit-height" : "contain";
 

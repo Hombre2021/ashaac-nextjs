@@ -32,8 +32,6 @@ export const useDeviceDetection = (): DeviceDetection => {
       const width = window.innerWidth;
       const height = window.innerHeight;
 
-      console.log(`Device dimensions: ${width}x${height}`); // Debug log
-
       const isNestHub = width === 1024 && height === 600;
       const isNestHubMax = width === 1280 && height === 800;
       const isSurfaceDuo = width === 540 && height === 720;

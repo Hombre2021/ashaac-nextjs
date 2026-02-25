@@ -780,7 +780,7 @@
   667-932w × 320-430h, touch phones only
   ============================================ */
 
-@media (orientation: landscape) and (min-width: 667px) and (max-width: 932px) and (min-height: 320px) and (max-height: 430px) and (hover: none) and (pointer: coarse) {
+@media (orientation: landscape) and (min-width: 667px) and (max-width: 950px) and (min-height: 320px) and (max-height: 460px) and (hover: none) and (pointer: coarse) {
   .heroWrap {
     overflow: hidden !important;
     max-width: 100vw !important;
@@ -847,6 +847,66 @@
   }
 
   /* Increase hero man size by 50% */
+  .heroManWrap {
+    width: 167px !important;
+    height: 233px !important;
+  }
+}
+
+/* ============================================
+   SAMSUNG GALAXY S25-CLASS (landscape)
+   Override iPhone-shared landscape offsets for Android phones
+   ============================================ */
+
+@media (orientation: landscape) and (min-width: 900px) and (max-width: 950px) and (min-height: 390px) and (max-height: 460px) and (hover: none) and (pointer: coarse) {
+  .welcomeTitle {
+    font-size: 1.28rem !important;
+    top: 13% !important;
+  }
+
+  .installTagline {
+    top: calc(12% + 2.4em) !important;
+    left: 62% !important;
+  }
+
+  .becauseTagline {
+    top: 82% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: 520px !important;
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+
+  .bbbAccreditedBadge,
+  .googleVerifiedBadge,
+  .googleFivestarBadge {
+    top: 360px !important;
+  }
+
+  .bbbAccreditedBadge {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .googleVerifiedBadge {
+    left: calc(50% - 136px) !important;
+    right: auto !important;
+  }
+
+  .googleFivestarBadge {
+    left: calc(50% + 136px) !important;
+    right: auto !important;
+  }
+
+  .hablamosWrap {
+    top: 15% !important;
+    left: 84% !important;
+  }
+
   .heroManWrap {
     width: 167px !important;
     height: 233px !important;
@@ -1347,4 +1407,297 @@
       text-align: center !important;
     }
   }
+
+/* ============================================
+   ANDROID PHONES LANDSCAPE (final override)
+   Stabilizes hero composition on real Samsung landscape
+   ============================================ */
+
+@media (orientation: landscape) and (max-width: 1300px) and (max-height: 600px) and (hover: none) and (pointer: coarse) {
+  .heroWrap {
+    height: 100vh !important;
+    min-height: 500px !important;
+    overflow: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  .welcomeTitle {
+    font-size: 1.2rem !important;
+    line-height: 1.3 !important;
+    top: 14% !important;
+    width: 86% !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 0.9rem !important;
+    top: 30% !important;
+    left: 5% !important;
+    max-width: 54% !important;
+    width: 54% !important;
+    text-align: left !important;
+  }
+
+  .installTagline {
+    top: 38% !important;
+    left: 58% !important;
+    transform: translateX(-50%) !important;
+    font-size: 1.45rem !important;
+    width: auto !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .installLine,
+  .zeroInterestLine {
+    font-size: 1rem !important;
+  }
+
+  .becauseTaglineMobile {
+    top: 79% !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important;
+    max-width: 90% !important;
+    font-size: 0.88rem !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+  }
+
+  .badgeLayer {
+    top: 66% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+    z-index: 50 !important;
+  }
+
+  .badgeBase {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: 118px !important;
+    height: 77px !important;
+    transform: none !important;
+  }
+
+  .googleVerifiedBadge {
+    width: 118px !important;
+    height: 75px !important;
+  }
+
+  .heroManWrap {
+    width: 170px !important;
+    height: 238px !important;
+    right: -6px !important;
+    bottom: 0 !important;
+    opacity: 0.95 !important;
+  }
+
+  .hablamosWrap {
+    display: none !important;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 980px) and (max-width: 1120px) and (min-height: 430px) and (max-height: 560px) {
+  .heroWrap {
+    height: 100vh !important;
+    min-height: 480px !important;
+    overflow: hidden !important;
+  }
+
+  .welcomeTitle {
+    font-size: 1.22rem !important;
+    line-height: 1.3 !important;
+    top: 14% !important;
+    width: 86% !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 0.92rem !important;
+    top: 31% !important;
+    left: 5% !important;
+    max-width: 54% !important;
+    width: 54% !important;
+  }
+
+  .installTagline {
+    top: 39% !important;
+    left: 58% !important;
+    transform: translateX(-50%) !important;
+    font-size: 1.45rem !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .installLine,
+  .zeroInterestLine {
+    font-size: 1rem !important;
+  }
+
+  .becauseTaglineMobile {
+    top: 80% !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important;
+    max-width: 90% !important;
+    font-size: 0.88rem !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+  }
+
+  .badgeLayer {
+    top: 66% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    gap: 6px !important;
+  }
+
+  .badgeBase {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: 118px !important;
+    height: 77px !important;
+    transform: none !important;
+  }
+
+  .googleVerifiedBadge {
+    width: 118px !important;
+    height: 75px !important;
+  }
+
+  .heroManWrap {
+    width: 170px !important;
+    height: 238px !important;
+    right: -6px !important;
+    bottom: 0 !important;
+  }
+
+  .hablamosWrap {
+    display: none !important;
+  }
+}
+
+:global(body.android-landscape-phone) .heroWrap {
+  height: 100vh !important;
+  min-height: 480px !important;
+  overflow: hidden !important;
+}
+
+:global(body.android-landscape-phone) .welcomeTitle {
+  font-size: 1.22rem !important;
+  line-height: 1.3 !important;
+  top: calc(14% + 20px) !important;
+  width: 86% !important;
+}
+
+:global(body.android-landscape-phone) .professionalSubtitle {
+  font-size: 0.92rem !important;
+  top: calc(31% - 25px) !important;
+  left: 5% !important;
+  max-width: 54% !important;
+  width: 54% !important;
+}
+
+:global(body.android-landscape-phone) .installTagline {
+  top: calc(39% - 20px) !important;
+  left: 58% !important;
+  transform: translateX(-50%) !important;
+  font-size: 1.45rem !important;
+  white-space: normal !important;
+  text-align: center !important;
+}
+
+:global(body.android-landscape-phone) .installLine,
+:global(body.android-landscape-phone) .zeroInterestLine {
+  font-size: 1rem !important;
+}
+
+:global(body.android-landscape-phone) .becauseTaglineMobile {
+  top: 60% !important;
+  left: calc(-120%) !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: 90% !important;
+  max-width: 90% !important;
+  font-size: 0.90rem !important;
+  line-height: 1.55 !important;
+  text-align: center !important;
+}
+
+:global(body.android-landscape-phone) .badgeLayer {
+  top: 66% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 6px !important;
+  z-index: 60 !important;
+}
+
+:global(body.android-landscape-phone) .badgeBase {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
+  width: 118px !important;
+  height: 77px !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+:global(body.android-landscape-phone) .bbbAccreditedBadge,
+:global(body.android-landscape-phone) .googleVerifiedBadge,
+:global(body.android-landscape-phone) .googleFivestarBadge {
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
+  bottom: auto !important;
+  position: relative !important;
+}
+
+:global(body.android-landscape-phone) .googleVerifiedBadge {
+  width: 118px !important;
+  height: 75px !important;
+}
+
+:global(body.android-landscape-phone) .heroManWrap {
+  width: 196px !important;
+  height: 274px !important;
+  right: -6px !important;
+  bottom: 0 !important;
+}
+
+:global(body.android-landscape-phone) .hablamosWrap {
+  display: flex !important;
+  position: absolute !important;
+  left: auto !important;
+  right: 14px !important;
+  top: calc(27px + 11px + 45px + 15px + 20px) !important;
+  z-index: 10120 !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+:global(body.android-landscape-phone) .hablamosEspbutton {
+  font-size: calc(0.97rem + 2px) !important;
+  min-height: 45px !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  line-height: 1.2 !important;
+  white-space: normal !important;
+}
 

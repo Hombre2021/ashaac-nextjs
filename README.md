@@ -4,6 +4,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Default local startup workflow: run `powershell -ExecutionPolicy Bypass -File ..\dev.ps1` from the workspace root (`my-hvac-website`) for the most stable dev environment on Windows.
+
 First, run the development server:
 
 ```bash

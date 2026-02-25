@@ -8,6 +8,7 @@ import styles from "./HomepageHeader.module.css";
 
 export default function HomepageHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLandscapePhone, setIsLandscapePhone] = useState(false);
   const { nestHub, nestHubMax } = useDeviceDetection();
 
   useEffect(() => {
@@ -17,6 +18,32 @@ export default function HomepageHeader() {
       document.body.classList.remove('mobile-menu-open');
     }
   }, [menuOpen]);
+
+  useEffect(() => {
+    const detectLandscapePhone = () => {
+      const matchesPhoneLandscape =
+        window.matchMedia('(orientation: landscape)').matches &&
+        window.innerHeight > 0 &&
+        window.innerWidth / window.innerHeight >= 1.8 &&
+        window.innerHeight <= 800;
+
+      if (matchesPhoneLandscape) {
+        document.body.classList.add('android-landscape-phone');
+      } else {
+        document.body.classList.remove('android-landscape-phone');
+      }
+
+      setIsLandscapePhone(matchesPhoneLandscape);
+    };
+
+    detectLandscapePhone();
+    window.addEventListener('resize', detectLandscapePhone);
+
+    return () => {
+      window.removeEventListener('resize', detectLandscapePhone);
+      document.body.classList.remove('android-landscape-phone');
+    };
+  }, []);
 
   return (
     <div className={`${styles.whitestripeWrap} ${nestHubMax ? styles.whitestripeWrapNesthubMax : ''} w-full flex justify-center bg-transparent absolute left-0 z-20`}>
@@ -30,7 +57,7 @@ export default function HomepageHeader() {
           className={styles.whitestripeImage}
         />
       </div>
-      <Link href="/your-target-url">
+      <Link href="/">
         <div className={`${styles.van2ImageWrap} ${nestHub ? styles.van2ImageWrapNesthub : ''} ${nestHubMax ? styles.van2ImageWrapNesthubMax : ''}`}>
           <Image
             src="/images/homepage/van2.png"
@@ -45,7 +72,7 @@ export default function HomepageHeader() {
       <div className={styles.whitestripeOverlay}>
         <div className={styles.whitestripeContent}>
           <div className={styles.whitestripeInner}>
-            <div className={styles.desktopOnly}>
+            <div className={`${styles.desktopOnly} ${isLandscapePhone ? styles.forceHideDesktop : ''}`}>
               <nav className={`${styles.headermenuNavDesktop} ${nestHub ? styles.headermenuNavNesthub : ''} ${nestHubMax ? styles.headermenuNavNesthubMax : ''}`} data-label="MainNavigation">
                 <Link href="/" className={styles.headermenuLink} data-label="NavHome">Home</Link>
                 <Link href="/about" className={styles.headermenuLink} data-label="NavAbout">About</Link>
@@ -70,7 +97,7 @@ export default function HomepageHeader() {
                 </Link>
               </div>
             </div>
-            <div className={styles.mobileOnly}>
+            <div className={`${styles.mobileOnly} ${isLandscapePhone ? styles.forceShowMobile : ''}`}>
               <a
                 data-label="CallButtonMobileHeader"
                 href="tel:801-755-3040"
@@ -82,7 +109,7 @@ export default function HomepageHeader() {
 
               <button
                 data-label="HamburgerMenu"
-                className={styles.headermenuToggle}
+                className={`${styles.headermenuToggle} ${isLandscapePhone ? styles.forceLandscapeHamburger : ''}`}
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
                 aria-expanded={menuOpen}
