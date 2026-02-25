@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: "About Our HVAC Company",
   description:
     "Learn about All Solutions Heating and Air Conditioning, serving West Jordan and Salt Lake County with honest, affordable HVAC installation and repair services.",
+  keywords: [
+    "about HVAC company West Jordan",
+    "licensed HVAC contractor Utah",
+    "All Solutions Heating and Air Conditioning",
+  ],
   alternates: {
     canonical: "/about",
   },

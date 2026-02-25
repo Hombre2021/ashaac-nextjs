@@ -23,6 +23,16 @@ export const metadata: Metadata = {
   },
   description:
     "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County. Affordable, efficient, reliable service since 2012.",
+  keywords: [
+    "HVAC West Jordan",
+    "HVAC Salt Lake County",
+    "air conditioning repair West Jordan",
+    "furnace installation West Jordan",
+    "mini split installation Utah",
+    "heat pump installation Utah",
+    "HVAC contractor near me",
+    "emergency HVAC repair",
+  ],
   alternates: {
     canonical: "/",
   },

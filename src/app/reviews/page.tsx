@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: "HVAC Customer Reviews",
   description:
     "Read real customer reviews for All Solutions Heating and Air Conditioning in West Jordan and Salt Lake County.",
+  keywords: [
+    "HVAC reviews West Jordan",
+    "air conditioning company reviews Utah",
+    "furnace installation reviews West Jordan",
+  ],
   alternates: {
     canonical: "/reviews",
   },

@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   title: "HVAC Services: Installation, Repair & Maintenance",
   description:
     "Explore our HVAC services in West Jordan and Salt Lake County: furnace and AC installation, heat pumps, mini-splits, repairs, and maintenance.",
+  keywords: [
+    "HVAC services West Jordan",
+    "AC installation West Jordan",
+    "furnace installation Salt Lake County",
+    "HVAC maintenance Utah",
+    "mini split services West Jordan",
+    "heat pump repair Salt Lake County",
+  ],
   alternates: {
     canonical: "/services",
   },

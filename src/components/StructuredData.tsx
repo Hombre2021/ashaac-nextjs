@@ -19,9 +19,56 @@ const localBusinessSchema = {
   },
   areaServed: [
     { "@type": "City", name: "West Jordan" },
+    { "@type": "City", name: "South Jordan" },
+    { "@type": "City", name: "Sandy" },
+    { "@type": "City", name: "Murray" },
+    { "@type": "City", name: "Midvale" },
+    { "@type": "City", name: "Taylorsville" },
+    { "@type": "City", name: "Draper" },
     { "@type": "City", name: "Salt Lake City" },
     { "@type": "AdministrativeArea", name: "Salt Lake County" },
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "HVAC Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "HVAC Installation",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Air Conditioning Repair",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Furnace Installation and Repair",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Mini-Split Installation",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Heat Pump Installation and Repair",
+        },
+      },
+    ],
+  },
   sameAs: [
     "https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709",
   ],

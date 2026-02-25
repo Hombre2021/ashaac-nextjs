@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "Contact HVAC Experts in West Jordan",
   description:
     "Contact All Solutions Heating and Air Conditioning for HVAC installation, repairs, and free estimates in West Jordan and Salt Lake County.",
+  keywords: [
+    "HVAC contact West Jordan",
+    "schedule HVAC estimate",
+    "HVAC company Salt Lake County",
+    "call HVAC technician West Jordan",
+  ],
   alternates: {
     canonical: "/contact",
   },
