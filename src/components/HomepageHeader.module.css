@@ -640,8 +640,8 @@
 
   .whitestripeInner {
     max-width: 1920px;
-    padding-left: 395px;
-    padding-right: 64px;
+    padding-left: 360px;
+    padding-right: 120px;
     height: 90px;
     gap: 24px;
     margin-top: -669px;
@@ -656,9 +656,11 @@
 
   .headermenuNavDesktop {
     display: flex;
-    gap: 24px;
+    gap: 26px;
     align-items: center; /* controls vertical alignment */
+    flex-wrap: nowrap;
     padding-top: 10px;   /* ← adjust this number to lower the menu */
+    margin-left: 55px;
   }
 
   .headermenuLink {
@@ -666,22 +668,24 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     padding: 0;
     border-bottom: none;
+    white-space: nowrap;
   }
 
   .headerbuttonsDesktop {
     display: flex !important;
-    gap: 24px;
+    gap: 40px;
     flex: .7 .7 auto;
-    margin-left: 8px;
+    margin-left: 20px;
+    justify-content: flex-end;
   }
 
   .headerbuttonsButton {
     background: #095f91;
     color: #fff;
     font-size: 1.25rem;
-    padding: 18px 18px;
+    padding: 10px 30px;
     border-radius: 8px;
-    line-height: 1.6;
+    line-height: 1.2;
     text-decoration: none;
     font-family: 'Montserrat', Arial, sans-serif;
     font-weight: bold;
@@ -689,8 +693,24 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     cursor: pointer;
     letter-spacing: 0.01em;
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+
+  .headerbuttonsButton .callButtonTop,
+  .headerbuttonsButton .callButtonBottom,
+  .headerbuttonsButton .estimateButtonTop,
+  .headerbuttonsButton .estimateButtonBottom,
+  .headerbuttonsButton .financingButtonTop,
+  .headerbuttonsButton .financingButtonBottom {
+    display: block;
+    white-space: nowrap;
+    text-align: center;
   }
 
   .headerbuttonsButton:hover {

@@ -83,10 +83,12 @@ export default function HomepageHeader() {
               </nav>
               <div className={`${styles.headerbuttonsDesktop} ${nestHub ? styles.headerbuttonsDesktopNesthub : ''} ${nestHubMax ? styles.headerbuttonsDesktopNesthubMax : ''}`}>
                 <a data-label="CallButton" href="tel:801-755-3040" className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}>
-                  <span className={styles.callButtonTop}>Call/text now</span>{" "}<span className={styles.callButtonBottom}>801-755-3040</span>
+                  <span className={styles.callButtonTop}>Text/Call now</span>
+                  <span className={styles.callButtonBottom}>801-755-3040</span>
                 </a>
                 <a data-label="EstimateButton" href="https://calendly.com/ashaacutah/30min?month=2026-02&_gl=1%2A1owpxfg%2A_ga%2AODYzMjgyOTI3LjE3NTIyODkwNzY.%2A_ga_WNKN6Z7Y46%2AczE3NzA2ODU3ODIkbzU3JGcxJHQxNzcwNjg1NzgyJGo2MCRsMCRoMA.." target="_blank" rel="noopener noreferrer" className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}>
-                  <span className={styles.estimateButtonTop}>Request a</span>{" "}<span className={styles.estimateButtonBottom}>free Estimate</span>
+                  <span className={styles.estimateButtonTop}>Request a</span>
+                  <span className={styles.estimateButtonBottom}>free Estimate</span>
                 </a>
                 <Link
                   data-label="FinancingButton"
@@ -94,7 +96,8 @@ export default function HomepageHeader() {
                   className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}
                   aria-label="Apply for financing"
                 >
-                  Apply For Financing
+                  <span className={styles.financingButtonTop}>Apply for</span>
+                  <span className={styles.financingButtonBottom}>Financing</span>
                 </Link>
               </div>
             </div>
