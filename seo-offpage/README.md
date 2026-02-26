@@ -6,6 +6,7 @@ This folder contains publish-ready assets for local SEO execution:
 - CITATION_TRACKER_TEMPLATE.csv
 - REVIEW_RESPONSE_SOP.md
 - BACKLINK_OUTREACH_TEMPLATES.md
+- DIY_HELP_REVIEW_BACKLINK_FLYWHEEL.md
 - MONTHLY_SEO_SCORECARD_TEMPLATE.csv
 - MONTHLY_SCORECARD_GUIDE.md
 - WEEKLY_SEO_KPI_ROLLUP_TEMPLATE.csv
@@ -17,7 +18,8 @@ This folder contains publish-ready assets for local SEO execution:
 1. Start with OFFPAGE_EXECUTION_CHECKLIST.md
 2. Track listings in CITATION_TRACKER_TEMPLATE.csv
 3. Use REVIEW_RESPONSE_SOP.md daily for review handling
-4. Run weekly outreach using BACKLINK_OUTREACH_TEMPLATES.md
-5. Track weekly metrics in WEEKLY_SEO_KPI_ROLLUP_TEMPLATE.csv
-6. Map weekly totals to monthly using WEEKLY_TO_MONTHLY_MAPPING_GUIDE.md
-7. Close each month with MONTHLY_SEO_SCORECARD_TEMPLATE.csv or MONTHLY_SEO_SCORECARD_BASELINE.csv
+4. Use DIY_HELP_REVIEW_BACKLINK_FLYWHEEL.md when launching DIY videos and remote help
+5. Run weekly outreach using BACKLINK_OUTREACH_TEMPLATES.md
+6. Track weekly metrics in WEEKLY_SEO_KPI_ROLLUP_TEMPLATE.csv
+7. Map weekly totals to monthly using WEEKLY_TO_MONTHLY_MAPPING_GUIDE.md
+8. Close each month with MONTHLY_SEO_SCORECARD_TEMPLATE.csv or MONTHLY_SEO_SCORECARD_BASELINE.csv

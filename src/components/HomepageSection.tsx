@@ -13,7 +13,6 @@ export default function HomepageSection() {
             fill
             sizes="(max-width: 480px) 100vw, (max-width: 1024px) 80vw, 50vw"
             className={styles.wjChineseAcImage}
-            priority
           />
                  </div>
         <div className={styles.hvacText}>

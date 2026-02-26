@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useResponsiveFlags } from '../hooks/useResponsiveFlags';
 import { BREAKPOINTS_PX } from '../constants/responsive';
 import styles from './HomepageHero.module.css';
@@ -17,7 +18,7 @@ export default function HomepageHero() {
         src="/images/homepage/commercial.jpg"
         alt="Commercial Background"
         fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1920px"
+        sizes="100vw"
         className={styles.commercialImage}
         priority
       />
@@ -28,7 +29,9 @@ export default function HomepageHero() {
 
       <div className={styles.installTagline}>
         <div className={styles.installLine}>Install a complete HVAC system.</div>
-        <div className={styles.zeroInterestLine}>0% interest for 24 months!</div>
+        <Link href="/financing" className={styles.zeroInterestLink} aria-label="Learn about 0% financing options">
+          <span className={styles.zeroInterestLine}>0% interest for 24 months!</span>
+        </Link>
       </div>
 
       <div className={styles.professionalSubtitle} data-label="HeroSubtitle">
@@ -106,7 +109,6 @@ export default function HomepageHero() {
           fill
           sizes="(max-width: 480px) 100vw, (max-width: 1024px) 80vw, 60vw"
           className={styles.heroManImage}
-          priority
         />
 
         {isMobileRender ? (

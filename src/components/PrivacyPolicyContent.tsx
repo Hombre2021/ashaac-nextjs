@@ -7,7 +7,7 @@ export default function PrivacyPolicyContent() {
       <div className={`${sharedStyles.contentBase} ${styles.privacyText}`}>
         <h1 style={{ textAlign: "center", fontSize: 32, marginBottom: 32 }}>Privacy Policy</h1>
         <p><strong>All Solutions Heating and Air Conditioning LLC</strong><br />
-          4434 W 8790 S, West Jordan, Utah 84088<br />
+          Service Area: West Jordan and Salt Lake County, Utah<br />
           <strong>Last updated: January 2026</strong></p>
         <h2>1. Introduction</h2>
         <p>All Solutions Heating and Air Conditioning LLC (“we,” “our,” or “us”) respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, store, and safeguard your information when you visit our website, request service, or communicate with our team.<br />
@@ -121,8 +121,7 @@ export default function PrivacyPolicyContent() {
         <h2>13. Contact Us</h2>
         <p>If you have questions about this Privacy Policy or how your information is handled, contact us:<br />
           <strong>All Solutions Heating and Air Conditioning LLC</strong><br />
-          4434 W 8790 S<br />
-          West Jordan, Utah 84088<br />
+          Service Area: West Jordan and Salt Lake County, Utah<br />
           Email: <a href="mailto:contact@ashaac.com">contact@ashaac.com</a><br />
           Phone: <a href="tel:8017553040">801‑755‑3040</a> or <a href="tel:8015127103">801‑512‑7103</a></p>
       </div>

@@ -59,7 +59,7 @@ export default function HomepageFooter() {
           <a href="tel:801-512-7103" data-label="Phone1">801-512-7103</a>
           <a href="tel:801-755-3040" data-label="Phone2">801-755-3040</a>
           <a href="mailto:ashaacutah@gmail.com" data-label="EmailLink">ashaacutah@gmail.com</a>
-          <div data-label="Address">4434 W 8790 S West Jordan,<br />Utah</div>
+          <div data-label="Address">Serving West Jordan &amp; Salt Lake County,<br />Utah</div>
         </div>
       </div>
       <div className={styles.footerCopyright}>

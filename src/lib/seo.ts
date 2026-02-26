@@ -11,15 +11,13 @@ export const secondaryPhone = "+1-801-512-7103";
 export const businessEmail = "contact@ashaac.com";
 
 export const businessAddress = {
-  streetAddress: "4434 W 8790 S",
   addressLocality: "West Jordan",
   addressRegion: "UT",
-  postalCode: "84088",
   addressCountry: "US",
 };
 
 export const businessMapUrl =
-  "https://www.google.com/maps/search/?api=1&query=4434%20W%208790%20S%2C%20West%20Jordan%2C%20UT%2084088";
+  "https://www.google.com/maps/search/?api=1&query=West%20Jordan%2C%20Utah";
 
 export const googleBusinessProfileUrl =
   "https://www.google.com/search?q=All+Solutions+Heating+And+Air+Conditioning";

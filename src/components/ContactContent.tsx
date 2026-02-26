@@ -8,14 +8,14 @@ export default function ContactContent() {
       <ContactButtons phoneAriaLabel="Text or call 801-755-3040 or 801-512-7103 from Contact page" />
 
       <div className={styles.mapCard}>
-        <h2 className={styles.mapTitle}>Find Us in West Jordan</h2>
+        <h2 className={styles.mapTitle}>Service Area Map</h2>
         <p className={styles.mapText}>
-          We serve West Jordan and surrounding Salt Lake County cities. Use the map below for directions.
+          We serve West Jordan and surrounding Salt Lake County cities. Use the map below to view our local service coverage area.
         </p>
         <div className={styles.mapWrap}>
           <iframe
-            title="All Solutions Heating and Air Conditioning location map"
-            src="https://www.google.com/maps?q=4434%20W%208790%20S%20West%20Jordan%20UT%2084088&output=embed"
+            title="All Solutions Heating and Air Conditioning service area map"
+            src="https://www.google.com/maps?q=West%20Jordan%20Utah&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0 }}

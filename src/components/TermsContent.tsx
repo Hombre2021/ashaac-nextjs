@@ -97,8 +97,7 @@ export default function TermsContent() {
         <h2>14. Contact Information</h2>
         <p>For questions about these Terms & Conditions, contact us:<br />
         <strong>All Solutions Heating and Air Conditioning LLC</strong><br />
-        4434 W 8790 S<br />
-        West Jordan, Utah 84088<br />
+        Service Area: West Jordan and Salt Lake County, Utah<br />
         Email: <a href="mailto:contact@ashaac.com">contact@ashaac.com</a><br />
         Phone: <a href="tel:8017553040">801‑755‑3040</a> or <a href="tel:8015127103">801‑512‑7103</a></p>
       </div>

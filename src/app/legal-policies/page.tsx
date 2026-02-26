@@ -98,7 +98,7 @@ export default function LegalPoliciesPage() {
           <li><strong>The Right to Ask Questions</strong><br />We will always explain your options and help you make informed decisions.</li>
         </ol>
         <h3>Contact Information</h3>
-        <p>All Solutions Heating and Air Conditioning LLC<br />4434 W 8790 S<br />West Jordan, Utah 84088<br />Email: <a href="mailto:contact@ashaac.com">contact@ashaac.com</a><br />Phone: <a href="tel:8017553040">801‑755‑3040</a> or <a href="tel:8015127103">801‑512‑7103</a></p>
+        <p>All Solutions Heating and Air Conditioning LLC<br />Service Area: West Jordan and Salt Lake County, Utah<br />Email: <a href="mailto:contact@ashaac.com">contact@ashaac.com</a><br />Phone: <a href="tel:8017553040">801‑755‑3040</a> or <a href="tel:8015127103">801‑512‑7103</a></p>
       </ContentContainer>
       <HomepageFooter />
     </>

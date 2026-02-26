@@ -32,7 +32,6 @@ export default function HomepageHeader() {
           alt="White stripe"
           fill
           sizes="(max-width: 480px) 95vw, (max-width: 1024px) 90vw, 80vw"
-          priority
           className={styles.whitestripeImage}
         />
       </div>
@@ -44,7 +43,6 @@ export default function HomepageHeader() {
             fill
             sizes="(max-width: 480px) 120px, (max-width: 1024px) 160px, 220px"
             className={styles.van2Image}
-            priority
           />
         </div>
       </Link>

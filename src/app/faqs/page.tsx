@@ -46,7 +46,7 @@ const faqSchema = {
       name: "How can I contact you?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Call or text 801-755-3040 or 801-512-7103, email contact@ashaac.com, or visit 4434 W 8790 S, West Jordan, Utah 84088.",
+        text: "Call or text 801-755-3040 or 801-512-7103, email contact@ashaac.com, or request service in West Jordan and Salt Lake County, Utah.",
       },
     },
   ],
@@ -130,7 +130,7 @@ export default function FaqsPage() {
         </ul>
         <p>Payment is due upon completion unless otherwise arranged.</p>
         <h2>13. How can I contact you?</h2>
-        <p>You can reach us anytime:<br />- Phone: 801‑755‑3040 or 801‑512‑7103<br />- Email: contact@ashaac.com<br />- Address: 4434 W 8790 S, West Jordan, Utah 84088</p>
+        <p>You can reach us anytime:<br />- Phone: 801‑755‑3040 or 801‑512‑7103<br />- Email: contact@ashaac.com<br />- Service Area: West Jordan and Salt Lake County, Utah</p>
       </ContentContainer>
       <HomepageFooter />
     </>

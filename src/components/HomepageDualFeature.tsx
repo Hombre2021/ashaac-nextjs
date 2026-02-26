@@ -13,7 +13,6 @@ export default function HomepageDualFeature() {
               fill
               sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 50vw"
               className={styles.doubleFurnaceWestJordanImage}
-              priority
             />
           </div>
           <div className={styles.featureDescription}>
@@ -28,7 +27,6 @@ export default function HomepageDualFeature() {
               fill
               sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 50vw"
               className={styles.doubleAcCondenserImage}
-              priority
             />
           </div>
           <div className={styles.featureDescription}>
