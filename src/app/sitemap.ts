@@ -12,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/projects", priority: 0.85, changeFrequency: "weekly" },
     { path: "/reviews", priority: 0.8, changeFrequency: "weekly" },
     { path: "/emergency-hvac-repair", priority: 0.9, changeFrequency: "weekly" },
-    { path: "/diy-help-center", priority: 0.75, changeFrequency: "weekly" },
     { path: "/contact", priority: 0.9, changeFrequency: "monthly" },
     { path: "/financing", priority: 0.8, changeFrequency: "monthly" },
     { path: "/faqs", priority: 0.7, changeFrequency: "monthly" },

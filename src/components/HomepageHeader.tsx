@@ -59,7 +59,6 @@ export default function HomepageHeader() {
                 <Link href="/services" className={styles.headermenuLink} data-label="NavServices">Services</Link>
                 <Link href="/projects" className={styles.headermenuLink} data-label="NavProjects">Projects</Link>
                 <Link href="/reviews" className={styles.headermenuLink} data-label="NavReviews">Reviews</Link>
-                <Link href="/diy-help-center" className={styles.headermenuLink} data-label="NavDIYHelp">DIY Help</Link>
                 <Link href="/contact" className={styles.headermenuLink} data-label="NavContact">Contact</Link>
               </nav>
               <div className={`${styles.headerbuttonsDesktop} ${nestHub ? styles.headerbuttonsDesktopNesthub : ''} ${nestHubMax ? styles.headerbuttonsDesktopNesthubMax : ''}`}>
@@ -131,7 +130,6 @@ export default function HomepageHeader() {
                 <Link href="/services" className={styles.headermenuLink} data-label="NavServicesMobile">Services</Link>
                 <Link href="/projects" className={styles.headermenuLink} data-label="NavProjectsMobile">Projects</Link>
                 <Link href="/reviews" className={styles.headermenuLink} data-label="NavReviewsMobile">Reviews</Link>
-                <Link href="/diy-help-center" className={styles.headermenuLink} data-label="NavDIYHelpMobile">DIY Help</Link>
                 <Link href="/contact" className={styles.headermenuLink} data-label="NavContactMobile">Contact</Link>
               </nav>
             </div>
