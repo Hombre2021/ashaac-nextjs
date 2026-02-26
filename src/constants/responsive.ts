@@ -79,9 +79,9 @@ export const isLandscapeViewport = (width: number, height: number) =>
 
 export const isLandscapePhoneViewport = (width: number, height: number) =>
   isLandscapeViewport(width, height) &&
-  width <= BREAKPOINTS_PX.MOBILE_LANDSCAPE_MAX &&
+  width <= 950 &&
   width / height >= 1.8 &&
-  height <= 800;
+  height <= 560;
 
 export const isPortraitPhoneViewport = (
   width: number,
