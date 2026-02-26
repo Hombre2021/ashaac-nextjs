@@ -46,6 +46,22 @@ Detailed rules live in `RESPONSIVE_FAMILY_RULES.md`.
 
 For production release readiness, follow `VERCEL_DEPLOY_CHECKLIST.md`.
 
+## Analytics Setup (GA4 + GTM)
+
+Set these environment variables in Vercel Project Settings -> Environment Variables:
+
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX`
+- `NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX`
+
+Notes:
+
+- If both GA4 and GTM are set, direct GA4 pageview is disabled in code to avoid duplicate pageviews.
+- Conversion events are tracked globally for:
+	- `call_click` (tel links)
+	- `book_estimate_click` (Calendly links)
+	- `financing_click` (`/financing` links)
+	- `form_submit` (form submissions)
+
 First, run the development server:
 
 ```bash

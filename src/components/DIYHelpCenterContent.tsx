@@ -121,7 +121,7 @@ export default function DIYHelpCenterContent() {
       <div className={styles.panel}>
         <h2>Ask an Online Question</h2>
         <p>Send your HVAC question and we’ll respond through your preferred channel.</p>
-        <form className={styles.form} onSubmit={handleQuestionSubmit}>
+        <form name="diy_question_form" className={styles.form} onSubmit={handleQuestionSubmit}>
           <input name="name" type="text" placeholder="Your name" required />
           <input name="email" type="email" placeholder="Your email" required />
           <input name="city" type="text" placeholder="City" required />
@@ -140,7 +140,7 @@ export default function DIYHelpCenterContent() {
       <div className={styles.panel}>
         <h2>Request Live Help</h2>
         <p>Need more direct support? Request a live video help session and we’ll follow up with scheduling details.</p>
-        <form className={styles.form} onSubmit={handleLiveHelpSubmit}>
+        <form name="diy_live_help_form" className={styles.form} onSubmit={handleLiveHelpSubmit}>
           <input name="name" type="text" placeholder="Your name" required />
           <input name="email" type="email" placeholder="Your email" required />
           <input name="phone" type="tel" placeholder="Your phone number" required />
