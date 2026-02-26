@@ -119,3 +119,21 @@ body {
     touch-action: pan-y;
   }
 }
+
+@media (orientation: portrait) and (max-width: 1366px) {
+  .appRoot p,
+  .appRoot li {
+    font-size: calc(1em * 1.25) !important;
+    line-height: 1.7 !important;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .appRoot section p,
+  .appRoot section li {
+    max-width: min(92vw, 72ch);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

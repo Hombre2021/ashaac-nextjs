@@ -6,6 +6,46 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 Default local startup workflow: run `powershell -ExecutionPolicy Bypass -File ..\dev.ps1` from the workspace root (`my-hvac-website`) for the most stable dev environment on Windows.
 
+If Copilot or local build state starts behaving unexpectedly, use the recovery guide in `COPILOT_HEALTH_RUNBOOK.md` and run `npm run copilot:status` first.
+
+For local SEO publishing and outreach operations, use the off-page execution toolkit in `seo-offpage/README.md`.
+
+For mobile rendering QA with Responsively App:
+
+1. Start dev server: `npm run dev`
+2. In a second terminal, launch Responsively on localhost: `npm run dev:responsively`
+3. Use device presets in Responsively to validate alignment and spacing fixes before commit.
+
+## Responsive PR Checklist
+
+Before opening a PR with responsive/layout changes:
+
+1. Confirm target device family first (`MOBILE-PORTRAIT`, `MOBILE-LANDSCAPE`, `TABLET-LANDSCAPE`, `DESKTOP`).
+2. Update breakpoints only in `src/constants/responsive.ts` (single source of truth).
+3. Prefer family media-query blocks over exact device-size exceptions.
+4. If a device exception is required, keep it minimal and place it under `[DEVICE EXCEPTION]` in CSS.
+5. Check for duplicate selectors/media-query blocks before adding rules.
+6. Ensure mobile hamburger behavior stays phone-family only; tablet/desktop keep white-stripe menu.
+7. Run validation:
+	- `npm run type-check`
+	- `npm run lint`
+8. Verify in Responsively with at least one viewport per family:
+	- iPhone 12 Pro (mobile portrait)
+	- Galaxy landscape-class viewport (mobile landscape)
+	- iPad class portrait (tablet portrait)
+	- iPad class landscape (tablet landscape)
+	- 1280+ desktop viewport
+
+Detailed rules live in `RESPONSIVE_FAMILY_RULES.md`.
+
+## PR Template Usage
+
+- Use `.github/PULL_REQUEST_TEMPLATE.md` for normal feature, refactor, responsive, and content changes.
+- Use `.github/PULL_REQUEST_TEMPLATE_HOTFIX.md` only for urgent production fixes that must stay minimal and targeted.
+- If a hotfix grows beyond a narrow fix, switch back to the standard template.
+
+For production release readiness, follow `VERCEL_DEPLOY_CHECKLIST.md`.
+
 First, run the development server:
 
 ```bash

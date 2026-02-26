@@ -9,7 +9,7 @@
  * Breakpoint Strategy:
  * Mobile Portrait:  max-width: 479px | orientation: portrait
  * Mobile Landscape: max-width: 767px | orientation: landscape
- * Tablet Portrait:  480px - 1024px   | orientation: portrait
+ * Tablet Portrait:  480px - 1023px   | orientation: portrait
  * Tablet Landscape: 768px - 1199px   | orientation: landscape
  * Desktop:          min-width: 1200px (no media query needed)
  */
@@ -50,4 +50,75 @@ export const ASPECT_RATIOS = {
   IMAGE_CARD: '4 / 3',
   SQUARE: '1 / 1',
   PORTRAIT: '3 / 4',
+};
+
+const toPx = (value: string) => parseInt(value, 10);
+
+export const BREAKPOINTS_PX = {
+  MOBILE_PORTRAIT_MAX: toPx(RESPONSIVE_BREAKPOINTS.MOBILE_PORTRAIT_MAX),
+  MOBILE_LANDSCAPE_MAX: toPx(RESPONSIVE_BREAKPOINTS.MOBILE_LANDSCAPE_MAX),
+  TABLET_PORTRAIT_MIN: toPx(RESPONSIVE_BREAKPOINTS.TABLET_PORTRAIT_MIN),
+  TABLET_PORTRAIT_MAX: toPx(RESPONSIVE_BREAKPOINTS.TABLET_PORTRAIT_MAX),
+  TABLET_LANDSCAPE_MIN: toPx(RESPONSIVE_BREAKPOINTS.TABLET_LANDSCAPE_MIN),
+  TABLET_LANDSCAPE_MAX: toPx(RESPONSIVE_BREAKPOINTS.TABLET_LANDSCAPE_MAX),
+  DESKTOP_MIN: toPx(RESPONSIVE_BREAKPOINTS.DESKTOP_MIN),
+} as const;
+
+export type DeviceFamily =
+  | 'mobile-portrait'
+  | 'mobile-landscape'
+  | 'tablet-portrait'
+  | 'tablet-landscape'
+  | 'desktop';
+
+export const isPortraitViewport = (width: number, height: number) =>
+  width > 0 && height > 0 && height >= width;
+
+export const isLandscapeViewport = (width: number, height: number) =>
+  width > 0 && height > 0 && width > height;
+
+export const isLandscapePhoneViewport = (width: number, height: number) =>
+  isLandscapeViewport(width, height) &&
+  width <= BREAKPOINTS_PX.MOBILE_LANDSCAPE_MAX &&
+  width / height >= 1.8 &&
+  height <= 800;
+
+export const isPortraitPhoneViewport = (
+  width: number,
+  height: number,
+  maxWidth: number = BREAKPOINTS_PX.MOBILE_LANDSCAPE_MAX
+) => isPortraitViewport(width, height) && width <= maxWidth;
+
+export const isCompactLaptopViewport = (width: number, height: number) =>
+  width >= 1280 && width <= 1500 && height >= 700;
+
+export const getDeviceFamily = (width: number, height: number): DeviceFamily => {
+  if (isLandscapePhoneViewport(width, height)) {
+    return 'mobile-landscape';
+  }
+
+  if (
+    isPortraitViewport(width, height) &&
+    width <= BREAKPOINTS_PX.MOBILE_PORTRAIT_MAX
+  ) {
+    return 'mobile-portrait';
+  }
+
+  if (
+    isPortraitViewport(width, height) &&
+    width >= BREAKPOINTS_PX.TABLET_PORTRAIT_MIN &&
+    width <= BREAKPOINTS_PX.TABLET_PORTRAIT_MAX
+  ) {
+    return 'tablet-portrait';
+  }
+
+  if (
+    isLandscapeViewport(width, height) &&
+    width >= BREAKPOINTS_PX.TABLET_LANDSCAPE_MIN &&
+    width <= BREAKPOINTS_PX.TABLET_LANDSCAPE_MAX
+  ) {
+    return 'tablet-landscape';
+  }
+
+  return 'desktop';
 };

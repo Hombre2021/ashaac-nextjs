@@ -1,103 +1,15 @@
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com").replace(/\/$/, "");
-
-const localBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "HVACBusiness",
-  "@id": `${siteUrl}/#business`,
-  name: "All Solutions Heating and Air Conditioning",
-  url: siteUrl,
-  telephone: "+1-801-755-3040",
-  email: "contact@ashaac.com",
-  image: `${siteUrl}/images/homepage/van2.png`,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "4434 W 8790 S",
-    addressLocality: "West Jordan",
-    addressRegion: "UT",
-    postalCode: "84088",
-    addressCountry: "US",
-  },
-  areaServed: [
-    { "@type": "City", name: "West Jordan" },
-    { "@type": "City", name: "South Jordan" },
-    { "@type": "City", name: "Sandy" },
-    { "@type": "City", name: "Murray" },
-    { "@type": "City", name: "Midvale" },
-    { "@type": "City", name: "Taylorsville" },
-    { "@type": "City", name: "Draper" },
-    { "@type": "City", name: "Salt Lake City" },
-    { "@type": "AdministrativeArea", name: "Salt Lake County" },
-  ],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "HVAC Services",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "HVAC Installation",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Air Conditioning Repair",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Furnace Installation and Repair",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Mini-Split Installation",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Heat Pump Installation and Repair",
-        },
-      },
-    ],
-  },
-  sameAs: [
-    "https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709",
-  ],
-  priceRange: "$$",
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${siteUrl}/#website`,
-  url: siteUrl,
-  name: "All Solutions Heating and Air Conditioning",
-  inLanguage: "en-US",
-  publisher: {
-    "@id": `${siteUrl}/#business`,
-  },
-};
+import { buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from "@/lib/seo";
 
 export default function StructuredData() {
+  const schemaGraph = {
+    "@context": "https://schema.org",
+    "@graph": [buildLocalBusinessSchema(), buildOrganizationSchema(), buildWebsiteSchema()],
+  };
+
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+    />
   );
 }

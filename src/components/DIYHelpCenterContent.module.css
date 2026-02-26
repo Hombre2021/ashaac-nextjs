@@ -1,0 +1,100 @@
+.pageSection {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.introCard,
+.panel {
+  background: #ffffff;
+  border: 1px solid #d9e1ee;
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.introCard h1 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+}
+
+.introCard p,
+.panel p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.panel h2 {
+  margin: 0 0 10px;
+  font-size: 1.55rem;
+}
+
+.videoGrid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.videoCard {
+  border: 1px solid #d8e6f5;
+  border-radius: 10px;
+  padding: 14px;
+  text-decoration: none;
+  color: #0f172a;
+  background: #f8fbff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.videoCard h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.videoCard p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.videoCard span {
+  margin-top: auto;
+  font-weight: 700;
+  color: #095f91;
+}
+
+.form {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  border: 1px solid #cfd9e6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.form button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font: inherit;
+  font-weight: 700;
+  color: #ffffff;
+  background: #095f91;
+  cursor: pointer;
+}
+
+.successMsg {
+  margin-top: 10px;
+  color: #0a7d44;
+  font-weight: 600;
+}

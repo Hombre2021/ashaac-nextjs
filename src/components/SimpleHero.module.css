@@ -73,6 +73,13 @@
   max-width: 85%;
 }
 
+@media (orientation: portrait) and (max-width: 1366px) {
+  .heroSubtitle {
+    font-size: clamp(1.25rem, 3.75vw, 2.5rem) !important;
+    line-height: 1.55 !important;
+  }
+}
+
 /* ============================================
    TABLET PORTRAIT (480px - 1023px | portrait)
    ============================================ */

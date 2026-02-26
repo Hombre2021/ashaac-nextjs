@@ -40,6 +40,9 @@ export default function HomepageFooter() {
           <div className={styles.footerLinksTitle} data-label="QuickLinksTitle">Quick Link</div>
           <Link href="/about" data-label="LinkAbout">About Us</Link>
           <Link href="/services" data-label="LinkServices">Services</Link>
+          <Link href="/emergency-hvac-repair" data-label="LinkEmergency">Emergency HVAC Repair</Link>
+          <Link href="/service-areas" data-label="LinkServiceAreas">Service Areas</Link>
+          <Link href="/diy-help-center" data-label="LinkDIYHelp">DIY Help Center</Link>
           <Link href="/projects" data-label="LinkProjects">Projects</Link>
           <Link href="/reviews" data-label="LinkReviews">Reviews</Link>
           <Link href="/contact" data-label="LinkContact">Contact Us</Link>
@@ -49,6 +52,7 @@ export default function HomepageFooter() {
           <Link href="/privacy-policy" data-label="LinkPrivacy">Privacy Policy</Link>
           <Link href="/terms-and-conditions" data-label="LinkTerms">Terms and Conditions</Link>
           <Link href="/faqs" data-label="LinkFAQ">FAQ&apos;s</Link>
+          <Link href="/valley" data-label="LinkValley">Salt Lake Valley Map</Link>
           <Link href="/legal-policies" data-label="LinkLegal">Legal Policies &amp; Customer Rights</Link>
         </div>
         <div className={styles.footerLinksCol} data-label="ContactCol">
