@@ -3,6 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import HomepageDesktop from "./HomepageDesktop";
 import HomepageMobile from "./HomepageMobile";
+import {
+  BREAKPOINTS_PX,
+  isLandscapePhoneViewport,
+  isPortraitPhoneViewport,
+} from '../constants/responsive';
 import styles from "./HomepageResponsive.module.css";
 
 const DESKTOP_BASE = { width: 1920, height: 1080 };
@@ -51,14 +56,12 @@ export default function HomepageResponsive() {
     return () => window.removeEventListener("resize", updateViewport);
   }, []);
 
-  const isPortrait = viewport.height >= viewport.width && viewport.width > 0;
-  const isPortraitMobile = isPortrait && viewport.width <= 768;
-  const isLandscapePhone =
-    !isPortrait &&
-    viewport.width > 0 &&
-    viewport.height > 0 &&
-    viewport.height <= 800 &&
-    viewport.width / viewport.height >= 1.8;
+  const isPortraitMobile = isPortraitPhoneViewport(
+    viewport.width,
+    viewport.height,
+    BREAKPOINTS_PX.MOBILE_LANDSCAPE_MAX
+  );
+  const isLandscapePhone = isLandscapePhoneViewport(viewport.width, viewport.height);
 
   const layout = isPortraitMobile || isLandscapePhone ? "mobile" : "desktop";
   const isFullDesktop = layout === "desktop" && viewport.width >= 1200;

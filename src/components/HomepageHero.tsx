@@ -1,41 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useResponsiveFlags } from '../hooks/useResponsiveFlags';
+import { BREAKPOINTS_PX } from '../constants/responsive';
 import styles from './HomepageHero.module.css';
 
 export default function HomepageHero() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isLandscapePhone, setIsLandscapePhone] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      const isPortraitMobile = window.innerWidth <= 1366 && window.matchMedia('(orientation: portrait)').matches;
-      const isLandscapePhone =
-        window.matchMedia('(orientation: landscape)').matches &&
-        window.innerHeight > 0 &&
-        window.innerWidth / window.innerHeight >= 1.8 &&
-        window.innerHeight <= 800;
-
-      setIsLandscapePhone(isLandscapePhone);
-
-      if (isLandscapePhone) {
-        document.body.classList.add('android-landscape-phone');
-      } else {
-        document.body.classList.remove('android-landscape-phone');
-      }
-
-      setIsMobile(isPortraitMobile || isLandscapePhone);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      document.body.classList.remove('android-landscape-phone');
-    };
-  }, []);
+  const { isLandscapePhone, isMobileRender } = useResponsiveFlags({
+    portraitMobileMaxWidth: BREAKPOINTS_PX.MOBILE_LANDSCAPE_MAX,
+    syncLandscapeBodyClass: false,
+  });
 
   return (
     <div className={styles.heroWrap}>
@@ -61,7 +35,7 @@ export default function HomepageHero() {
         Professional installation and top-quality repairs in West Jordan and Salt Lake County, Utah
       </div>
 
-      {(!isMobile || isLandscapePhone) && (
+      {(!isMobileRender || isLandscapePhone) && (
         <div className={styles.hablamosWrap} data-label="HeroActionButtons">
           <button className={styles.hablamosEspbutton} data-label="SpanishButton">
             Hablamos Español
@@ -135,7 +109,7 @@ export default function HomepageHero() {
           priority
         />
 
-        {isMobile ? (
+        {isMobileRender ? (
           <div className={styles.becauseTaglineMobile} data-label="HeroLeftTaglineMobile">
             Because at All Solutions<br />
             Heating and AC<br />

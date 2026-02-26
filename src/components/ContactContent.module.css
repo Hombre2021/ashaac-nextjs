@@ -39,3 +39,53 @@
   transform: translateY(-4px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
+
+.contactSection {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 20px 56px;
+}
+
+.mapCard,
+.reviewCard {
+  background: #ffffff;
+  border: 1px solid #d9e1ee;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 18px;
+}
+
+.mapTitle,
+.reviewTitle {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: 1.5rem;
+}
+
+.mapText {
+  margin: 0 0 12px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.mapWrap {
+  width: 100%;
+  height: 320px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.reviewButton {
+  display: inline-block;
+  background: #095f91;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.reviewButton:hover,
+.reviewButton:focus {
+  background: #0d4a70;
+}

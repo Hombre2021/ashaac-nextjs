@@ -5,6 +5,7 @@ import HomepageHeader from "@/components/HomepageHeader";
 import AboutHero from "@/components/AboutHero";
 import HomepageFooter from "@/components/HomepageFooter";
 import styles from "./projects.module.css";
+import { absoluteUrl, siteName } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Recent HVAC Projects and Installations",
@@ -55,8 +56,42 @@ const projects = [
 ];
 
 export default function ProjectsPage() {
+  const projectsPageSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": absoluteUrl("/projects#webpage"),
+        url: absoluteUrl("/projects"),
+        name: `Recent HVAC Projects and Installations | ${siteName}`,
+        about: {
+          "@id": absoluteUrl("/#business"),
+        },
+      },
+      {
+        "@type": "ItemList",
+        name: "Recent HVAC projects",
+        numberOfItems: projects.length,
+        itemListElement: projects.map((project, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "CreativeWork",
+            name: project.title,
+            description: project.description,
+            image: absoluteUrl(project.image),
+          },
+        })),
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsPageSchema) }}
+      />
       <HomepageHeader />
       <AboutHero title="Projects & Recent Work" />
 

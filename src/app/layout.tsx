@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import StructuredData from "@/components/StructuredData";
+import { absoluteUrl, siteDescription, siteName, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com";
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,12 +19,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: siteName,
+  category: "Home Services",
   title: {
-    default: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
-    template: "%s | All Solutions Heating and Air Conditioning",
+    default: `HVAC Installation & Repair in West Jordan, UT | ${siteName}`,
+    template: `%s | ${siteName}`,
   },
-  description:
-    "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County. Affordable, efficient, reliable service since 2012.",
+  description: siteDescription,
   keywords: [
     "HVAC West Jordan",
     "HVAC Salt Lake County",
@@ -38,18 +41,51 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: "/",
-    title: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
-    description:
-      "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County.",
-    siteName: "All Solutions Heating and Air Conditioning",
+    url: absoluteUrl("/"),
+    title: `HVAC Installation & Repair in West Jordan, UT | ${siteName}`,
+    description: siteDescription,
+    siteName,
     locale: "en_US",
+    images: [
+      {
+        url: absoluteUrl("/images/homepage/van2.png"),
+        width: 1200,
+        height: 630,
+        alt: `${siteName} service van`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
-    description:
-      "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County.",
+    title: `HVAC Installation & Repair in West Jordan, UT | ${siteName}`,
+    description: siteDescription,
+    images: [absoluteUrl("/images/homepage/van2.png")],
+  },
+  creator: siteName,
+  publisher: siteName,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
+  icons: {
+    icon: [
+      { url: "/images/homepage/Google-verified.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/images/homepage/Google-verified.png", type: "image/png" },
+    ],
+    shortcut: [
+      { url: "/images/homepage/Google-verified.png", type: "image/png" },
+    ],
+  },
+  appLinks: {
+    web: {
+      url: absoluteUrl("/"),
+    },
   },
   robots: {
     index: true,
@@ -74,6 +110,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {gaMeasurementId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${gaMeasurementId}');`}
+            </Script>
+          </>
+        ) : null}
         <StructuredData />
         <div className="appRoot">{children}</div>
       </body>

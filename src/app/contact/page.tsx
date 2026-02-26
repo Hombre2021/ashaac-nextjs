@@ -3,6 +3,15 @@ import HomepageHeader from "../../components/HomepageHeader";
 import ContactHero from "../../components/ContactHero";
 import ContactContent from "../../components/ContactContent";
 import HomepageFooter from "../../components/HomepageFooter";
+import {
+  absoluteUrl,
+  businessAddress,
+  businessEmail,
+  businessMapUrl,
+  primaryPhone,
+  secondaryPhone,
+  siteName,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact HVAC Experts in West Jordan",
@@ -20,8 +29,47 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": absoluteUrl("/contact#webpage"),
+    url: absoluteUrl("/contact"),
+    name: `Contact ${siteName}`,
+    description:
+      "Contact All Solutions Heating and Air Conditioning for HVAC installation, repairs, and free estimates in West Jordan and Salt Lake County.",
+    mainEntity: {
+      "@id": absoluteUrl("/#business"),
+    },
+    about: {
+      "@id": absoluteUrl("/#business"),
+    },
+    hasMap: businessMapUrl,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: primaryPhone,
+        email: businessEmail,
+        contactType: "customer service",
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: secondaryPhone,
+        email: businessEmail,
+        contactType: "customer service",
+      },
+    ],
+    address: {
+      "@type": "PostalAddress",
+      ...businessAddress,
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
+      />
       <HomepageHeader />
       <ContactHero />
       <ContactContent />

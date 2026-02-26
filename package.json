@@ -3,11 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "type-check": "tsc --noEmit",
+    "safe-build": "rimraf .next && npm run type-check && next build",
+    "build": "npm run safe-build",
     "dev": "node --max-old-space-size=4096 ./node_modules/next/dist/bin/next dev --webpack --hostname 0.0.0.0",
     "dev:ps": "pwsh -ExecutionPolicy Bypass -File ./scripts/dev.ps1",
-    "build": "next build",
+    "dev:responsively": "pwsh -ExecutionPolicy Bypass -File ./scripts/responsively.ps1 -Port 3000",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "copilot:status": "pwsh -ExecutionPolicy Bypass -File ./scripts/copilot-health.ps1 -Action status",
+    "copilot:quick-clean": "pwsh -ExecutionPolicy Bypass -File ./scripts/copilot-health.ps1 -Action quick-clean",
+    "copilot:deep-clean": "pwsh -ExecutionPolicy Bypass -File ./scripts/copilot-health.ps1 -Action deep-clean",
+    "copilot:deep-clean:all": "pwsh -ExecutionPolicy Bypass -File ./scripts/copilot-health.ps1 -Action deep-clean -ResetVSCodeWorkspaceStorage",
+    "copilot:repair": "pwsh -ExecutionPolicy Bypass -File ./scripts/copilot-health.ps1 -Action repair",
+    "copilot:repair:all": "pwsh -ExecutionPolicy Bypass -File ./scripts/copilot-health.ps1 -Action repair -ResetVSCodeWorkspaceStorage"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -26,6 +35,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "rimraf": "^6.1.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

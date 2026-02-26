@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import HomepageHeader from "../../components/HomepageHeader";
 import ServicesHero from "../../components/ServicesHero";
 import ServicesContent from "../../components/ServicesContent";
 import HomepageFooter from "../../components/HomepageFooter";
+import { absoluteUrl, buildLocalBusinessSchema } from "@/lib/seo";
+import { serviceAreas } from "@/data/serviceAreas";
 
 export const metadata: Metadata = {
   title: "HVAC Services: Installation, Repair & Maintenance",
@@ -23,8 +26,40 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
+  const servicesPageSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": absoluteUrl("/services#webpage"),
+        url: absoluteUrl("/services"),
+        name: "HVAC Services: Installation, Repair & Maintenance",
+        isPartOf: {
+          "@id": absoluteUrl("/#website"),
+        },
+        about: {
+          "@id": absoluteUrl("/#business"),
+        },
+      },
+      {
+        "@type": "Service",
+        "@id": absoluteUrl("/services#service"),
+        serviceType: "HVAC installation, repair, and maintenance",
+        provider: {
+          "@id": absoluteUrl("/#business"),
+        },
+        areaServed: buildLocalBusinessSchema().areaServed,
+        hasOfferCatalog: buildLocalBusinessSchema().hasOfferCatalog,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesPageSchema) }}
+      />
       <HomepageHeader />
       <ServicesHero />
       <ServicesContent />
@@ -130,6 +165,29 @@ export default function ServicesPage() {
         <strong>Through-the-Window or Wall Units</strong><br />
         For spaces where a full central air system is not necessary, we offer the installation of through-the-window or wall units. These units are efficient and cost-effective options for cooling or heating specific areas. Our technicians will recommend the most suitable through-the-window or wall unit for your needs and ensure proper installation for optimal performance.
       </div>
+
+      <section style={{ maxWidth: 980, margin: "0 auto 56px auto", padding: "0 24px", textAlign: "center" }}>
+        <h2 style={{ fontSize: 30, marginBottom: 14 }}>Local Service Area Pages</h2>
+        <p style={{ fontSize: 18, lineHeight: 1.7, marginBottom: 16 }}>
+          Looking for city-specific HVAC services? Explore our local service pages for availability, neighborhoods served, and estimate options.
+        </p>
+        <div style={{ marginBottom: 18 }}>
+          <Link href="/service-areas" style={{ textDecoration: "none", fontWeight: 600 }}>
+            View All Service Areas
+          </Link>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
+          {serviceAreas.map((area) => (
+            <Link
+              key={area.slug}
+              href={`/service-areas/${area.slug}`}
+              style={{ border: "1px solid #d9e1ee", borderRadius: 999, padding: "8px 12px", textDecoration: "none", color: "#111827" }}
+            >
+              {area.city}
+            </Link>
+          ))}
+        </div>
+      </section>
       <HomepageFooter />
     </>
   );

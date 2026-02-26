@@ -208,6 +208,16 @@
   outline-offset: 3px;
 }
 
+@media (orientation: portrait) and (max-width: 1366px) {
+  .stepDescriptions,
+  .yourInitialApplicationIsOn,
+  .subOptions li,
+  .preQualificationLink {
+    font-size: calc(1em * 1.25) !important;
+    line-height: 1.6 !important;
+  }
+}
+
 @media (max-width: 768px) {
   .financingpage {
     padding-bottom: 220px;
