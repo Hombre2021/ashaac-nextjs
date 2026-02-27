@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import HomepageHeader from "../../components/HomepageHeader";
 import ServicesHero from "../../components/ServicesHero";
 import ServicesContent from "../../components/ServicesContent";
@@ -169,22 +168,16 @@ export default function ServicesPage() {
       <section style={{ maxWidth: 980, margin: "0 auto 56px auto", padding: "0 24px", textAlign: "center" }}>
         <h2 style={{ fontSize: 30, marginBottom: 14 }}>Local Service Area Pages</h2>
         <p style={{ fontSize: 18, lineHeight: 1.7, marginBottom: 16 }}>
-          Looking for city-specific HVAC services? Explore our local service pages for availability, neighborhoods served, and estimate options.
+          We provide HVAC services across these Salt Lake Valley cities.
         </p>
-        <div style={{ marginBottom: 18 }}>
-          <Link href="/service-areas" style={{ textDecoration: "none", fontWeight: 600 }}>
-            View All Service Areas
-          </Link>
-        </div>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
           {serviceAreas.map((area) => (
-            <Link
-              key={area.slug}
-              href={`/service-areas/${area.slug}`}
-              style={{ border: "1px solid #d9e1ee", borderRadius: 999, padding: "8px 12px", textDecoration: "none", color: "#111827" }}
+            <span
+              key={area.city}
+              style={{ border: "1px solid #d9e1ee", borderRadius: 999, padding: "8px 12px", color: "#111827", background: "#fff" }}
             >
               {area.city}
-            </Link>
+            </span>
           ))}
         </div>
       </section>

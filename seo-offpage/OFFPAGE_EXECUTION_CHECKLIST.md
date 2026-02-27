@@ -6,7 +6,7 @@ Use this checklist to improve local rankings for All Solutions Heating and Air C
 
 - [ ] Confirm canonical NAP is identical everywhere:
   - Business name: All Solutions Heating and Air Conditioning LLC
-  - Address: 4434 W 8790 S, West Jordan, UT 84088
+  - Address: Service-area business (no public storefront address)
   - Phone: 801-755-3040 (primary), 801-512-7103 (secondary)
   - Website: https://ashaac.com
 - [ ] Confirm service area wording across listings: West Jordan + Salt Lake County cities.

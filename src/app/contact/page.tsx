@@ -5,9 +5,7 @@ import ContactContent from "../../components/ContactContent";
 import HomepageFooter from "../../components/HomepageFooter";
 import {
   absoluteUrl,
-  businessAddress,
   businessEmail,
-  businessMapUrl,
   primaryPhone,
   secondaryPhone,
   siteName,
@@ -43,7 +41,6 @@ export default function ContactPage() {
     about: {
       "@id": absoluteUrl("/#business"),
     },
-    hasMap: businessMapUrl,
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -58,10 +55,6 @@ export default function ContactPage() {
         contactType: "customer service",
       },
     ],
-    address: {
-      "@type": "PostalAddress",
-      ...businessAddress,
-    },
   };
 
   return (

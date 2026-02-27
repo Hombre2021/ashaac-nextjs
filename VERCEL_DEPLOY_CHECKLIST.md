@@ -54,3 +54,5 @@ Check at least:
 - Test core CTA links (`tel:`, contact form path, estimate links)
 - Submit URL in Google Search Console (homepage + sitemap)
 - Monitor Vercel logs and web vitals for first 24 hours
+
+For strict release validation and sign-off, use `POST_DEPLOY_VALIDATION_CHECKLIST.md`.

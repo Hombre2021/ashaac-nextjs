@@ -93,8 +93,19 @@
   cursor: pointer;
 }
 
+.form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .successMsg {
   margin-top: 10px;
   color: #0a7d44;
+  font-weight: 600;
+}
+
+.errorMsg {
+  margin-top: 10px;
+  color: #b42318;
   font-weight: 600;
 }

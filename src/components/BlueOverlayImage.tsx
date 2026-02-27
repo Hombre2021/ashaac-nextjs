@@ -8,17 +8,28 @@ interface BlueOverlayImageProps {
   children?: ReactNode;
   height?: number | string;
   width?: number | string;
+  objectFit?: "cover" | "contain";
+  objectPosition?: string;
   style?: React.CSSProperties;
 }
 
-export default function BlueOverlayImage({ src, alt, children, height = 400, width = "100%", style }: BlueOverlayImageProps) {
+export default function BlueOverlayImage({
+  src,
+  alt,
+  children,
+  height = 400,
+  width = "100%",
+  objectFit = "cover",
+  objectPosition = "center",
+  style,
+}: BlueOverlayImageProps) {
   return (
     <div className={styles.container} style={{ height, width, ...style }}>
       <Image
         src={src}
         alt={alt}
         fill
-        style={{ objectFit: "cover" }}
+        style={{ objectFit, objectPosition }}
         className={styles.bgImage}
         priority
       />

@@ -46,6 +46,22 @@ Detailed rules live in `RESPONSIVE_FAMILY_RULES.md`.
 
 For production release readiness, follow `VERCEL_DEPLOY_CHECKLIST.md`.
 
+## Post-Deploy Verification (Automation)
+
+Run the automated production validation snapshot after each deploy:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\post-deploy-verify.ps1
+```
+
+Optional custom target:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\post-deploy-verify.ps1 -BaseUrl "https://your-domain.com"
+```
+
+This script checks route health, `robots.txt`, `sitemap.xml`, stale removed routes, and analytics loader presence. It also prints required manual checks for GSC, GTM, GA4, and CWV.
+
 ## Analytics Setup (GA4 + GTM)
 
 Set these environment variables in Vercel Project Settings -> Environment Variables:

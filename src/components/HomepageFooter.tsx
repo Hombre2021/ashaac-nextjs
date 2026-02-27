@@ -41,7 +41,6 @@ export default function HomepageFooter() {
           <Link href="/about" data-label="LinkAbout">About Us</Link>
           <Link href="/services" data-label="LinkServices">Services</Link>
           <Link href="/emergency-hvac-repair" data-label="LinkEmergency">Emergency HVAC Repair</Link>
-          <Link href="/service-areas" data-label="LinkServiceAreas">Service Areas</Link>
           <Link href="/projects" data-label="LinkProjects">Projects</Link>
           <Link href="/reviews" data-label="LinkReviews">Reviews</Link>
           <Link href="/contact" data-label="LinkContact">Contact Us</Link>

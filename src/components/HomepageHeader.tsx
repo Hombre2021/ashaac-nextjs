@@ -95,6 +95,21 @@ export default function HomepageHeader() {
                     </>
                   )}
                 </Link>
+                <Link
+                  data-label="DIYHelpButton"
+                  href="/diy-help-center"
+                  className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}
+                  aria-label="Open DIY Help Center"
+                >
+                  {isCompactLaptop ? (
+                    <span className={styles.compactButtonLabel}>DIY Help</span>
+                  ) : (
+                    <>
+                      <span className={styles.diyHelpButtonTop}>DIY Help</span>
+                      <span className={styles.diyHelpButtonBottom}>Center</span>
+                    </>
+                  )}
+                </Link>
               </div>
             </div>
             ) : (
@@ -128,6 +143,7 @@ export default function HomepageHeader() {
                 <Link href="/services" className={styles.headermenuLink} data-label="NavServicesMobile">Services</Link>
                 <Link href="/projects" className={styles.headermenuLink} data-label="NavProjectsMobile">Projects</Link>
                 <Link href="/reviews" className={styles.headermenuLink} data-label="NavReviewsMobile">Reviews</Link>
+                <Link href="/diy-help-center" className={styles.headermenuLink} data-label="NavDIYHelpMobile">DIY Help Center</Link>
                 <Link href="/contact" className={styles.headermenuLink} data-label="NavContactMobile">Contact</Link>
               </nav>
             </div>

@@ -10,15 +10,6 @@ export const primaryPhone = "+1-801-755-3040";
 export const secondaryPhone = "+1-801-512-7103";
 export const businessEmail = "contact@ashaac.com";
 
-export const businessAddress = {
-  addressLocality: "West Jordan",
-  addressRegion: "UT",
-  addressCountry: "US",
-};
-
-export const businessMapUrl =
-  "https://www.google.com/maps/search/?api=1&query=West%20Jordan%2C%20Utah";
-
 export const googleBusinessProfileUrl =
   "https://www.google.com/search?q=All+Solutions+Heating+And+Air+Conditioning";
 
@@ -55,11 +46,6 @@ export function buildLocalBusinessSchema() {
     description: siteDescription,
     telephone: primaryPhone,
     email: businessEmail,
-    hasMap: businessMapUrl,
-    address: {
-      "@type": "PostalAddress",
-      ...businessAddress,
-    },
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -128,9 +114,5 @@ export function buildOrganizationSchema() {
     logo: absoluteUrl("/images/homepage/Google-verified.png"),
     email: businessEmail,
     telephone: primaryPhone,
-    address: {
-      "@type": "PostalAddress",
-      ...businessAddress,
-    },
   };
 }
