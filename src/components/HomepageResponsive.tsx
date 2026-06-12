@@ -1,8 +1,9 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import HomepageDesktop from "./HomepageDesktop";
-import HomepageMobile from "./HomepageMobile";
+const HomepageDesktop = dynamic(() => import("./HomepageDesktop"));
+const HomepageMobile = dynamic(() => import("./HomepageMobile"));
 import {
   BREAKPOINTS_PX,
   isLandscapePhoneViewport,

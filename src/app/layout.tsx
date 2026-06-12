@@ -109,6 +109,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" fetchPriority="high" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -132,6 +136,7 @@ export default function RootLayout({
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
               strategy="afterInteractive"
+              async
             />
             <Script id="ga4-init" strategy="afterInteractive">
               {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} window.gtag = gtag; gtag('js', new Date()); gtag('config', '${gaMeasurementId}', { send_page_view: ${gtmId ? "false" : "true"} });`}

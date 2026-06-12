@@ -39,3 +39,7 @@ export function trackFinancingClick(source: string) {
 export function trackBookEstimateClick(source: string) {
   trackEvent("book_estimate_click", { source });
 }
+
+export function trackBookingSuccess(params: AnalyticsParams = {}) {
+  trackEvent("booking_success", params);
+}
