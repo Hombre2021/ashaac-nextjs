@@ -301,15 +301,8 @@ function buildSpeechNode(text: string, state?: PhoneAssistantState) {
   return `<Say voice="${voice}" language="en-US">${spokenText}</Say>`;
 }
 
-function buildTypingSoundNode(question?: string) {
-  // DTMF tone bursts simulate keyboard tapping without external audio hosting.
-  const len = String(question || "").trim().length;
-  const pattern = len >= 120
-    ? "w12w34w56w78w90w*#w12w34w56w78w90w*#w1234w5678"
-    : len >= 60
-      ? "w12w34w56w78w90w*#w1234w5678"
-      : "w12w34w56w78";
-  return `<Play digits="${pattern}"/>`;
+function buildTypingSoundNode() {
+  return `<Play>${escapeXml(`${getPublicBaseUrl()}/api/assistant/phone/typing`)}</Play>`;
 }
 
 function getGatherHints(state?: PhoneAssistantState) {
@@ -364,9 +357,7 @@ function toThinkingTwiml(text: string, options?: { state?: PhoneAssistantState; 
   const joiner = stateParam ? "&" : "";
   const actionUrl = `/api/assistant/phone?${stateParam}${joiner}${suffix}`;
   const speechNode = buildSpeechNode(text, options?.state);
-  const pending = options?.state ? readPendingAiQuestion(options.state) : "";
-  const typingNode = buildTypingSoundNode(options?.question || pending);
-  return `<?xml version="1.0" encoding="UTF-8"?><Response><Gather input="speech dtmf" action="${escapeXml(actionUrl)}" actionOnEmptyResult="true" method="POST" speechTimeout="auto" timeout="6" bargeIn="true" hints="${escapeXml(getGatherHints(options?.state))}">${speechNode}${typingNode}<Pause length="1"/></Gather></Response>`;
+  return `<?xml version="1.0" encoding="UTF-8"?><Response>${speechNode}${buildTypingSoundNode()}<Redirect method="POST">${escapeXml(actionUrl)}</Redirect></Response>`;
 }
 
 const PENDING_AI_QUESTION_KEY = "_pendingAiQuestion";
