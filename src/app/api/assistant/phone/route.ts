@@ -150,7 +150,7 @@ function nextDefaultTwoHourWindow(nowMinutes: number) {
 async function buildPostAnswerFollowup(request: Request, question: string) {
   if (!isSameDayVisitRequest(question)) {
     return {
-      text: "Is there anything else I can help you with?",
+      text: "",
       sameDayOffer: null as null | { date: string; window: string; question: string },
     };
   }
@@ -189,6 +189,28 @@ async function buildPostAnswerFollowup(request: Request, question: string) {
   };
 }
 
+async function buildBookingAvailabilityOffer(request: Request, bookingRequest: string) {
+  const todayDate = normalizeBookingDate("today");
+  const windows = await fetchAvailabilityForDate(request, todayDate).catch(() => [] as string[]);
+  const now = currentMountainMinutes();
+  const target = now + 30;
+  const valid = windows
+    .filter((window) => !/Any time/i.test(window))
+    .map((window) => ({ window, start: parseWindowStartMinutes(window) }))
+    .filter((item) => Number.isFinite(item.start) && item.start >= target)
+    .sort((a, b) => a.start - b.start);
+  const pickedWindow = valid[0]?.window || nextDefaultTwoHourWindow(now);
+
+  return {
+    text: `The next available time is between ${pickedWindow} today. Would that work for you?`,
+    offer: {
+      date: todayDate,
+      window: pickedWindow,
+      question: bookingRequest,
+    },
+  };
+}
+
 function formatAiVoiceReply(question: string, answer: string) {
   const cleanedAnswer = sanitizeForVoice(answer);
   if (!cleanedAnswer) {
@@ -201,15 +223,15 @@ function formatAiVoiceReply(question: string, answer: string) {
   // If the model returns an echo-like answer, switch to a direct fallback prompt.
   if (normalizedQuestion && normalizedAnswer.includes(normalizedQuestion) && cleanedAnswer.length < 180) {
     const fallback = groundedPhoneAnswer(question);
-    return `Here is what I found: ${fallback} Would you like me to book an appointment, schedule a callback, or connect you to a live technician via text and then he can decide to call you if he needs to?`;
+    return `${fallback} Would you like me to book an appointment, connect you with a technician by text, or arrange a callback?`;
   }
 
-  const hasNextStep = /(book|appointment|callback|call back|technician|transfer)/i.test(cleanedAnswer);
+  const hasNextStep = /(would you like|do you want|I can|shall I).{0,120}(book|appointment|text|callback|call back|transfer)/i.test(cleanedAnswer);
   const closer = hasNextStep
     ? ""
-    : " Would you like me to book an appointment, schedule a callback, or connect you to a live technician via text and then he can decide to call you if he needs to?";
+    : " Would you like me to book an appointment, connect you with a technician by text, or arrange a callback?";
 
-  return `Here is what I found: ${cleanedAnswer}${closer}`.trim();
+  return `${cleanedAnswer}${closer}`.trim();
 }
 
 async function getPhoneAiAnswer(request: Request, question: string) {
@@ -231,8 +253,10 @@ async function getPhoneAiAnswer(request: Request, question: string) {
   const systemPrompt = [
     "You are All Solutions AI Assistant for phone calls.",
     "Primary goal: book an appointment whenever the caller is service-ready.",
-    "Secondary goals: schedule a callback or connect to a live technician when booking is not chosen.",
+    "If booking is not chosen, next offer a technician text chat. Offer a callback last.",
     "Answer clearly in plain language for a caller.",
+    "Respond to the caller's full meaning and finish the current thought before offering another action.",
+    "Do not ask whether the caller needs anything else until their current question or request is fully resolved.",
     "Do not repeat the caller's full question back.",
     "Keep the answer short and directly useful.",
     "After answering, guide toward one next step: booking, callback, or live technician.",
@@ -360,6 +384,13 @@ function toThinkingTwiml(text: string, options?: { state?: PhoneAssistantState; 
   return `<?xml version="1.0" encoding="UTF-8"?><Response>${speechNode}${buildTypingSoundNode()}<Redirect method="POST">${escapeXml(actionUrl)}</Redirect></Response>`;
 }
 
+function toBookingAvailabilityTwiml(state: PhoneAssistantState) {
+  const stateParam = `state=${encodeURIComponent(encodePhoneAssistantState(state))}`;
+  const actionUrl = `/api/assistant/phone?${stateParam}&mode=booking-availability`;
+  const speechNode = buildSpeechNode("Let me look for available times our technician can come to your location.", state);
+  return `<?xml version="1.0" encoding="UTF-8"?><Response>${speechNode}${buildTypingSoundNode()}<Redirect method="POST">${escapeXml(actionUrl)}</Redirect></Response>`;
+}
+
 const PENDING_AI_QUESTION_KEY = "_pendingAiQuestion";
 const EMERGENCY_FLAG_KEY = "_emergencyFlag";
 const OWNER_ASSISTANT_FLAG_KEY = "_ownerAssistantCaller";
@@ -368,6 +399,28 @@ const SAME_DAY_OFFER_PENDING_KEY = "_sameDayOfferPending";
 const SAME_DAY_OFFER_DATE_KEY = "_sameDayOfferDate";
 const SAME_DAY_OFFER_WINDOW_KEY = "_sameDayOfferWindow";
 const SAME_DAY_OFFER_QUESTION_KEY = "_sameDayOfferQuestion";
+const CONTACT_CONFIRMATION_PENDING_KEY = "_contactConfirmationPending";
+const CONTACT_CONFIRMED_KEY = "_contactConfirmed";
+
+function requiresConfirmedContact(intent: PhoneAssistantState["intent"]) {
+  return intent === "booking" || intent === "sms-technician" || intent === "callback";
+}
+
+function missingRequiredContactStep(state: PhoneAssistantState) {
+  if (!String(state.data.firstName || "").trim()) return "firstName" as const;
+  if (normalizePhoneDigits(state.data.phone || "").length !== 10) return "phone" as const;
+  if (!String(state.data.address || "").trim()) return "address" as const;
+  if (!String(state.data.addressCity || "").trim()) return "addressCity" as const;
+  if (normalizePhoneDigits(state.data.addressZip || "").length < 5) return "addressZip" as const;
+  return null;
+}
+
+function contactConfirmationPrompt(state: PhoneAssistantState) {
+  const name = [state.data.firstName, state.data.lastName].filter(Boolean).join(" ").trim();
+  const phone = normalizePhoneDigits(state.data.phone || "").split("").join(", ");
+  const address = [state.data.address, state.data.addressCity, state.data.addressZip].filter(Boolean).join(", ");
+  return `Please confirm the information for our technician. Your name is ${name}. Your callback number is ${phone}. The service address is ${address}. Is all of that correct?`;
+}
 
 function withPendingAiQuestion(state: PhoneAssistantState, question: string): PhoneAssistantState {
   return {
@@ -434,7 +487,7 @@ function isPostIntroSupportPending(state: PhoneAssistantState) {
 }
 
 function supportChoicePrompt() {
-  return "Would you like to leave a message, send or receive a text, or receive a call back?";
+  return "Would you like me to connect you with a technician by text, or arrange a callback?";
 }
 
 function resolveSupportIntent(text: string): "callback" | "sms-technician" | "unknown" {
@@ -589,7 +642,7 @@ function mauricioNamePrompt() {
 }
 
 function keepConversationGoing(message: string) {
-  return `${message} Would you like help with anything else?`;
+  return `${message} Is there anything else I can assist you with?`;
 }
 
 function excuseMePrompt(message: string) {
@@ -640,6 +693,12 @@ function normalizeBookingServiceType(value: string) {
   return "Repair diagnostic";
 }
 
+function inferBookingServiceType(value: string) {
+  return /(repair|diagnostic|replace|replacement|new system|install|tune|maintenance|seasonal|mini\s*split|heat\s*pump|second opinion)/i.test(value)
+    ? normalizeBookingServiceType(value)
+    : "";
+}
+
 function normalizeBookingCity(value: string) {
   const lower = String(value || "").toLowerCase();
   if (lower.includes("west jordan")) return "West Jordan";
@@ -651,6 +710,12 @@ function normalizeBookingCity(value: string) {
   if (lower.includes("draper")) return "Draper";
   if (lower.includes("salt lake")) return "Salt Lake City";
   return "West Jordan";
+}
+
+function inferBookingCity(value: string) {
+  return /(west jordan|south jordan|sandy|murray|midvale|taylorsville|draper|salt lake)/i.test(value)
+    ? normalizeBookingCity(value)
+    : "";
 }
 
 function normalizeBookingWindow(value: string) {
@@ -1144,7 +1209,7 @@ export async function POST(request: Request) {
   const realtimeFallback = url.searchParams.get("realtimeFallback") === "1";
   const conferenceName = String(url.searchParams.get("conference") || "").trim();
   const incomingState = decodePhoneAssistantState(url.searchParams.get("state"));
-  const incomingText = String(payload.SpeechResult || payload.Digits || payload.Body || "").trim();
+  let incomingText = String(payload.SpeechResult || payload.Digits || payload.Body || "").trim();
   const confidenceRaw = String(payload.Confidence || "").trim();
   const confidence = Number.parseFloat(confidenceRaw);
   const lowConfidence = Number.isFinite(confidence) && confidence < 0.45;
@@ -1154,6 +1219,7 @@ export async function POST(request: Request) {
   const callSid = String(payload.CallSid || incomingState.callSid || "").trim();
 
   const state: PhoneAssistantState = { ...incomingState, callSid };
+  let contactConfirmationAccepted = false;
 
   if (mode === "realtime-dial-complete") {
     const dialStatus = String(payload.DialCallStatus || "").trim().toLowerCase();
@@ -1205,6 +1271,15 @@ export async function POST(request: Request) {
     });
   }
 
+  if (mode === "booking-availability") {
+    const bookingRequest = readPendingAiQuestion(state) || "book an appointment";
+    const availability = await buildBookingAvailabilityOffer(request, bookingRequest);
+    const offerState = withSameDayOfferContext(clearPendingAiQuestion(state), availability.offer);
+    return new NextResponse(toTwiml(availability.text, { gather: true, state: offerState }), {
+      headers: { "Content-Type": "text/xml" },
+    });
+  }
+
   if (mode === "ai-answer") {
     const pendingQuestion = incomingText || readPendingAiQuestion(state);
     const detectedIntent = incomingText ? detectPhoneIntent(incomingText) : "menu";
@@ -1235,6 +1310,12 @@ export async function POST(request: Request) {
       const ownerAssistantCaller = isOwnerAssistantCaller(fromE164, incomingText);
       const nextState = withOwnerAssistantFlag(withEmergencyFlag({ ...state, intent: detectedIntent, flow, stepIndex: 0, data: {} }, emergency), ownerAssistantCaller);
 
+      if (detectedIntent === "booking") {
+        return new NextResponse(toBookingAvailabilityTwiml(withPendingAiQuestion(nextState, incomingText)), {
+          headers: { "Content-Type": "text/xml" },
+        });
+      }
+
       if (flow.length === 0) {
         return new NextResponse(toThinkingTwiml("Give me a few seconds while I get the best answer to your question.", {
           state: withPendingAiQuestion(nextState, incomingText),
@@ -1245,9 +1326,7 @@ export async function POST(request: Request) {
         });
       }
 
-      const prompt = (detectedIntent === "booking" && emergency)
-        ? `${currentStepLabel(flow[0])} Emergency and after-hours service can include an extra cost of 150 dollars.`
-        : currentStepLabel(flow[0]);
+      const prompt = currentStepLabel(flow[0]);
       return new NextResponse(toTwiml(prompt, { gather: true, state: nextState }), {
         headers: { "Content-Type": "text/xml" },
       });
@@ -1421,8 +1500,8 @@ export async function POST(request: Request) {
     if (yesNo === "yes") {
       const flow = buildFlowForIntent("booking");
       const bookingData: Record<string, string> = {
-        serviceType: normalizeBookingServiceType(sameDayOffer.question || ""),
-        city: normalizeBookingCity(sameDayOffer.question || "West Jordan"),
+        serviceType: inferBookingServiceType(sameDayOffer.question || ""),
+        city: inferBookingCity(sameDayOffer.question || ""),
         preferredDate: normalizeBookingDate(sameDayOffer.date || "today"),
         preferredTimeWindow: normalizeBookingWindow(sameDayOffer.window || "Any time"),
       };
@@ -1534,7 +1613,7 @@ export async function POST(request: Request) {
       const ownerAssistantCaller = isOwnerAssistantCaller(fromE164, incomingText);
       const flow = buildFlowForIntent("booking");
       const nextState: PhoneAssistantState = withOwnerAssistantFlag(withEmergencyFlag({ ...state, intent: "booking", flow, stepIndex: 0, data: {} }, emergency), ownerAssistantCaller);
-      return new NextResponse(toTwiml(currentStepLabel(flow[0]), { gather: true, state: nextState }), {
+      return new NextResponse(toBookingAvailabilityTwiml(withPendingAiQuestion(nextState, incomingText)), {
         headers: { "Content-Type": "text/xml" },
       });
     }
@@ -1596,6 +1675,12 @@ export async function POST(request: Request) {
     const flow = buildFlowForIntent(chosenIntent);
     const nextState: PhoneAssistantState = withOwnerAssistantFlag(withEmergencyFlag({ ...state, intent: chosenIntent, flow, stepIndex: 0, data: {} }, emergency), ownerAssistantCaller);
 
+    if (chosenIntent === "booking") {
+      return new NextResponse(toBookingAvailabilityTwiml(withPendingAiQuestion(nextState, incomingText)), {
+        headers: { "Content-Type": "text/xml" },
+      });
+    }
+
     if (flow.length === 0) {
       const thinkingState = withPendingAiQuestion(nextState, incomingText);
       return new NextResponse(toThinkingTwiml("Give me a few seconds while I get the best answer to your question.", { state: thinkingState, question: incomingText }), {
@@ -1603,9 +1688,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const openingStepPrompt = (chosenIntent === "booking" && emergency)
-      ? `${currentStepLabel(flow[0])} Emergency and after-hours service can include an extra cost of 150 dollars.`
-      : currentStepLabel(flow[0]);
+    const openingStepPrompt = currentStepLabel(flow[0]);
 
     return new NextResponse(toTwiml(openingStepPrompt, { gather: true, state: nextState }), {
       headers: { "Content-Type": "text/xml" },
@@ -1670,6 +1753,35 @@ export async function POST(request: Request) {
     });
   }
 
+  if (String(state.data[CONTACT_CONFIRMATION_PENDING_KEY] || "") === "1") {
+    const confirmation = detectYesNo(incomingText);
+    if (confirmation === "no") {
+      const data = { ...state.data };
+      for (const key of ["firstName", "lastName", "phone", "address", "addressCity", "addressZip", CONTACT_CONFIRMATION_PENDING_KEY, CONTACT_CONFIRMED_KEY]) {
+        delete data[key];
+      }
+      const confirmationFlow: PhoneAssistantState["flow"] = ["firstName", "lastName", "phone", "address", "addressCity", "addressZip"];
+      return new NextResponse(toTwiml("No problem. Let us correct it. Please say your first name.", {
+        gather: true,
+        state: { ...state, data, flow: confirmationFlow, stepIndex: 0 },
+      }), { headers: { "Content-Type": "text/xml" } });
+    }
+
+    if (confirmation !== "yes") {
+      return new NextResponse(toTwiml(`Please say yes if this is correct, or no to correct it. ${contactConfirmationPrompt(state)}`, {
+        gather: true,
+        state,
+      }), { headers: { "Content-Type": "text/xml" } });
+    }
+
+    delete state.data[CONTACT_CONFIRMATION_PENDING_KEY];
+    state.data[CONTACT_CONFIRMED_KEY] = "1";
+    contactConfirmationAccepted = true;
+    const finalStep = state.flow[state.flow.length - 1];
+    state.stepIndex = state.flow.length - 1;
+    incomingText = String(state.data[finalStep] || "No additional notes");
+  }
+
   const step = state.flow[state.stepIndex];
   if (!step) {
     return new NextResponse(toTwiml(shortHelpPrompt, { gather: true, state: { ...state, intent: "menu", flow: [], stepIndex: 0 } }), {
@@ -1692,7 +1804,7 @@ export async function POST(request: Request) {
   const interruptIntent = detectPhoneInterruptIntent(incomingText);
   const broadIntent = detectPhoneIntent(incomingText);
   const effectiveInterruptIntent = (interruptIntent || (broadIntent !== "menu" ? broadIntent : null));
-  if (effectiveInterruptIntent && effectiveInterruptIntent !== state.intent) {
+  if (!contactConfirmationAccepted && effectiveInterruptIntent && effectiveInterruptIntent !== state.intent) {
     const emergency = isEmergencyText(incomingText);
     const ownerAssistantCaller = isOwnerAssistantCaller(fromE164, incomingText);
     if (effectiveInterruptIntent === "goodbye") {
@@ -1709,6 +1821,12 @@ export async function POST(request: Request) {
     const interruptFlow = buildFlowForIntent(effectiveInterruptIntent);
     const interruptState: PhoneAssistantState = withOwnerAssistantFlag(withEmergencyFlag({ ...state, intent: effectiveInterruptIntent, flow: interruptFlow, stepIndex: 0, data: {}, awaitingRescheduleFollowup: false }, emergency), ownerAssistantCaller);
 
+    if (effectiveInterruptIntent === "booking") {
+      return new NextResponse(toBookingAvailabilityTwiml(withPendingAiQuestion(interruptState, incomingText)), {
+        headers: { "Content-Type": "text/xml" },
+      });
+    }
+
     if (interruptFlow.length === 0) {
       const thinkingState = withPendingAiQuestion(interruptState, incomingText);
       return new NextResponse(toThinkingTwiml("Give me a few seconds while I get the best answer to your question.", { state: thinkingState, question: incomingText }), {
@@ -1716,9 +1834,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const interruptPrompt = (effectiveInterruptIntent === "booking" && emergency)
-      ? `${currentStepLabel(interruptFlow[0])} Emergency and after-hours service can include an extra cost of 150 dollars.`
-      : currentStepLabel(interruptFlow[0]);
+    const interruptPrompt = currentStepLabel(interruptFlow[0]);
 
     return new NextResponse(toTwiml(interruptPrompt, { gather: true, state: interruptState }), {
       headers: { "Content-Type": "text/xml" },
@@ -1748,6 +1864,26 @@ export async function POST(request: Request) {
 
   const nextIndex = state.stepIndex + 1;
   if (nextIndex >= state.flow.length) {
+    if (requiresConfirmedContact(state.intent)) {
+      const missingStep = missingRequiredContactStep(state);
+      if (missingStep) {
+        const requiredFlow: PhoneAssistantState["flow"] = [missingStep];
+        return new NextResponse(toTwiml(currentStepLabel(missingStep), {
+          gather: true,
+          state: { ...state, flow: requiredFlow, stepIndex: 0 },
+        }), { headers: { "Content-Type": "text/xml" } });
+      }
+
+      if (String(state.data[CONTACT_CONFIRMED_KEY] || "") !== "1") {
+        state.data[CONTACT_CONFIRMATION_PENDING_KEY] = "1";
+        return new NextResponse(toTwiml(contactConfirmationPrompt(state), { gather: true, state }), {
+          headers: { "Content-Type": "text/xml" },
+        });
+      }
+
+      delete state.data[CONTACT_CONFIRMED_KEY];
+    }
+
     switch (state.intent) {
       case "goodbye":
         return new NextResponse(hangupTwiml("Good bye."), { headers: { "Content-Type": "text/xml" } });
@@ -1900,13 +2036,14 @@ export async function POST(request: Request) {
         const lastName = state.data.lastName || "";
         const callerPhone = state.data.phone || from;
         const callerNotes = state.data.notes || "";
+        const serviceAddress = [state.data.address, state.data.addressCity, state.data.addressZip].filter(Boolean).join(", ");
 
         await appendAssistantLead({
           leadId: `VOICE-${Date.now()}`,
           priority: "P1",
           serviceType: "general-service",
           urgency: "now",
-          city: "West Jordan",
+          city: normalizeBookingCity(state.data.addressCity || "West Jordan"),
           phone: callerPhone,
           handoffMode: "sms-technician",
           bookingMode: "callback-only",
@@ -1918,10 +2055,10 @@ export async function POST(request: Request) {
           customerPhone: callerPhone,
           firstName,
           lastName,
-          city: "West Jordan",
+          city: normalizeBookingCity(state.data.addressCity || "West Jordan"),
           serviceType: "general-service",
           urgency: "now",
-          initialMessage: callerNotes,
+          initialMessage: [callerNotes, `Service address: ${serviceAddress}`].filter(Boolean).join("\n"),
         });
 
         const code = String(response.data?.thread && typeof response.data.thread === "object" ? (response.data.thread as { code?: string }).code || "" : "").trim();
@@ -1940,9 +2077,9 @@ export async function POST(request: Request) {
           preferredDate: "",
           preferredTimeWindow: "",
           firstName: state.data.firstName || "Customer",
-          address: "",
+          address: [state.data.address, state.data.addressCity, state.data.addressZip].filter(Boolean).join(", "),
           phone: state.data.phone || from,
-          city: "",
+          city: normalizeBookingCity(state.data.addressCity || "West Jordan"),
           email: "",
           contactMethod: "phone",
           homeType: "owner",

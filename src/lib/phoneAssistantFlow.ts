@@ -54,6 +54,10 @@ export type PhoneAssistantResponse = {
 export const phoneAssistantGreeting =
   "Thank you for calling All Solutions. We offer free estimates, so one of our technicians can come to your desired location and disclose pricing before doing anything. Would you like to make an appointment?";
 
+function isBookingRequest(lower: string) {
+  return /(\bbook(?:ing)?\b|\bschedul(?:e|ing)\b|make\s+(?:me\s+)?an?\s+appointment|set\s+up\s+an?\s+appointment|need\s+an?\s+appointment|want\s+an?\s+appointment|technician\s+(?:can\s+)?come|technician\s+(?:to\s+)?visit|come\s+to\s+(?:my|our|the)\s+(?:home|house|location|address))/.test(lower);
+}
+
 export function defaultPhoneAssistantState(callSid?: string): PhoneAssistantState {
   return {
     callSid,
@@ -72,11 +76,10 @@ export function detectPhoneIntent(text: string): PhoneAssistantIntent {
   if (lower.includes("status") || (lower.includes("check") && lower.includes("status"))) return "check-status";
   if (lower.includes("reschedule") || /\bre[-\s]?schedule\b/.test(lower)) return "reschedule";
   if (lower.includes("cancel")) return "cancel";
-  if (asksAvailability) return "booking";
+  if (asksAvailability || isBookingRequest(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
   if (lower.includes("text") && lower.includes("technician")) return "sms-technician";
   if (lower.includes("callback") || lower.includes("call me back") || lower.includes("call back")) return "callback";
-  if (lower.includes("book")) return "booking";
   if (lower.includes("question") || lower.includes("service")) return "question";
   return "menu";
 }
@@ -88,7 +91,7 @@ export function detectPhoneInterruptIntent(text: string): PhoneAssistantIntent |
   if (/(talk\s+to\s+mauricio|talk\s+to\s+leandro|mauricio|leandro)/.test(lower)) return "mauricio";
   if (/(question\s+about\s+service|service\s+question)/.test(lower)) return "question";
   if (/(next\s+available|when\s+is\s+your\s+next\s+available|when\s+can\s+you\s+(come|guys\s+come)|how\s+soon\s+can\s+your\s+technician\s+come|when\s+can\s+your\s+technician\s+come)/.test(lower)) return "booking";
-  if (/(\bbook(?:ing)?\b|schedule\s+an\s+appointment|get\s+service\s+as\s+soon\s+as\s+possible)/.test(lower)) return "booking";
+  if (isBookingRequest(lower) || /get\s+service\s+as\s+soon\s+as\s+possible/.test(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
   if (/(text\s+with\s+a\s+technician|text\s+technician|send\s+(?:a\s+)?text)/.test(lower)) return "sms-technician";
   if (/(call\s+me\s+back|call\s+back|callback)/.test(lower)) return "callback";
@@ -127,9 +130,9 @@ export function buildFlowForIntent(intent: PhoneAssistantIntent): PhoneAssistant
         "notes",
       ];
     case "callback":
-      return ["firstName", "lastName", "phone", "notes"];
+      return ["firstName", "lastName", "phone", "address", "addressCity", "addressZip", "notes"];
     case "sms-technician":
-      return ["firstName", "lastName", "phone", "notes"];
+      return ["firstName", "lastName", "phone", "address", "addressCity", "addressZip", "notes"];
     default:
       return [];
   }
@@ -143,11 +146,10 @@ export function parseMenuChoice(text: string): PhoneAssistantIntent {
   if (lower.includes("status")) return "check-status";
   if (lower.includes("reschedule")) return "reschedule";
   if (lower.includes("cancel")) return "cancel";
-  if (asksAvailability) return "booking";
+  if (asksAvailability || isBookingRequest(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
   if (lower.includes("text")) return "sms-technician";
   if (lower.includes("callback") || lower.includes("call me back") || lower.includes("call back")) return "callback";
-  if (lower.includes("book")) return "booking";
   if (lower.includes("question") || lower.includes("service")) return "question";
   return "menu";
 }
