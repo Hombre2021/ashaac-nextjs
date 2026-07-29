@@ -650,6 +650,16 @@ function readSameDayOfferContext(state: PhoneAssistantState) {
   return { pending, date, window, question };
 }
 
+function isOfferClarificationRequest(value: string) {
+  return /(repeat|say (?:that|it|the time|the date) again|what time|which time|what date|which date|what day|which day|when did you say|what did you say|did not (?:hear|catch|understand)|didn't (?:hear|catch|understand)|could you say that again|can you say that again|come again|pardon)/i.test(value);
+}
+
+function repeatOfferPrompt(date: string, window: string) {
+  const spokenDate = formatBookingDateForVoice(normalizeBookingDate(date || "today"), normalizeBookingDate("today"));
+  const spokenWindow = String(window || "").replace(" - ", " to ");
+  return `The available appointment I mentioned is ${spokenDate}, from ${spokenWindow}. Would that work for you? Please say yes or no.`;
+}
+
 async function readTwilioPayload(request: Request) {
   const contentType = request.headers.get("content-type") || "";
   const payload: Record<string, string> = {};
@@ -1656,6 +1666,12 @@ export async function POST(request: Request) {
 
   const sameDayOffer = readSameDayOfferContext(state);
   if (sameDayOffer.pending && incomingText) {
+    if (isOfferClarificationRequest(incomingText)) {
+      return new NextResponse(toTwiml(repeatOfferPrompt(sameDayOffer.date, sameDayOffer.window), { gather: true, state }), {
+        headers: { "Content-Type": "text/xml" },
+      });
+    }
+
     const yesNo = detectYesNo(incomingText);
 
     if (yesNo === "yes") {
