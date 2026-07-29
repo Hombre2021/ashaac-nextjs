@@ -102,7 +102,7 @@ function createServer(origin: string) {
       callId: z.string().startsWith("rtc_"),
       reason: z.string().min(2),
     },
-  }, async ({ callId, reason }) => {
+  }, async ({ callId }) => {
     const apiKey = String(process.env.OPENAI_API_KEY || "").trim();
     const ownerPhone = String(process.env.LIVE_TECHNICIAN_CALL_TO || process.env.LIVE_TECHNICIAN_SMS_TO || "").replace(/[^+\d]/g, "");
     if (!apiKey || !/^\+\d{10,15}$/.test(ownerPhone)) {
@@ -111,7 +111,7 @@ function createServer(origin: string) {
     const response = await fetch(`https://api.openai.com/v1/realtime/calls/${encodeURIComponent(callId)}/refer`, {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ target_uri: `tel:${ownerPhone}`, reason }),
+      body: JSON.stringify({ target_uri: `tel:${ownerPhone}` }),
     });
     return response.ok
       ? toolResult({ ok: true, detail: "Transferring the caller to the owner." })

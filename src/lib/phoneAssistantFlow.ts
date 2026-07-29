@@ -52,7 +52,7 @@ export type PhoneAssistantResponse = {
 };
 
 export const phoneAssistantGreeting =
-  "Hi and thank you for calling All Solutions Heating and Air Conditioning. Would you like to make an appointment for one of our technicians to come to your location? Just so you know, our technician will give you a free estimate before he does anything. Would you like to book your appointment for our next available time?";
+  "Thank you for calling All Solutions. We offer free estimates, so one of our technicians can come to your desired location and disclose pricing before doing anything. Would you like to make an appointment?";
 
 export function defaultPhoneAssistantState(callSid?: string): PhoneAssistantState {
   return {

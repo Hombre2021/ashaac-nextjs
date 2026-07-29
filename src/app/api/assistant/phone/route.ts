@@ -798,6 +798,20 @@ function isTrustedCaller(fromE164: string) {
     }
   }
 
+  const twilio = getTwilioConfig();
+  for (const value of [twilio.fromCall, twilio.fromSms, envFirst("TWILIO_FROM_NUMBER")]) {
+    const normalized = toE164(value);
+    if (normalized) trusted.add(normalized);
+  }
+
+  const twilioNumbers = envFirst("TWILIO_PHONE_NUMBERS");
+  if (twilioNumbers) {
+    for (const value of twilioNumbers.split(/[,;\s]+/)) {
+      const normalized = toE164(value.trim());
+      if (normalized) trusted.add(normalized);
+    }
+  }
+
   return Boolean(fromE164 && trusted.has(fromE164));
 }
 
@@ -1010,10 +1024,11 @@ function buildOwnerDirectTransferTwiml() {
   return `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="Polly.Matthew" language="en-US">Connecting you now.</Say><Dial>${escapeXml(ownerPhone)}</Dial></Response>`;
 }
 
-function buildRealtimeSipTwiml() {
+function buildRealtimeSipTwiml(state: PhoneAssistantState) {
   const sipUri = getOpenAiRealtimeSipUri();
-  const fallbackUrl = `${getPublicBaseUrl()}/api/assistant/phone?realtimeFallback=1`;
-  return `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="Polly.Matthew" language="en-US">Thanks for calling All Solutions. You are being connected to our OpenAI phone assistant.</Say><Dial answerOnBridge="true"><Sip>${escapeXml(sipUri)}</Sip></Dial><Redirect method="POST">${escapeXml(fallbackUrl)}</Redirect></Response>`;
+  const completionUrl = `${getPublicBaseUrl()}/api/assistant/phone?mode=realtime-dial-complete`;
+  const greeting = "Thank you for calling All Solutions. We offer free estimates, so one of our technicians can come to your desired location and disclose pricing before doing anything. Would you like to make an appointment?";
+  return `<?xml version="1.0" encoding="UTF-8"?><Response>${buildSpeechNode(greeting, state)}<Dial answerOnBridge="true" action="${escapeXml(completionUrl)}" method="POST"><Sip>${escapeXml(sipUri)}</Sip></Dial></Response>`;
 }
 
 function buildCallerVoicemailTwiml(callerName: string, conferenceName: string) {
@@ -1148,6 +1163,24 @@ export async function POST(request: Request) {
   const callSid = String(payload.CallSid || incomingState.callSid || "").trim();
 
   const state: PhoneAssistantState = { ...incomingState, callSid };
+
+  if (mode === "realtime-dial-complete") {
+    const dialStatus = String(payload.DialCallStatus || "").trim().toLowerCase();
+    if (dialStatus === "completed") {
+      return new NextResponse(hangupTwiml("Thank you for calling All Solutions. Goodbye."), {
+        headers: { "Content-Type": "text/xml" },
+      });
+    }
+
+    return new NextResponse(
+      toTwiml("Would you like to make an appointment?", {
+        gather: true,
+        state,
+      }),
+      { headers: { "Content-Type": "text/xml" } },
+    );
+  }
+
   const spamDecision = await getSpamDecision(fromE164, incomingText, callerName);
 
   if (String(payload.Digits || "").trim() === "0" && mode !== "mauricio-screen") {
@@ -1457,7 +1490,7 @@ export async function POST(request: Request) {
   if (!state.intent || state.intent === "menu") {
     if (!incomingText) {
       if (!realtimeFallback && getOpenAiRealtimeSipUri()) {
-        return new NextResponse(buildRealtimeSipTwiml(), {
+        return new NextResponse(buildRealtimeSipTwiml(state), {
           headers: { "Content-Type": "text/xml" },
         });
       }
