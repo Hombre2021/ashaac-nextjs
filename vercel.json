@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/assistant/knowledge/ingest?source=cron",
+      "schedule": "0 6 * * *"
+    }
+  ]
+}

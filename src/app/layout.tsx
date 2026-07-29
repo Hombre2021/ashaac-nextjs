@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import StructuredData from "@/components/StructuredData";
+import WebsiteAIAssistant from "@/components/WebsiteAIAssistant";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com";
@@ -76,6 +77,7 @@ export default function RootLayout({
       >
         <StructuredData />
         <div className="appRoot">{children}</div>
+        <WebsiteAIAssistant />
       </body>
     </html>
   );
