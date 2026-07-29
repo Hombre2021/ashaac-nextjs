@@ -824,12 +824,6 @@ function normalizeBookingServiceType(value: string) {
   return "Repair diagnostic";
 }
 
-function inferBookingServiceType(value: string) {
-  return /(repair|diagnostic|replace|replacement|new system|install|tune|maintenance|seasonal|mini\s*split|heat\s*pump|second opinion)/i.test(value)
-    ? normalizeBookingServiceType(value)
-    : "";
-}
-
 function normalizeBookingCity(value: string) {
   const lower = String(value || "").toLowerCase();
   if (lower.includes("west jordan")) return "West Jordan";
@@ -1667,7 +1661,7 @@ export async function POST(request: Request) {
     if (yesNo === "yes") {
       const flow = buildFlowForIntent("booking");
       const bookingData: Record<string, string> = {
-        serviceType: inferBookingServiceType(sameDayOffer.question || ""),
+        serviceType: "Repair diagnostic",
         city: inferBookingCity(sameDayOffer.question || ""),
         preferredDate: normalizeBookingDate(sameDayOffer.date || "today"),
         preferredTimeWindow: normalizeBookingWindow(sameDayOffer.window || "Any time"),
@@ -1695,7 +1689,7 @@ export async function POST(request: Request) {
 
     if (yesNo === "no") {
       const cleared = clearSameDayOfferContext(state);
-      const flow: PhoneAssistantState["flow"] = ["preferredTimeWindow", "firstName", "lastName", "phone", "email", "address", "addressCity", "addressZip", "notes"];
+      const flow: PhoneAssistantState["flow"] = ["city", "preferredTimeWindow", "firstName", "lastName", "phone", "email", "address", "addressCity", "addressZip", "notes"];
       const nextState: PhoneAssistantState = {
         ...cleared,
         intent: "booking",
@@ -1703,14 +1697,14 @@ export async function POST(request: Request) {
         stepIndex: 0,
         data: {
           ...cleared.data,
-          serviceType: normalizeBookingServiceType(sameDayOffer.question || ""),
-          city: normalizeBookingCity(sameDayOffer.question || "West Jordan"),
+          serviceType: "Repair diagnostic",
+          city: inferBookingCity(sameDayOffer.question || ""),
           preferredDate: normalizeBookingDate(sameDayOffer.date || "today"),
         },
       };
 
       return new NextResponse(
-        toTwiml("No problem. I can check another time window for you. What time works better today?", {
+        toTwiml(`No problem. ${currentStepLabel(flow[0])}`, {
           gather: true,
           state: nextState,
         }),

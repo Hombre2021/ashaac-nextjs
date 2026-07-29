@@ -52,7 +52,7 @@ export type PhoneAssistantResponse = {
 };
 
 export const phoneAssistantGreeting =
-  "Thank you for calling All Solutions. We offer free estimates, so one of our technicians can come to your location and discuss pricing before you commit to or authorize any work. Would you like to schedule an appointment at our earliest available time?";
+  "Thank you for calling All Solutions Heating and Air Conditioning. We offer free estimates, so one of our technicians can come to your location and discuss pricing before you commit to or authorize any work. Would you like to schedule an appointment at our earliest convenience?";
 
 function isBookingRequest(lower: string) {
   return /(\bbook(?:ing)?\b|\bschedul(?:e|ing)\b|make\s+(?:me\s+)?an?\s+appointment|set\s+up\s+an?\s+appointment|need\s+an?\s+appointment|want\s+an?\s+appointment|technician\s+(?:can\s+)?come|technician\s+(?:to\s+)?visit|(?:can|could|would)\s+you\s+come|come\s+(?:today|tomorrow|this\s+(?:morning|afternoon|evening))|\b(?:next\s+)?(?:monday|tuesday|wednesday|thursday|friday|saturday)(?:\s+(?:morning|afternoon|evening))?\b|come\s+to\s+(?:my|our|the)\s+(?:home|house|location|address))/.test(lower);
