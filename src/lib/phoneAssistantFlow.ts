@@ -58,6 +58,10 @@ function isBookingRequest(lower: string) {
   return /(\bbook(?:ing)?\b|\bschedul(?:e|ing)\b|make\s+(?:me\s+)?an?\s+appointment|set\s+up\s+an?\s+appointment|need\s+an?\s+appointment|want\s+an?\s+appointment|technician\s+(?:can\s+)?come|technician\s+(?:to\s+)?visit|come\s+to\s+(?:my|our|the)\s+(?:home|house|location|address))/.test(lower);
 }
 
+function isCallbackRequest(lower: string) {
+  return /(callback|call\s+me\s+back|call\s+back|(?:can|could|would)\s+(?:a\s+technician|someone|somebody|you)\s+call\s+(?:me\s+)?(?:back|later)|have\s+(?:a\s+technician|someone|somebody)\s+call\s+me)/.test(lower);
+}
+
 export function defaultPhoneAssistantState(callSid?: string): PhoneAssistantState {
   return {
     callSid,
@@ -79,7 +83,7 @@ export function detectPhoneIntent(text: string): PhoneAssistantIntent {
   if (asksAvailability || isBookingRequest(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
   if (lower.includes("text") && lower.includes("technician")) return "sms-technician";
-  if (lower.includes("callback") || lower.includes("call me back") || lower.includes("call back")) return "callback";
+  if (isCallbackRequest(lower)) return "callback";
   if (lower.includes("question") || lower.includes("service")) return "question";
   return "menu";
 }
@@ -94,7 +98,7 @@ export function detectPhoneInterruptIntent(text: string): PhoneAssistantIntent |
   if (isBookingRequest(lower) || /get\s+service\s+as\s+soon\s+as\s+possible/.test(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
   if (/(text\s+with\s+a\s+technician|text\s+technician|send\s+(?:a\s+)?text)/.test(lower)) return "sms-technician";
-  if (/(call\s+me\s+back|call\s+back|callback)/.test(lower)) return "callback";
+  if (isCallbackRequest(lower)) return "callback";
   if (/(appointment\s+status|check\s+(?:my\s+)?status|status\s+of\s+(?:my\s+)?appointment)/.test(lower)) return "check-status";
   if (/(re[-\s]?schedule\s+(?:an\s+)?appointment|reschedule\s+(?:an\s+)?appointment)/.test(lower)) return "reschedule";
   if (/(cancel\s+(?:an\s+)?appointment)/.test(lower)) return "cancel";
@@ -149,7 +153,7 @@ export function parseMenuChoice(text: string): PhoneAssistantIntent {
   if (asksAvailability || isBookingRequest(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
   if (lower.includes("text")) return "sms-technician";
-  if (lower.includes("callback") || lower.includes("call me back") || lower.includes("call back")) return "callback";
+  if (isCallbackRequest(lower)) return "callback";
   if (lower.includes("question") || lower.includes("service")) return "question";
   return "menu";
 }

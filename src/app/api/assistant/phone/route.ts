@@ -23,7 +23,7 @@ import {
   updateMauricioTransferSession,
 } from "@/lib/assistantStore";
 import { getTwilioConfig, sendTwilioSms } from "@/lib/twilio";
-import { assistantBusinessFacts } from "@/lib/assistantKnowledge";
+import { assistantBusinessFacts, assistantBusinessPolicy } from "@/lib/assistantKnowledge";
 import { retrieveRelevantKnowledge, type RetrievedChunk } from "@/lib/assistantKnowledgeBase";
 import { getOpenAiRealtimeSipUri } from "@/lib/openAiRealtimePhone";
 
@@ -262,6 +262,8 @@ async function getPhoneAiAnswer(request: Request, question: string) {
     "After answering, guide toward one next step: booking, callback, or live technician.",
     "When relevant, mention same-day service is based on technician availability.",
     "If caller asks for same-day service, propose a concrete time window and ask a yes/no confirmation.",
+    "All Solutions business policy:",
+    ...assistantBusinessPolicy.map((policy) => `- ${policy}`),
     "Grounding facts:",
     ...assistantBusinessFacts.map((fact) => `- ${fact}`),
     grounded ? `Grounded answer candidate: ${grounded}` : "",
@@ -305,6 +307,66 @@ async function getPhoneAiAnswer(request: Request, question: string) {
     return answer;
   } catch {
     return groundedPhoneAnswer(question);
+  }
+}
+
+async function getNaturalWorkflowPrompt(
+  request: Request,
+  callerText: string,
+  intent: PhoneAssistantState["intent"],
+  requiredQuestion: string,
+) {
+  const fallbackAcknowledgement: Partial<Record<PhoneAssistantState["intent"], string>> = {
+    callback: "I can arrange a callback for you.",
+    "sms-technician": "I can connect you with a technician by text.",
+    "check-status": "I can check your appointment status.",
+    reschedule: "I can help reschedule your appointment.",
+    cancel: "I can help with your cancellation request.",
+  };
+  const fallback = `${fallbackAcknowledgement[intent] || "I can help with that."} ${requiredQuestion}`;
+  const apiKey = envFirst("OPENAI_API_KEY");
+  if (!apiKey) return fallback;
+
+  const model = envFirst("OPENAI_CHAT_MODEL", "OPENAI_MODEL") || "gpt-4.1-mini";
+  const policy = assistantBusinessPolicy.map((item) => `- ${item}`).join("\n");
+  const systemPrompt = [
+    "You are the All Solutions phone assistant.",
+    "Acknowledge the caller naturally in one short sentence based on what they actually said.",
+    "Do not ask a question, collect data, promise success, or mention internal systems in the acknowledgement.",
+    "Do not repeat the caller verbatim. Return only the acknowledgement sentence.",
+    `Recognized workflow: ${intent}.`,
+    "Business policy:",
+    policy,
+  ].join("\n");
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        input: [
+          { role: "system", content: [{ type: "input_text", text: systemPrompt }] },
+          { role: "user", content: [{ type: "input_text", text: callerText }] },
+        ],
+        max_output_tokens: 60,
+      }),
+      signal: AbortSignal.timeout(7000),
+    });
+    if (!response.ok) return fallback;
+    const payload = (await response.json().catch(() => null)) as unknown;
+    const generated = sanitizeForVoice(extractResponseText(payload))
+      .split(/\?|\b(?:may I|please (?:say|provide|tell)|what is your|could you (?:provide|tell|say)|can you (?:provide|tell|say))\b/i)[0]
+      .trim();
+    if (!generated || /(phone number|callback number|service address|zip code|email address)/i.test(generated)) {
+      return fallback;
+    }
+    return `${generated.replace(/[.!]+$/, "")}. ${requiredQuestion}`;
+  } catch {
+    return fallback;
   }
 }
 
@@ -1326,7 +1388,7 @@ export async function POST(request: Request) {
         });
       }
 
-      const prompt = currentStepLabel(flow[0]);
+      const prompt = await getNaturalWorkflowPrompt(request, incomingText, detectedIntent, currentStepLabel(flow[0]));
       return new NextResponse(toTwiml(prompt, { gather: true, state: nextState }), {
         headers: { "Content-Type": "text/xml" },
       });
@@ -1597,7 +1659,8 @@ export async function POST(request: Request) {
           ownerAssistantCaller,
         );
 
-        return new NextResponse(toTwiml(`Absolutely. ${currentStepLabel(flow[0])}`, { gather: true, state: nextState }), {
+        const naturalPrompt = await getNaturalWorkflowPrompt(request, incomingText, selectedSupportIntent, currentStepLabel(flow[0]));
+        return new NextResponse(toTwiml(naturalPrompt, { gather: true, state: nextState }), {
           headers: { "Content-Type": "text/xml" },
         });
       }
@@ -1688,7 +1751,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const openingStepPrompt = currentStepLabel(flow[0]);
+    const openingStepPrompt = await getNaturalWorkflowPrompt(request, incomingText, chosenIntent, currentStepLabel(flow[0]));
 
     return new NextResponse(toTwiml(openingStepPrompt, { gather: true, state: nextState }), {
       headers: { "Content-Type": "text/xml" },
@@ -1834,7 +1897,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const interruptPrompt = currentStepLabel(interruptFlow[0]);
+    const interruptPrompt = await getNaturalWorkflowPrompt(request, incomingText, effectiveInterruptIntent, currentStepLabel(interruptFlow[0]));
 
     return new NextResponse(toTwiml(interruptPrompt, { gather: true, state: interruptState }), {
       headers: { "Content-Type": "text/xml" },
