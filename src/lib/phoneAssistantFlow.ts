@@ -52,14 +52,18 @@ export type PhoneAssistantResponse = {
 };
 
 export const phoneAssistantGreeting =
-  "Thank you for calling All Solutions. We offer free estimates, so one of our technicians can come to your desired location and disclose pricing before doing anything. Would you like to make an appointment?";
+  "Thank you for calling All Solutions. We offer free estimates, so one of our technicians can come to your location and discuss pricing before you commit to or authorize any work. Would you like to schedule an appointment at our earliest available time?";
 
 function isBookingRequest(lower: string) {
-  return /(\bbook(?:ing)?\b|\bschedul(?:e|ing)\b|make\s+(?:me\s+)?an?\s+appointment|set\s+up\s+an?\s+appointment|need\s+an?\s+appointment|want\s+an?\s+appointment|technician\s+(?:can\s+)?come|technician\s+(?:to\s+)?visit|come\s+to\s+(?:my|our|the)\s+(?:home|house|location|address))/.test(lower);
+  return /(\bbook(?:ing)?\b|\bschedul(?:e|ing)\b|make\s+(?:me\s+)?an?\s+appointment|set\s+up\s+an?\s+appointment|need\s+an?\s+appointment|want\s+an?\s+appointment|technician\s+(?:can\s+)?come|technician\s+(?:to\s+)?visit|(?:can|could|would)\s+you\s+come|come\s+(?:today|tomorrow|this\s+(?:morning|afternoon|evening))|\b(?:next\s+)?(?:monday|tuesday|wednesday|thursday|friday|saturday)(?:\s+(?:morning|afternoon|evening))?\b|come\s+to\s+(?:my|our|the)\s+(?:home|house|location|address))/.test(lower);
 }
 
 function isCallbackRequest(lower: string) {
   return /(callback|call\s+me\s+back|call\s+back|(?:can|could|would)\s+(?:a\s+technician|someone|somebody|you)\s+call\s+(?:me\s+)?(?:back|later)|have\s+(?:a\s+technician|someone|somebody)\s+call\s+me)/.test(lower);
+}
+
+function isTechnicianTextRequest(lower: string) {
+  return /(text\s+(?:with\s+)?(?:a\s+)?technician|technician\s+(?:to\s+)?text|text\s+me|send\s+me\s+(?:a\s+)?text|(?:have|want|need)\s+(?:a\s+technician|someone|somebody)\s+to\s+text\s+me|connect\s+me.{0,30}(?:by|through|via)\s+text)/.test(lower);
 }
 
 export function defaultPhoneAssistantState(callSid?: string): PhoneAssistantState {
@@ -82,7 +86,7 @@ export function detectPhoneIntent(text: string): PhoneAssistantIntent {
   if (lower.includes("cancel")) return "cancel";
   if (asksAvailability || isBookingRequest(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
-  if (lower.includes("text") && lower.includes("technician")) return "sms-technician";
+  if (isTechnicianTextRequest(lower)) return "sms-technician";
   if (isCallbackRequest(lower)) return "callback";
   if (lower.includes("question") || lower.includes("service")) return "question";
   return "menu";
@@ -97,7 +101,7 @@ export function detectPhoneInterruptIntent(text: string): PhoneAssistantIntent |
   if (/(next\s+available|when\s+is\s+your\s+next\s+available|when\s+can\s+you\s+(come|guys\s+come)|how\s+soon\s+can\s+your\s+technician\s+come|when\s+can\s+your\s+technician\s+come)/.test(lower)) return "booking";
   if (isBookingRequest(lower) || /get\s+service\s+as\s+soon\s+as\s+possible/.test(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
-  if (/(text\s+with\s+a\s+technician|text\s+technician|send\s+(?:a\s+)?text)/.test(lower)) return "sms-technician";
+  if (isTechnicianTextRequest(lower)) return "sms-technician";
   if (isCallbackRequest(lower)) return "callback";
   if (/(appointment\s+status|check\s+(?:my\s+)?status|status\s+of\s+(?:my\s+)?appointment)/.test(lower)) return "check-status";
   if (/(re[-\s]?schedule\s+(?:an\s+)?appointment|reschedule\s+(?:an\s+)?appointment)/.test(lower)) return "reschedule";
@@ -152,7 +156,7 @@ export function parseMenuChoice(text: string): PhoneAssistantIntent {
   if (lower.includes("cancel")) return "cancel";
   if (asksAvailability || isBookingRequest(lower)) return "booking";
   if (/(transfer|live\s+person|real\s+person|representative|agent|someone\s+now)/.test(lower)) return "sms-technician";
-  if (lower.includes("text")) return "sms-technician";
+  if (isTechnicianTextRequest(lower)) return "sms-technician";
   if (isCallbackRequest(lower)) return "callback";
   if (lower.includes("question") || lower.includes("service")) return "question";
   return "menu";

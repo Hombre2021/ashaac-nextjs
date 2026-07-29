@@ -190,25 +190,85 @@ async function buildPostAnswerFollowup(request: Request, question: string) {
 }
 
 async function buildBookingAvailabilityOffer(request: Request, bookingRequest: string) {
+  const slots = await fetchAvailabilitySlots(request).catch(() => [] as Array<{ date: string; windows: string[] }>);
+  const requestedDate = inferRequestedBookingDate(bookingRequest);
+  const requestedPeriod = inferRequestedTimePeriod(bookingRequest);
   const todayDate = normalizeBookingDate("today");
-  const windows = await fetchAvailabilityForDate(request, todayDate).catch(() => [] as string[]);
   const now = currentMountainMinutes();
   const target = now + 30;
-  const valid = windows
-    .filter((window) => !/Any time/i.test(window))
-    .map((window) => ({ window, start: parseWindowStartMinutes(window) }))
-    .filter((item) => Number.isFinite(item.start) && item.start >= target)
-    .sort((a, b) => a.start - b.start);
-  const pickedWindow = valid[0]?.window || nextDefaultTwoHourWindow(now);
+  const allCandidates = slots
+    .filter((slot) => isMondayThroughSaturday(slot.date))
+    .flatMap((slot) => slot.windows
+      .filter((window) => !/Any time/i.test(window))
+      .map((window) => ({ date: slot.date, window, start: parseWindowStartMinutes(window) })))
+    .filter((item) => Number.isFinite(item.start))
+    .filter((item) => item.date !== todayDate || item.start >= target)
+    .sort((a, b) => a.date.localeCompare(b.date) || a.start - b.start);
+  const exactCandidates = allCandidates
+    .filter((item) => !requestedDate || item.date === requestedDate)
+    .filter((item) => matchesRequestedTimePeriod(item.start, requestedPeriod));
+  const periodAlternatives = allCandidates.filter((item) => matchesRequestedTimePeriod(item.start, requestedPeriod));
+  const picked = exactCandidates[0] || periodAlternatives[0] || allCandidates[0];
+
+  if (!picked) {
+    return {
+      text: "I do not see an available appointment in the current schedule. Which other day, Monday through Saturday, would work for you?",
+      offer: null,
+    };
+  }
+
+  const spokenDate = formatBookingDateForVoice(picked.date, todayDate);
+  const exactMatch = exactCandidates.length > 0;
+  const requestedDateText = requestedDate ? formatBookingDateForVoice(requestedDate, todayDate) : "your requested day";
+  const requestedPeriodText = requestedPeriod === "any" ? "" : ` ${requestedPeriod}`;
 
   return {
-    text: `The next available time is between ${pickedWindow} today. Would that work for you?`,
+    text: exactMatch
+      ? `The earliest matching time is between ${picked.window} ${spokenDate}. Would that work for you?`
+      : `I do not see an available${requestedPeriodText} appointment ${requestedDateText}. The nearest available time is between ${picked.window} ${spokenDate}. Would that work for you?`,
     offer: {
-      date: todayDate,
-      window: pickedWindow,
+      date: picked.date,
+      window: picked.window,
       question: bookingRequest,
     },
   };
+}
+
+function inferRequestedBookingDate(value: string) {
+  if (/\btoday\b/i.test(value)) return normalizeBookingDate("today");
+  if (/\btomorrow\b/i.test(value)) return normalizeBookingDate("tomorrow");
+  if (/\b(?:next\s+)?(?:monday|tuesday|wednesday|thursday|friday|saturday)\b/i.test(value)) return normalizeBookingDate(value);
+  if (/\b(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}/i.test(value)) return normalizeBookingDate(value);
+  const iso = value.match(/\b20\d{2}[-\s\/]?\d{1,2}[-\s\/]?\d{1,2}\b/);
+  return iso ? normalizeBookingDate(iso[0]) : "";
+}
+
+function isMondayThroughSaturday(date: string) {
+  const parsed = new Date(`${date}T12:00:00`);
+  return !Number.isNaN(parsed.getTime()) && parsed.getDay() >= 1 && parsed.getDay() <= 6;
+}
+
+function inferRequestedTimePeriod(value: string) {
+  if (/\bmorning\b/i.test(value)) return "morning" as const;
+  if (/\bafternoon\b/i.test(value)) return "afternoon" as const;
+  if (/\b(?:evening|night)\b/i.test(value)) return "evening" as const;
+  return "any" as const;
+}
+
+function matchesRequestedTimePeriod(startMinutes: number, period: "morning" | "afternoon" | "evening" | "any") {
+  if (period === "morning") return startMinutes < 12 * 60;
+  if (period === "afternoon") return startMinutes >= 12 * 60 && startMinutes < 17 * 60;
+  if (period === "evening") return startMinutes >= 17 * 60;
+  return true;
+}
+
+function formatBookingDateForVoice(date: string, todayDate: string) {
+  if (date === todayDate) return "today";
+  if (date === normalizeBookingDate("tomorrow")) return "tomorrow";
+  const parsed = new Date(`${date}T12:00:00`);
+  return Number.isNaN(parsed.getTime())
+    ? `on ${date}`
+    : `on ${new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(parsed)}`;
 }
 
 function formatAiVoiceReply(question: string, answer: string) {
@@ -672,13 +732,22 @@ async function sendMauricioMessage(message: string) {
 }
 
 async function fetchAvailabilityForDate(request: Request, date: string) {
+  const slots = await fetchAvailabilitySlots(request);
+  const slot = slots.find((item) => item.date === date);
+  return slot?.windows || [];
+}
+
+async function fetchAvailabilitySlots(request: Request) {
   const url = new URL(request.url);
   const endpoint = new URL("/api/book/availability", url.origin).toString();
   const response = await fetch(endpoint, { method: "GET", cache: "no-store" });
   const payload = (await response.json().catch(() => null)) as { slots?: Array<{ date?: string; windows?: string[] }> } | null;
-  const slots = Array.isArray(payload?.slots) ? payload!.slots : [];
-  const slot = slots.find((item) => String(item.date || "") === date);
-  return Array.isArray(slot?.windows) ? slot!.windows : [];
+  return (Array.isArray(payload?.slots) ? payload!.slots : [])
+    .map((slot) => ({
+      date: String(slot.date || "").trim(),
+      windows: Array.isArray(slot.windows) ? slot.windows.map((window) => String(window).trim()).filter(Boolean) : [],
+    }))
+    .filter((slot) => slot.date && slot.windows.length > 0);
 }
 
 async function callLocalApi(request: Request, path: string, body: Record<string, unknown>) {
@@ -783,6 +852,11 @@ function inferBookingCity(value: string) {
 function normalizeBookingWindow(value: string) {
   const lower = String(value || "").toLowerCase();
   if (/any\s*time|anytime|whenever/.test(lower)) return "Any time (24-hour availability)";
+  if (/5|five/.test(lower) && /7|seven/.test(lower) && /am|morning/.test(lower)) return "5:00 AM - 7:00 AM";
+  if (/7|seven/.test(lower) && /9|nine/.test(lower) && /am|morning/.test(lower)) return "7:00 AM - 9:00 AM";
+  if (/9|nine/.test(lower) && /11|eleven/.test(lower) && /am|morning/.test(lower)) return "9:00 AM - 11:00 AM";
+  if (/7|seven/.test(lower) && /9|nine/.test(lower) && /pm|evening|night/.test(lower)) return "7:00 PM - 9:00 PM";
+  if (/9|nine/.test(lower) && /11|eleven/.test(lower) && /pm|evening|night/.test(lower)) return "9:00 PM - 11:00 PM";
   if (/8|eight/.test(lower) && /10|ten/.test(lower)) return "8:00 AM - 10:00 AM";
   if (/10|ten/.test(lower) && /12|twelve/.test(lower)) return "10:00 AM - 12:00 PM";
   if (/12|twelve/.test(lower) && /2|two/.test(lower)) return "12:00 PM - 2:00 PM";
@@ -813,6 +887,34 @@ function normalizeBookingDate(value: string) {
     const t = new Date(mountain);
     t.setDate(t.getDate() + 1);
     return format(t);
+  }
+
+  const weekdayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  const weekdayMatch = lower.match(/\b(?:next\s+)?(monday|tuesday|wednesday|thursday|friday|saturday)\b/);
+  if (weekdayMatch) {
+    const targetDay = weekdayNames.indexOf(weekdayMatch[1]);
+    let daysAhead = (targetDay - mountain.getDay() + 7) % 7;
+    if (/\bnext\s+/.test(weekdayMatch[0]) || daysAhead === 0) daysAhead += 7;
+    const target = new Date(mountain);
+    target.setDate(target.getDate() + daysAhead);
+    return format(target);
+  }
+
+  const monthNames: Record<string, number> = {
+    january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+    july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+  };
+  const monthMatch = lower.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+(20\d{2}))?\b/);
+  if (monthMatch) {
+    let year = monthMatch[3] ? Number.parseInt(monthMatch[3], 10) : mountain.getFullYear();
+    const month = monthNames[monthMatch[1]];
+    const day = Number.parseInt(monthMatch[2], 10);
+    let target = new Date(year, month, day);
+    if (!monthMatch[3] && format(target) < format(mountain)) {
+      year += 1;
+      target = new Date(year, month, day);
+    }
+    if (target.getMonth() === month && target.getDate() === day) return format(target);
   }
 
   const iso = lower.match(/\b(20\d{2})[-\s\/]?(\d{1,2})[-\s\/]?(\d{1,2})\b/);
@@ -1336,7 +1438,10 @@ export async function POST(request: Request) {
   if (mode === "booking-availability") {
     const bookingRequest = readPendingAiQuestion(state) || "book an appointment";
     const availability = await buildBookingAvailabilityOffer(request, bookingRequest);
-    const offerState = withSameDayOfferContext(clearPendingAiQuestion(state), availability.offer);
+    const clearedState = clearPendingAiQuestion(state);
+    const offerState = availability.offer
+      ? withSameDayOfferContext(clearedState, availability.offer)
+      : clearSameDayOfferContext(clearedState);
     return new NextResponse(toTwiml(availability.text, { gather: true, state: offerState }), {
       headers: { "Content-Type": "text/xml" },
     });

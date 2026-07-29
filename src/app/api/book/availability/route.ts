@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   buildPrototypeAvailability,
   bookingTimeWindowOptions,
+  isBookingWindowAllowedOnDate,
   type BookingAvailabilitySlot,
   type BookingAvailabilityResponse,
 } from "@/lib/booking";
@@ -53,7 +54,8 @@ async function fetchCalendarDayAvailability(date: string): Promise<string[]> {
   url.searchParams.set("date", date);
   url.searchParams.set("durationMinutes", String(DEFAULT_DURATION_MINUTES));
   url.searchParams.set("slotIntervalMinutes", String(DEFAULT_SLOT_INTERVAL_MINUTES));
-  url.searchParams.set("businessStartHour", String(DEFAULT_BUSINESS_START_HOUR));
+  const isFriday = new Date(`${date}T12:00:00`).getDay() === 5;
+  url.searchParams.set("businessStartHour", String(isFriday ? 5 : DEFAULT_BUSINESS_START_HOUR));
   url.searchParams.set("businessEndHour", String(DEFAULT_BUSINESS_END_HOUR));
 
   const headers: Record<string, string> = {};
@@ -83,7 +85,7 @@ async function fetchCalendarDayAvailability(date: string): Promise<string[]> {
     windows.push("Any time (24-hour availability)");
   }
 
-  return windows.filter((window) => VALID_WINDOWS.has(window));
+  return windows.filter((window) => VALID_WINDOWS.has(window) && isBookingWindowAllowedOnDate(date, window));
 }
 
 export async function GET() {
@@ -92,7 +94,8 @@ export async function GET() {
   const calendarSlots = await Promise.all(
     rawSlots.map(async (slot) => ({
       ...slot,
-      windows: await fetchCalendarDayAvailability(slot.date).catch(() => slot.windows),
+      windows: (await fetchCalendarDayAvailability(slot.date).catch(() => slot.windows))
+        .filter((window) => isBookingWindowAllowedOnDate(slot.date, window)),
     })),
   );
 

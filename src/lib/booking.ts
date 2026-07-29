@@ -12,12 +12,17 @@ export const bookingServiceOptions = [
 ] as const;
 
 export const bookingTimeWindowOptions = [
+  "5:00 AM - 7:00 AM",
+  "7:00 AM - 9:00 AM",
+  "9:00 AM - 11:00 AM",
   "8:00 AM - 10:00 AM",
   "10:00 AM - 12:00 PM",
   "12:00 PM - 2:00 PM",
   "2:00 PM - 4:00 PM",
   "4:00 PM - 6:00 PM",
   "6:00 PM - 8:00 PM",
+  "7:00 PM - 9:00 PM",
+  "9:00 PM - 11:00 PM",
   "8:00 PM - 10:00 PM",
   "10:00 PM - 11:00 PM",
   "Any time (24-hour availability)",
@@ -171,6 +176,40 @@ function hasFutureTimeForToday(window: typeof bookingTimeWindowOptions[number], 
   return getWindowStartMinutes(window) > nowMinutes;
 }
 
+const FRIDAY_WINDOWS = new Set<string>([
+  "5:00 AM - 7:00 AM",
+  "7:00 AM - 9:00 AM",
+  "9:00 AM - 11:00 AM",
+  "10:00 AM - 12:00 PM",
+  "7:00 PM - 9:00 PM",
+  "9:00 PM - 11:00 PM",
+]);
+
+const FRIDAY_ONLY_WINDOWS = new Set<string>([
+  "5:00 AM - 7:00 AM",
+  "7:00 AM - 9:00 AM",
+  "9:00 AM - 11:00 AM",
+  "7:00 PM - 9:00 PM",
+  "9:00 PM - 11:00 PM",
+]);
+
+export function isBookingWindowAllowedOnDate(date: string, window: string) {
+  const parsed = new Date(`${date}T12:00:00`);
+  if (Number.isNaN(parsed.getTime())) return false;
+  const weekday = parsed.getDay();
+  if (weekday === 0) return false;
+  if (weekday === 5) return FRIDAY_WINDOWS.has(window);
+  if (FRIDAY_ONLY_WINDOWS.has(window)) return false;
+  if (weekday === 6) return [
+    "8:00 AM - 10:00 AM",
+    "10:00 AM - 12:00 PM",
+    "12:00 PM - 2:00 PM",
+    "2:00 PM - 4:00 PM",
+    "4:00 PM - 6:00 PM",
+  ].includes(window);
+  return true;
+}
+
 export function getCurrentDateInBookingTimeZone(now = new Date()) {
   return toIsoDate(now);
 }
@@ -186,7 +225,10 @@ export function buildPrototypeAvailability(days = 7): BookingAvailabilitySlot[] 
     candidate.setDate(baseDay.getDate() + offset);
 
     if (offset === 0) {
-      const todayWindows = [...bookingTimeWindowOptions].filter((window) => hasFutureTimeForToday(window, today));
+      const candidateDate = toIsoDate(candidate);
+      const todayWindows = [...bookingTimeWindowOptions]
+        .filter((window) => isBookingWindowAllowedOnDate(candidateDate, window))
+        .filter((window) => hasFutureTimeForToday(window, today));
 
       if (todayWindows.length > 0) {
         slots.push({
@@ -203,14 +245,8 @@ export function buildPrototypeAvailability(days = 7): BookingAvailabilitySlot[] 
       continue;
     }
 
-    const windows = [...bookingTimeWindowOptions].filter((_, index) => {
-      // Saturdays: cap at early windows only (skip late-evening slots)
-      if (candidate.getDay() === 6) {
-        return index < 5;
-      }
-
-      return true;
-    });
+    const candidateDate = toIsoDate(candidate);
+    const windows = [...bookingTimeWindowOptions].filter((window) => isBookingWindowAllowedOnDate(candidateDate, window));
 
     slots.push({
       date: toIsoDate(candidate),
