@@ -26,6 +26,17 @@ async function postInternal(origin: string, path: string, body: Record<string, u
   return payload;
 }
 
+async function getInternal(origin: string, path: string) {
+  const response = await fetch(`${origin}${path}`, {
+    method: "GET",
+    cache: "no-store",
+    signal: AbortSignal.timeout(12000),
+  });
+  const payload = await response.json().catch(() => ({})) as Record<string, unknown>;
+  if (!response.ok) throw new Error(String(payload.error || payload.detail || `HTTP ${response.status}`));
+  return payload;
+}
+
 function toolResult(payload: unknown, isError = false) {
   return {
     isError,
@@ -35,6 +46,64 @@ function toolResult(payload: unknown, isError = false) {
 
 function createServer(origin: string) {
   const server = new McpServer({ name: "all-solutions-phone-tools", version: "1.0.0" });
+
+  server.registerTool("check_availability", {
+    description: "Get real Monday-through-Saturday website booking availability. Always call this before offering an appointment date or time.",
+    inputSchema: {
+      requestedDate: z.string().optional().describe("Requested date in YYYY-MM-DD when known."),
+      requestedPeriod: z.enum(["morning", "afternoon", "evening", "any"]).optional(),
+    },
+  }, async ({ requestedDate, requestedPeriod }) => {
+    try {
+      const availability = await getInternal(origin, "/api/book/availability") as { slots?: Array<{ date?: string; windows?: string[] }> };
+      const slots = Array.isArray(availability.slots) ? availability.slots : [];
+      return toolResult({
+        ok: true,
+        requestedDate: requestedDate || "",
+        requestedPeriod: requestedPeriod || "any",
+        slots: requestedDate ? slots.filter((slot) => slot.date === requestedDate) : slots,
+      });
+    } catch (error) {
+      return toolResult({ error: String((error as Error).message || error) }, true);
+    }
+  });
+
+  server.registerTool("create_booking", {
+    description: "Create a confirmed appointment through the website booking endpoint. Call only after checking availability and confirming date, time, phone, and address.",
+    inputSchema: {
+      preferredDate: z.string().min(10),
+      preferredTimeWindow: z.string().min(5),
+      city: z.string().min(2),
+      firstName: z.string().min(1),
+      lastName: z.string().min(1),
+      phone: z.string().min(10),
+      email: z.string().email(),
+      addressLine1: z.string().min(5),
+      addressCity: z.string().min(2),
+      addressZip: z.string().min(5),
+      notes: z.string().default("Repair diagnostic requested by phone"),
+    },
+  }, async (args) => {
+    try {
+      return toolResult(await postInternal(origin, "/api/book", {
+        ...args,
+        serviceType: "Repair diagnostic",
+        sourcePage: "/phone-assistant-realtime",
+        utm_source: "phone-assistant",
+        utm_medium: "voice",
+        utm_campaign: "openai-realtime-booking",
+        utm_term: "",
+        utm_content: "",
+        gclid: "",
+        gbraid: "",
+        wbraid: "",
+        fbclid: "",
+        msclkid: "",
+      }));
+    } catch (error) {
+      return toolResult({ error: String((error as Error).message || error) }, true);
+    }
+  });
 
   server.registerTool("submit_service_request", {
     description: "Submit a service or callback request only after the caller confirms the phone number and address.",

@@ -14,6 +14,7 @@ import {
   type PhoneAssistantState,
 } from "@/lib/phoneAssistantFlow";
 import {
+  appendAssistantCost,
   appendAssistantLead,
   appendAssistantSpamReview,
   createMauricioTransferSession,
@@ -430,8 +431,111 @@ async function getNaturalWorkflowPrompt(
   }
 }
 
+type PhoneTurnInterpretation = {
+  kind: "request" | "question" | "field_answer" | "offer_accept" | "offer_decline" | "offer_repeat" | "goodbye" | "unknown";
+  intent: "booking" | "question" | "callback" | "sms-technician" | "check-status" | "reschedule" | "cancel" | "mauricio" | "current" | "unknown";
+  normalizedValue: string;
+  acknowledgement: string;
+};
+
+async function interpretPhoneTurn(params: {
+  callerText: string;
+  callSid: string;
+  state: PhoneAssistantState;
+  pendingOffer: { pending: boolean; date: string; window: string };
+}) {
+  const apiKey = envFirst("OPENAI_API_KEY");
+  if (!apiKey || !params.callerText.trim()) return null;
+  const model = envFirst("OPENAI_PHONE_INTERPRETER_MODEL", "OPENAI_CHAT_MODEL", "OPENAI_MODEL") || "gpt-4.1-mini";
+  const currentStep: string = params.state.flow[params.state.stepIndex] ?? "none";
+  const systemPrompt = [
+    "You are the real-time turn interpreter for the All Solutions phone assistant.",
+    "Understand the caller's meaning in context. Do not answer the caller directly.",
+    "Classify requests separately from informational questions and from answers to the current workflow question.",
+    "If an appointment time is pending, a request to repeat, clarify, or ask what date/time was said is offer_repeat even if the utterance starts with yes.",
+    "Only an unambiguous acceptance of the pending appointment is offer_accept.",
+    "A requested different day or time is a booking request, not acceptance or decline.",
+    "Use field_answer when the caller is answering the current required field.",
+    `Current workflow intent: ${params.state.intent}.`,
+    `Current required field: ${currentStep}.`,
+    `Pending appointment offer: ${params.pendingOffer.pending ? `${params.pendingOffer.date} ${params.pendingOffer.window}` : "none"}.`,
+    params.state.intent === "menu" && currentStep === "none"
+      ? "The assistant most recently asked whether the caller wants to schedule an appointment. An unambiguous yes means a booking request."
+      : "",
+    "Business policy:",
+    ...assistantBusinessPolicy.map((item) => `- ${item}`),
+  ].join("\n");
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model,
+        input: [
+          { role: "system", content: [{ type: "input_text", text: systemPrompt }] },
+          { role: "user", content: [{ type: "input_text", text: params.callerText }] },
+        ],
+        text: {
+          format: {
+            type: "json_schema",
+            name: "phone_turn",
+            strict: true,
+            schema: {
+              type: "object",
+              additionalProperties: false,
+              required: ["kind", "intent", "normalizedValue", "acknowledgement"],
+              properties: {
+                kind: { type: "string", enum: ["request", "question", "field_answer", "offer_accept", "offer_decline", "offer_repeat", "goodbye", "unknown"] },
+                intent: { type: "string", enum: ["booking", "question", "callback", "sms-technician", "check-status", "reschedule", "cancel", "mauricio", "current", "unknown"] },
+                normalizedValue: { type: "string" },
+                acknowledgement: { type: "string" },
+              },
+            },
+          },
+        },
+        max_output_tokens: 180,
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) return null;
+    const payload = (await response.json().catch(() => null)) as unknown;
+    const raw = extractResponseText(payload);
+    const interpretation = JSON.parse(raw) as PhoneTurnInterpretation;
+    await appendAssistantCost({
+      provider: "openai",
+      category: "llm",
+      callSid: params.callSid || undefined,
+      unitCount: 1,
+      unitLabel: "turn",
+      detail: `phone-turn:${model}:${interpretation.kind}:${interpretation.intent}`,
+    }).catch(() => null);
+    console.info("phone_openai_turn", {
+      callSid: params.callSid,
+      model,
+      kind: interpretation.kind,
+      intent: interpretation.intent,
+    });
+    return interpretation;
+  } catch {
+    return null;
+  }
+}
+
+function intentFromInterpretation(turn: PhoneTurnInterpretation | null) {
+  if (!turn || turn.intent === "current" || turn.intent === "unknown") return null;
+  return turn.intent as PhoneAssistantState["intent"];
+}
+
+function yesNoFromInterpretation(turn: PhoneTurnInterpretation | null) {
+  if (turn?.kind === "offer_accept") return "yes" as const;
+  if (turn?.kind === "offer_decline") return "no" as const;
+  return "unknown" as const;
+}
+
 function hasElevenLabsConfig() {
-  return Boolean((process.env.ELEVENLABS_API_KEY || "").trim() && (process.env.ELEVENLABS_VOICE_ID || "").trim());
+  const enabled = /^(1|true|yes|on)$/i.test(String(process.env.PHONE_USE_ELEVENLABS || "").trim());
+  return enabled && Boolean((process.env.ELEVENLABS_API_KEY || "").trim() && (process.env.ELEVENLABS_VOICE_ID || "").trim());
 }
 
 function buildSpeechNode(text: string, state?: PhoneAssistantState) {
@@ -448,7 +552,7 @@ function buildSpeechNode(text: string, state?: PhoneAssistantState) {
 }
 
 function buildTypingSoundNode() {
-  return `<Play>${escapeXml(`${getPublicBaseUrl()}/api/assistant/phone/typing`)}</Play>`;
+  return `<Play>${escapeXml(`${getPublicBaseUrl()}/audio/typing-keyboard.mp3`)}</Play>`;
 }
 
 function getGatherHints(state?: PhoneAssistantState) {
@@ -1248,11 +1352,10 @@ function buildOwnerDirectTransferTwiml() {
   return `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="Polly.Matthew" language="en-US">Connecting you now.</Say><Dial>${escapeXml(ownerPhone)}</Dial></Response>`;
 }
 
-function buildRealtimeSipTwiml(state: PhoneAssistantState) {
+function buildRealtimeSipTwiml() {
   const sipUri = getOpenAiRealtimeSipUri();
   const completionUrl = `${getPublicBaseUrl()}/api/assistant/phone?mode=realtime-dial-complete`;
-  const greeting = "Thank you for calling All Solutions. We offer free estimates, so one of our technicians can come to your desired location and disclose pricing before doing anything. Would you like to make an appointment?";
-  return `<?xml version="1.0" encoding="UTF-8"?><Response>${buildSpeechNode(greeting, state)}<Dial answerOnBridge="true" action="${escapeXml(completionUrl)}" method="POST"><Sip>${escapeXml(sipUri)}</Sip></Dial></Response>`;
+  return `<?xml version="1.0" encoding="UTF-8"?><Response><Dial answerOnBridge="true" action="${escapeXml(completionUrl)}" method="POST"><Sip>${escapeXml(sipUri)}</Sip></Dial></Response>`;
 }
 
 function buildCallerVoicemailTwiml(callerName: string, conferenceName: string) {
@@ -1439,6 +1542,24 @@ export async function POST(request: Request) {
     });
   }
 
+  const excludedInterpretationModes = new Set([
+    "booking-availability",
+    "realtime-dial-complete",
+    "mauricio-connect",
+    "mauricio-wait",
+    "mauricio-status",
+    "mauricio-screen",
+    "mauricio-voicemail-complete",
+  ]);
+  const interpretedTurn = incomingText && !lowConfidence && !String(payload.Digits || "").trim() && !excludedInterpretationModes.has(mode)
+    ? await interpretPhoneTurn({
+      callerText: incomingText,
+      callSid,
+      state,
+      pendingOffer: readSameDayOfferContext(state),
+    })
+    : null;
+
   if (mode === "booking-availability") {
     const bookingRequest = readPendingAiQuestion(state) || "book an appointment";
     const availability = await buildBookingAvailabilityOffer(request, bookingRequest);
@@ -1453,7 +1574,7 @@ export async function POST(request: Request) {
 
   if (mode === "ai-answer") {
     const pendingQuestion = incomingText || readPendingAiQuestion(state);
-    const detectedIntent = incomingText ? detectPhoneIntent(incomingText) : "menu";
+    const detectedIntent = incomingText ? (intentFromInterpretation(interpretedTurn) || detectPhoneIntent(incomingText)) : "menu";
 
     if (incomingText && detectedIntent !== "menu" && detectedIntent !== "question") {
       if (detectedIntent === "goodbye") {
@@ -1666,13 +1787,14 @@ export async function POST(request: Request) {
 
   const sameDayOffer = readSameDayOfferContext(state);
   if (sameDayOffer.pending && incomingText) {
-    if (isOfferClarificationRequest(incomingText)) {
+    if (interpretedTurn?.kind === "offer_repeat" || isOfferClarificationRequest(incomingText)) {
       return new NextResponse(toTwiml(repeatOfferPrompt(sameDayOffer.date, sameDayOffer.window), { gather: true, state }), {
         headers: { "Content-Type": "text/xml" },
       });
     }
 
-    const yesNo = detectYesNo(incomingText);
+    const interpretedYesNo = yesNoFromInterpretation(interpretedTurn);
+    const yesNo = interpretedYesNo !== "unknown" ? interpretedYesNo : detectYesNo(incomingText);
 
     if (yesNo === "yes") {
       const flow = buildFlowForIntent("booking");
@@ -1737,7 +1859,7 @@ export async function POST(request: Request) {
   if (!state.intent || state.intent === "menu") {
     if (!incomingText) {
       if (!realtimeFallback && getOpenAiRealtimeSipUri()) {
-        return new NextResponse(buildRealtimeSipTwiml(state), {
+        return new NextResponse(buildRealtimeSipTwiml(), {
           headers: { "Content-Type": "text/xml" },
         });
       }
@@ -1785,7 +1907,13 @@ export async function POST(request: Request) {
       });
     }
 
-    const yesNoFromGreeting = detectYesNo(incomingText);
+    const interpretedGreetingAnswer = yesNoFromInterpretation(interpretedTurn);
+    const interpretedGreetingIntent = intentFromInterpretation(interpretedTurn);
+    const yesNoFromGreeting = interpretedGreetingAnswer !== "unknown"
+      ? interpretedGreetingAnswer
+      : interpretedGreetingIntent === "booking"
+        ? "yes"
+        : detectYesNo(incomingText);
     if (yesNoFromGreeting === "yes") {
       const emergency = isEmergencyText(incomingText);
       const ownerAssistantCaller = isOwnerAssistantCaller(fromE164, incomingText);
@@ -1803,7 +1931,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const chosenIntent = detectPhoneIntent(incomingText);
+    const chosenIntent = intentFromInterpretation(interpretedTurn) || detectPhoneIntent(incomingText);
     const emergency = isEmergencyText(incomingText);
     const ownerAssistantCaller = isOwnerAssistantCaller(fromE164, incomingText);
 
@@ -1980,7 +2108,7 @@ export async function POST(request: Request) {
   }
 
   const interruptIntent = detectPhoneInterruptIntent(incomingText);
-  const broadIntent = detectPhoneIntent(incomingText);
+  const broadIntent = intentFromInterpretation(interpretedTurn) || detectPhoneIntent(incomingText);
   const effectiveInterruptIntent = (interruptIntent || (broadIntent !== "menu" ? broadIntent : null));
   if (!contactConfirmationAccepted && effectiveInterruptIntent && effectiveInterruptIntent !== state.intent) {
     const emergency = isEmergencyText(incomingText);
