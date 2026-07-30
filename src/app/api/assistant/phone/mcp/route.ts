@@ -46,10 +46,43 @@ function twilioCredentials() {
   };
 }
 
+async function resolveConferenceSid(conferenceName: string) {
+  if (!/^ash-CA[0-9a-f]{32}$/i.test(conferenceName)) return "";
+  const twilio = twilioCredentials();
+  if (!twilio.sid || !twilio.token) return "";
+  const query = new URLSearchParams({
+    FriendlyName: conferenceName,
+    Status: "in-progress",
+    PageSize: "1",
+  });
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences.json?${query}`, {
+    headers: { Authorization: `Basic ${Buffer.from(`${twilio.sid}:${twilio.token}`).toString("base64")}` },
+  });
+  const payload = await response.json().catch(() => ({})) as { conferences?: Array<{ sid?: string }> };
+  return response.ok ? String(payload.conferences?.[0]?.sid || "") : "";
+}
+
+async function resolveParticipantCallSid(conferenceSid: string, participant: string) {
+  if (/^CA[0-9a-f]{32}$/i.test(participant)) return participant;
+  const twilio = twilioCredentials();
+  if (!twilio.sid || !twilio.token || !/^CF[0-9a-f]{32}$/i.test(conferenceSid)) return "";
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences/${conferenceSid}/Participants.json?PageSize=20`, {
+    headers: { Authorization: `Basic ${Buffer.from(`${twilio.sid}:${twilio.token}`).toString("base64")}` },
+  });
+  const payload = await response.json().catch(() => ({})) as { participants?: Array<{ call_sid?: string; label?: string }> };
+  if (!response.ok) return "";
+  const match = payload.participants?.find((entry) => entry.label === participant);
+  return String(match?.call_sid || "");
+}
+
 async function twilioParticipantRequest(conferenceName: string, participant: string, method: "GET" | "POST" | "DELETE", body?: URLSearchParams) {
   const twilio = twilioCredentials();
   if (!twilio.sid || !twilio.token) return null;
-  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences/${encodeURIComponent(conferenceName)}/Participants/${encodeURIComponent(participant)}.json`, {
+  const conferenceSid = await resolveConferenceSid(conferenceName);
+  if (!conferenceSid) return null;
+  const participantCallSid = await resolveParticipantCallSid(conferenceSid, participant);
+  if (!participantCallSid) return null;
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences/${conferenceSid}/Participants/${participantCallSid}.json`, {
     method,
     headers: {
       Authorization: `Basic ${Buffer.from(`${twilio.sid}:${twilio.token}`).toString("base64")}`,
@@ -66,10 +99,12 @@ async function waitForConferenceTechnician(conferenceName: string, ownerPhone: s
   if (!/^ash-CA[0-9a-f]{32}$/i.test(conferenceName)) return "failed";
   const twilio = twilioCredentials();
   if (!twilio.sid || !twilio.token || !twilio.from) return "failed";
+  const conferenceSid = await resolveConferenceSid(conferenceName);
+  if (!conferenceSid) return "failed";
 
   let participant = await twilioParticipantRequest(conferenceName, "technician", "GET");
   if (!participant?.ok) {
-    const createResponse = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences/${encodeURIComponent(conferenceName)}/Participants.json`, {
+    const createResponse = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences/${conferenceSid}/Participants.json`, {
       method: "POST",
       headers: {
         Authorization: `Basic ${Buffer.from(`${twilio.sid}:${twilio.token}`).toString("base64")}`,
@@ -106,6 +141,10 @@ async function setCallerHold(origin: string, conferenceName: string, hold: boole
   if (!/^ash-CA[0-9a-f]{32}$/i.test(conferenceName)) return false;
   const { sid, token } = twilioCredentials();
   if (!sid || !token) return false;
+  const conferenceSid = await resolveConferenceSid(conferenceName);
+  if (!conferenceSid) return false;
+  const callerCallSid = await resolveParticipantCallSid(conferenceSid, "caller");
+  if (!callerCallSid) return false;
 
   const body = new URLSearchParams({ Hold: String(hold) });
   if (hold) {
@@ -113,13 +152,20 @@ async function setCallerHold(origin: string, conferenceName: string, hold: boole
     body.set("HoldMethod", "GET");
   }
 
-  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Conferences/${encodeURIComponent(conferenceName)}/Participants/caller.json`, {
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Conferences/${conferenceSid}/Participants/${callerCallSid}.json`, {
     method: "POST",
     headers: {
       Authorization: `Basic ${Buffer.from(`${sid}:${token}`).toString("base64")}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: body.toString(),
+  });
+  const payload = await response.json().catch(() => ({})) as { hold?: boolean };
+  console.info("Twilio caller hold updated", {
+    conferenceSid,
+    requestedHold: hold,
+    actualHold: payload.hold,
+    status: response.status,
   });
   return response.ok;
 }
@@ -199,7 +245,7 @@ function createServer(origin: string, conferenceName: string) {
     },
   }, async (args) => {
     try {
-      return toolResult(await postInternal(origin, "/api/book", {
+      const booking = await postInternal(origin, "/api/book", {
         ...args,
         serviceType: "Use your own words",
         customServiceDescription: args.visitReason,
@@ -215,7 +261,11 @@ function createServer(origin: string, conferenceName: string) {
         wbraid: "",
         fbclid: "",
         msclkid: "",
-      }));
+      });
+      return toolResult({
+        ...booking,
+        instruction: "Immediately tell the caller the appointment was saved successfully. Confirm the appointment date and time. Do not wait for the caller to speak.",
+      });
     } catch (error) {
       return toolResult({ error: String((error as Error).message || error) }, true);
     }
