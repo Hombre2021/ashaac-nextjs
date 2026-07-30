@@ -9,10 +9,13 @@ function envValue(name: string) {
   return String(process.env[name] || "").trim();
 }
 
-async function triggerOpeningGreeting(callId: string, apiKey: string) {
+async function triggerOpeningGreeting(callId: string, apiKey: string, projectId: string) {
   await new Promise<void>((resolve, reject) => {
     const socket = new WebSocket(`wss://api.openai.com/v1/realtime?call_id=${encodeURIComponent(callId)}`, {
-      headers: { Authorization: `Bearer ${apiKey}` },
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "OpenAI-Project": projectId,
+      },
     });
     const timeout = setTimeout(() => {
       socket.close();
@@ -52,9 +55,10 @@ async function triggerOpeningGreeting(callId: string, apiKey: string) {
 
 export async function POST(request: Request) {
   const apiKey = envValue("OPENAI_API_KEY");
+  const projectId = envValue("OPENAI_PROJECT_ID");
   const webhookSecret = envValue("OPENAI_WEBHOOK_SECRET");
   const mcpToken = envValue("OPENAI_REALTIME_MCP_TOKEN");
-  if (!apiKey || !webhookSecret || !mcpToken) {
+  if (!apiKey || !projectId || !webhookSecret) {
     return Response.json({ error: "OpenAI Realtime phone configuration is incomplete." }, { status: 503 });
   }
 
@@ -78,6 +82,7 @@ export async function POST(request: Request) {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
+      "OpenAI-Project": projectId,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(buildRealtimeAcceptBody({
@@ -87,16 +92,22 @@ export async function POST(request: Request) {
       mcpToken,
     })),
   });
+  const acceptDetail = await acceptResponse.text().catch(() => "");
+  console.info("OpenAI Realtime accept result", {
+    callId,
+    status: acceptResponse.status,
+    detail: acceptDetail.slice(0, 300),
+    voice: envValue("OPENAI_REALTIME_VOICE") || "ash",
+  });
 
-  if (!acceptResponse.ok && acceptResponse.status !== 409) {
-    const detail = await acceptResponse.text().catch(() => "");
-    console.error("OpenAI Realtime call acceptance failed", { status: acceptResponse.status, detail: detail.slice(0, 300) });
+  if (!acceptResponse.ok) {
+    console.error("OpenAI Realtime call acceptance failed", { status: acceptResponse.status, detail: acceptDetail.slice(0, 300) });
     return Response.json({ error: "Unable to accept Realtime call." }, { status: 502 });
   }
 
   after(async () => {
     try {
-      await triggerOpeningGreeting(callId, apiKey);
+      await triggerOpeningGreeting(callId, apiKey, projectId);
       console.info("OpenAI Realtime greeting started", { callId, voice: envValue("OPENAI_REALTIME_VOICE") || "ash" });
     } catch (error) {
       console.error("OpenAI Realtime greeting failed", { callId, detail: String((error as Error).message || error) });

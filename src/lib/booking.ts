@@ -9,6 +9,7 @@ export const bookingServiceOptions = [
   "Mini-split consultation",
   "Heat pump consultation",
   "Second opinion",
+  "Use your own words",
 ] as const;
 
 export const bookingTimeWindowOptions = [
@@ -64,6 +65,7 @@ export const bookingRequestSchema = z.object({
   addressLine1: z.string().min(5, "Enter the service address."),
   addressCity: z.string().min(2, "Enter the city."),
   addressZip: z.string().min(5, "Enter the zip code.").max(10, "Zip code too long."),
+  customServiceDescription: z.string().max(1200, "Keep your description under 1200 characters.").default(""),
   notes: z.string().max(1200, "Keep notes under 1200 characters.").default(""),
   sourcePage: z.string().min(1).default("/book"),
   utm_source: z.string().default(""),
@@ -76,6 +78,14 @@ export const bookingRequestSchema = z.object({
   wbraid: z.string().default(""),
   fbclid: z.string().default(""),
   msclkid: z.string().default(""),
+}).superRefine((data, ctx) => {
+  if (data.serviceType === "Use your own words" && data.customServiceDescription.trim().length < 5) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["customServiceDescription"],
+      message: "Describe your request in at least 5 characters.",
+    });
+  }
 });
 
 export type BookingRequestInput = z.input<typeof bookingRequestSchema>;

@@ -1787,14 +1787,17 @@ export async function POST(request: Request) {
 
   const sameDayOffer = readSameDayOfferContext(state);
   if (sameDayOffer.pending && incomingText) {
-    if (interpretedTurn?.kind === "offer_repeat" || isOfferClarificationRequest(incomingText)) {
+    const explicitClarification = isOfferClarificationRequest(incomingText);
+    const recognizedYesNo = detectYesNo(incomingText);
+
+    if (explicitClarification || (recognizedYesNo === "unknown" && interpretedTurn?.kind === "offer_repeat")) {
       return new NextResponse(toTwiml(repeatOfferPrompt(sameDayOffer.date, sameDayOffer.window), { gather: true, state }), {
         headers: { "Content-Type": "text/xml" },
       });
     }
 
     const interpretedYesNo = yesNoFromInterpretation(interpretedTurn);
-    const yesNo = interpretedYesNo !== "unknown" ? interpretedYesNo : detectYesNo(incomingText);
+    const yesNo = recognizedYesNo !== "unknown" ? recognizedYesNo : interpretedYesNo;
 
     if (yesNo === "yes") {
       const flow = buildFlowForIntent("booking");

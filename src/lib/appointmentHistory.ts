@@ -3,6 +3,7 @@ import type { BookingRequest } from "@/lib/booking";
 
 type BookingRecordFields = {
   serviceType: string;
+  customServiceDescription: string;
   city: string;
   preferredDate: string;
   preferredTimeWindow: string;
@@ -269,6 +270,7 @@ export async function saveAppointmentHistory(
         appointmentDate: record.preferredDate,
         appointmentTime: record.preferredTimeWindow,
         serviceType: record.serviceType,
+        customServiceDescription: record.customServiceDescription,
         city: record.city,
         customerName: record.name,
         customerPhone: record.phone,
@@ -367,6 +369,7 @@ export async function listAppointmentHistory(limit = 50): Promise<AppointmentHis
         requestId: String(parsed.requestId || ""),
         submittedAt: String(parsed.submittedAt || ""),
         serviceType: String(parsed.serviceType || ""),
+        customServiceDescription: String(parsed.customServiceDescription || ""),
         city: String(parsed.city || ""),
         preferredDate: String(parsed.preferredDate || ""),
         preferredTimeWindow: String(parsed.preferredTimeWindow || ""),
@@ -415,6 +418,7 @@ export function toAppointmentHistoryRecord(
 ): AppointmentHistoryRecord {
   return {
     serviceType: data.serviceType,
+    customServiceDescription: data.customServiceDescription,
     city: data.city,
     preferredDate: data.preferredDate,
     preferredTimeWindow: data.preferredTimeWindow,

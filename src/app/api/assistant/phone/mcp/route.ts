@@ -44,6 +44,16 @@ function toolResult(payload: unknown, isError = false) {
   };
 }
 
+function windowMatchesPeriod(window: string, period: "morning" | "afternoon" | "evening" | "any") {
+  if (period === "any") return true;
+  const hourMatch = window.match(/^(\d{1,2}):\d{2}\s*(AM|PM)/i);
+  if (!hourMatch) return true;
+  const hour = (Number(hourMatch[1]) % 12) + (hourMatch[2].toUpperCase() === "PM" ? 12 : 0);
+  if (period === "morning") return hour < 12;
+  if (period === "afternoon") return hour >= 12 && hour < 17;
+  return hour >= 17;
+}
+
 function createServer(origin: string) {
   const server = new McpServer({ name: "all-solutions-phone-tools", version: "1.0.0" });
 
@@ -57,11 +67,22 @@ function createServer(origin: string) {
     try {
       const availability = await getInternal(origin, "/api/book/availability") as { slots?: Array<{ date?: string; windows?: string[] }> };
       const slots = Array.isArray(availability.slots) ? availability.slots : [];
+        const period = requestedPeriod || "any";
+        const matching = slots
+          .filter((slot) => !requestedDate || slot.date === requestedDate)
+          .flatMap((slot) => (slot.windows || [])
+            .filter((window) => windowMatchesPeriod(window, period))
+            .map((window) => ({ date: slot.date || "", window })))
+          .slice(0, 3);
       return toolResult({
         ok: true,
         requestedDate: requestedDate || "",
-        requestedPeriod: requestedPeriod || "any",
-        slots: requestedDate ? slots.filter((slot) => slot.date === requestedDate) : slots,
+            requestedPeriod: period,
+            recommended: matching[0] || null,
+            alternatives: matching.slice(1),
+            instruction: matching.length > 0
+              ? "Immediately offer the recommended date and window to the caller. Do not stay silent."
+              : "Tell the caller no matching time was found and ask for another date or time period.",
       });
     } catch (error) {
       return toolResult({ error: String((error as Error).message || error) }, true);
@@ -69,7 +90,7 @@ function createServer(origin: string) {
   });
 
   server.registerTool("create_booking", {
-    description: "Create a confirmed appointment through the website booking endpoint. Call only after checking availability and confirming date, time, phone, and address.",
+    description: "Create a confirmed appointment through the website booking endpoint. Call only after checking availability and confirming date, time, phone, address, and the caller's own description of the reason for the visit.",
     inputSchema: {
       preferredDate: z.string().min(10),
       preferredTimeWindow: z.string().min(5),
@@ -81,13 +102,16 @@ function createServer(origin: string) {
       addressLine1: z.string().min(5),
       addressCity: z.string().min(2),
       addressZip: z.string().min(5),
-      notes: z.string().default("Repair diagnostic requested by phone"),
+      visitReason: z.string().min(5).max(1200).describe("The caller's reason for the technician visit, preserved in the caller's own words."),
+      visitReasonConfirmed: z.literal(true).describe("True only after repeating the visit reason to the caller and receiving explicit confirmation."),
     },
   }, async (args) => {
     try {
       return toolResult(await postInternal(origin, "/api/book", {
         ...args,
-        serviceType: "Repair diagnostic",
+        serviceType: "Use your own words",
+        customServiceDescription: args.visitReason,
+        notes: "",
         sourcePage: "/phone-assistant-realtime",
         utm_source: "phone-assistant",
         utm_medium: "voice",

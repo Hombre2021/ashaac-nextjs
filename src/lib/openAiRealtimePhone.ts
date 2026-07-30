@@ -27,13 +27,18 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
     "Never guess a name, phone number, address, ZIP code, date, or time. If any part is unclear, ask the caller to repeat only that part.",
     "Do not submit a service request until the caller explicitly confirms both the phone number and address.",
     "Call each business tool only once per requested action. Never claim an appointment or request was saved unless the tool reports success.",
+      "Before calling a business tool, briefly tell the caller what you are checking. As soon as the tool returns, immediately speak the result and ask the next question. Never remain silent after a tool result.",
+      "If a lookup is still pending or an idle timeout occurs, say: I am still checking that for you. One moment please. Do not ask the caller to repeat information you already heard.",
     "If a tool fails, apologize briefly and offer to retry, arrange a callback, or transfer the caller.",
     "If the caller asks for Mauricio, Leandro, the owner, a person, or a transfer, use transfer_to_owner.",
     "For a new appointment, use check_availability before offering a date or time, repeat the selected date and time, and obtain explicit confirmation before create_booking.",
     "If the caller answers yes to the opening question, call check_availability and offer the earliest real appointment.",
     "If the caller asks for tomorrow morning or another day or time, call check_availability for that requested date and period and follow the caller's preference.",
-    "All phone bookings use Repair diagnostic as the service type; do not ask the caller to choose a service type.",
-    "Before create_booking, collect the remaining required website booking fields one at a time, including city, name, phone, email, street address, address city, ZIP, and notes.",
+    "After the caller confirms an offered appointment date and time, ask exactly: Describe in your own words the reason you want our technician to come to your location.",
+    "Preserve the caller's visit reason in their own words. Repeat it back and ask for explicit confirmation. If corrected, repeat the corrected wording and confirm again.",
+    "Never call create_booking until the caller has explicitly confirmed the repeated visit reason. Pass the exact confirmed wording as visitReason and pass visitReasonConfirmed as true.",
+    "For every phone booking, set the website Service Type to Use your own words and store the caller's exact confirmed visit reason in the website customServiceDescription field through create_booking.",
+    "Before create_booking, collect the remaining required website booking fields one at a time, including city, name, phone, email, street address, address city, ZIP, and the confirmed visit reason.",
     ...assistantBusinessPolicy.map((policy) => `Business policy: ${policy}`),
     callerPhone ? `The incoming caller ID is ${callerPhone}. Ask whether this is the best callback number before requesting another number.` : "",
     `The current OpenAI call ID is ${callId}. Pass this exact value to transfer_to_owner.`
@@ -52,7 +57,7 @@ export function buildRealtimeAcceptBody(options: {
   mcpUrl: string;
   mcpToken: string;
 }) {
-  return {
+  const session = {
     type: "realtime",
     model: process.env.OPENAI_REALTIME_MODEL || "gpt-realtime-2.1",
     output_modalities: ["audio"],
@@ -64,8 +69,11 @@ export function buildRealtimeAcceptBody(options: {
           language: "en",
         },
         turn_detection: {
-          type: "semantic_vad",
-          eagerness: "low",
+            type: "server_vad",
+            threshold: 0.45,
+            prefix_padding_ms: 400,
+            silence_duration_ms: 650,
+            idle_timeout_ms: 9000,
           create_response: true,
           interrupt_response: true,
         },
@@ -74,7 +82,10 @@ export function buildRealtimeAcceptBody(options: {
         voice: process.env.OPENAI_REALTIME_VOICE || "ash",
       },
     },
-    tools: [
+  } as Record<string, unknown>;
+
+  if (REALTIME_ENABLED_PATTERN.test(String(process.env.OPENAI_REALTIME_MCP_ENABLED || "").trim())) {
+    session.tools = [
       {
         type: "mcp",
         server_label: "all_solutions",
@@ -85,7 +96,9 @@ export function buildRealtimeAcceptBody(options: {
         allowed_tools: ["check_availability", "create_booking", "submit_service_request", "manage_appointment", "transfer_to_owner"],
         require_approval: "never",
       },
-    ],
-    tool_choice: "auto",
-  };
+    ];
+    session.tool_choice = "auto";
+  }
+
+  return session;
 }

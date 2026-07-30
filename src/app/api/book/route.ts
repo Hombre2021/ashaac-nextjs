@@ -104,6 +104,7 @@ function buildManagerPayload(bookingId: string, data: BookingRequest & { mediaUr
   return {
     bookingId,
     serviceType: data.serviceType,
+    customServiceDescription: data.customServiceDescription,
     city: data.city,
     preferredDate: data.preferredDate,
     preferredTimeWindow: data.preferredTimeWindow,
