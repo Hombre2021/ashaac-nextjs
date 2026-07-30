@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import {
   buildFlowForIntent,
   decodePhoneAssistantState,
@@ -1358,6 +1358,42 @@ function buildRealtimeSipTwiml() {
   return `<?xml version="1.0" encoding="UTF-8"?><Response><Dial answerOnBridge="true" action="${escapeXml(completionUrl)}" method="POST"><Sip>${escapeXml(sipUri)}</Sip></Dial></Response>`;
 }
 
+function buildRealtimeConferenceTwiml(conferenceName: string) {
+  return `<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Conference participantLabel="caller" startConferenceOnEnter="true" endConferenceOnExit="true" beep="false" waitUrl="" jitterBufferSize="small">${escapeXml(conferenceName)}</Conference></Dial></Response>`;
+}
+
+async function addAshConferenceParticipant(conferenceName: string, callerPhone: string) {
+  const twilio = getTwilioConfig();
+  const sipUri = getOpenAiRealtimeSipUri();
+  if (!twilio.configured || !sipUri) throw new Error("Realtime conference settings are incomplete.");
+
+  const separator = sipUri.includes("?") ? "&" : "?";
+  const to = `${sipUri}${separator}X-All-Solutions-Conference=${encodeURIComponent(conferenceName)}&X-All-Solutions-Caller=${encodeURIComponent(callerPhone)}`;
+  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences/${encodeURIComponent(conferenceName)}/Participants.json`, {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${Buffer.from(`${twilio.sid}:${twilio.token}`).toString("base64")}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      From: "all-solutions",
+      To: to,
+      Label: "ash",
+      Beep: "false",
+      EarlyMedia: "false",
+      StartConferenceOnEnter: "true",
+      EndConferenceOnExit: "false",
+    }).toString(),
+  });
+  if (!response.ok) throw new Error(`Unable to add Ash to the conference: ${response.status}`);
+}
+
+function shouldUseRealtimeConference(payload: Record<string, string>) {
+  const configured = normalizePhoneDigits(process.env.OPENAI_REALTIME_CONFERENCE_NUMBER || "");
+  const called = normalizePhoneDigits(payload.To || payload.Called || "");
+  return Boolean(configured && called.endsWith(configured.slice(-10)));
+}
+
 function buildCallerVoicemailTwiml(callerName: string, conferenceName: string) {
   const safeCallerName = escapeXml(callerName || "there");
   const completeUrl = `${getPublicBaseUrl()}/api/assistant/phone?mode=mauricio-voicemail-complete&conference=${encodeURIComponent(conferenceName)}`;
@@ -1861,6 +1897,20 @@ export async function POST(request: Request) {
 
   if (!state.intent || state.intent === "menu") {
     if (!incomingText) {
+      if (!realtimeFallback && getOpenAiRealtimeSipUri() && shouldUseRealtimeConference(payload) && /^CA[0-9a-f]{32}$/i.test(callSid)) {
+        const conferenceName = `ash-${callSid}`;
+        after(async () => {
+          try {
+            await new Promise((resolve) => setTimeout(resolve, 300));
+            await addAshConferenceParticipant(conferenceName, fromE164 || from);
+          } catch (error) {
+            console.error("Unable to add Ash conference participant", { conferenceName, detail: String((error as Error).message || error) });
+          }
+        });
+        return new NextResponse(buildRealtimeConferenceTwiml(conferenceName), {
+          headers: { "Content-Type": "text/xml" },
+        });
+      }
       if (!realtimeFallback && getOpenAiRealtimeSipUri()) {
         return new NextResponse(buildRealtimeSipTwiml(), {
           headers: { "Content-Type": "text/xml" },

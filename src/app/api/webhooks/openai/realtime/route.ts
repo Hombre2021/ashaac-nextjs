@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { after } from "next/server";
 import WebSocket from "ws";
-import { buildRealtimeAcceptBody, OPENAI_REALTIME_PHONE_GREETING, readSipCallerPhone } from "@/lib/openAiRealtimePhone";
+import { buildRealtimeAcceptBody, OPENAI_REALTIME_PHONE_GREETING, readSipCallerPhone, readSipHeader } from "@/lib/openAiRealtimePhone";
 
 export const runtime = "nodejs";
 
@@ -77,7 +77,12 @@ export async function POST(request: Request) {
 
   const callId = event.data.call_id;
   const callerPhone = readSipCallerPhone(event.data.sip_headers);
+  const conferenceName = readSipHeader(event.data.sip_headers, "x-all-solutions-conference");
   const origin = new URL(request.url).origin;
+  const mcpUrl = new URL("/api/assistant/phone/mcp", origin);
+  if (/^ash-CA[0-9a-f]{32}$/i.test(conferenceName)) {
+    mcpUrl.searchParams.set("conference", conferenceName);
+  }
   const acceptResponse = await fetch(`https://api.openai.com/v1/realtime/calls/${encodeURIComponent(callId)}/accept`, {
     method: "POST",
     headers: {
@@ -88,7 +93,7 @@ export async function POST(request: Request) {
     body: JSON.stringify(buildRealtimeAcceptBody({
       callId,
       callerPhone,
-      mcpUrl: `${origin}/api/assistant/phone/mcp`,
+      mcpUrl: mcpUrl.toString(),
       mcpToken,
     })),
   });

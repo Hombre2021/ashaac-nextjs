@@ -31,6 +31,7 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
       "If a lookup is still pending or an idle timeout occurs, say: I am still checking that for you. One moment please. Do not ask the caller to repeat information you already heard.",
     "If a tool fails, apologize briefly and offer to retry, arrange a callback, or transfer the caller.",
     "If the caller asks for Mauricio, Leandro, the owner, a person, or a transfer, use transfer_to_owner.",
+    "While connecting a live technician, if transfer_to_owner returns pending, say exactly: Thank you for your patience, I am still trying to connect to a live technician. Then immediately call transfer_to_owner again with the same call ID and reason. Repeat this every time the tool returns pending.",
     "For a new appointment, use check_availability before offering a date or time, repeat the selected date and time, and obtain explicit confirmation before create_booking.",
     "If the caller answers yes to the opening question, call check_availability and offer the earliest real appointment.",
     "If the caller asks for tomorrow morning or another day or time, call check_availability for that requested date and period and follow the caller's preference.",
@@ -46,9 +47,15 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
 }
 
 export function readSipCallerPhone(sipHeaders: Array<{ name: string; value: string }>) {
+  const forwardedCaller = readSipHeader(sipHeaders, "x-all-solutions-caller");
+  if (/^\+?\d{10,15}$/.test(forwardedCaller)) return forwardedCaller;
   const fromHeader = sipHeaders.find((header) => header.name.toLowerCase() === "from")?.value || "";
   const match = fromHeader.match(/(?:sip:|tel:)(\+?\d{10,15})/i);
   return match?.[1] || "";
+}
+
+export function readSipHeader(sipHeaders: Array<{ name: string; value: string }>, name: string) {
+  return sipHeaders.find((header) => header.name.toLowerCase() === name.toLowerCase())?.value || "";
 }
 
 export function buildRealtimeAcceptBody(options: {

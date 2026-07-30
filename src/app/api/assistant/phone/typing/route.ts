@@ -1,5 +1,13 @@
 export const dynamic = "force-dynamic";
 
-export function GET(request: Request) {
-  return Response.redirect(new URL("/audio/typing-keyboard.mp3", request.url), 307);
+function keyboardHoldTwiml(request: Request) {
+  const origin = new URL(request.url).origin;
+  const routeUrl = `${origin}/api/assistant/phone/typing`;
+  const audioUrl = `${origin}/audio/typing-keyboard.mp3`;
+  return new Response(`<?xml version="1.0" encoding="UTF-8"?><Response><Play>${audioUrl}</Play><Redirect method="GET">${routeUrl}</Redirect></Response>`, {
+    headers: { "Content-Type": "text/xml" },
+  });
 }
+
+export const GET = keyboardHoldTwiml;
+export const POST = keyboardHoldTwiml;
