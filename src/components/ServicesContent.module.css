@@ -88,6 +88,14 @@
   line-height: 1.6;
 }
 
+.emergencyServiceLink {
+  display: inline-block;
+  margin-top: 18px;
+  color: #075b78;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
 .heatingExperienceBlock {
   margin-top: 32px;
   padding: 0 12px;

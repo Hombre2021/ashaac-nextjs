@@ -1,6 +1,7 @@
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { appendAssistantLead, normalizePhoneForE164 as normalizeStorePhone, openOrReuseTextThread } from "@/lib/assistantStore";
+import { appendAssistantLead, listAssistantLeads, normalizePhoneForE164 as normalizeStorePhone, openOrReuseTextThread } from "@/lib/assistantStore";
 
 const leadSchema = z.object({
   handoffMode: z.string().default("callback"),
@@ -24,6 +25,7 @@ const leadSchema = z.object({
   utmSource: z.string().default(""),
   utmMedium: z.string().default(""),
   utmCampaign: z.string().default(""),
+  idempotencyKey: z.string().max(200).default(""),
 });
 
 type LeadInput = z.infer<typeof leadSchema>;
@@ -214,6 +216,70 @@ async function sendTwilioSms(sid: string, token: string, from: string, to: strin
   });
 }
 
+async function sendGraphNotificationEmail(to: string, subject: string, text: string) {
+  const endpoint = envFirst("HVAC_PRO_EMAIL_ENDPOINT");
+  const apiKey = envFirst("HVAC_PRO_API_KEY", "MANAGER_API_KEY");
+  if (!endpoint || !apiKey || !to) return { success: false, detail: "Microsoft Graph email endpoint is not configured" };
+  try {
+    await fetchJson(endpoint, {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        toEmail: to,
+        subject,
+        text,
+      }),
+    });
+    return { success: true, detail: `Microsoft Graph email sent to ${to}` };
+  } catch (error) {
+    return { success: false, detail: String((error as Error)?.message || error) };
+  }
+}
+
+async function dispatchRequestConfirmations(leadId: string, lead: LeadInput) {
+  if (lead.handoffMode !== "callback") return { businessEmail: null, callerSms: null, callerEmail: null };
+  const subject = lead.bookingMode === "owner-message"
+    ? `Owner message ${leadId} from ${lead.firstName}`
+    : `Callback request ${leadId} from ${lead.firstName}`;
+  const details = [
+    subject,
+    `Caller phone: ${lead.phone}`,
+    lead.email ? `Caller email: ${lead.email}` : "",
+    lead.address ? `Service address: ${lead.address}` : "",
+    lead.notes ? `Message: ${lead.notes}` : "",
+  ].filter(Boolean).join("\n");
+  const businessEmailTo = envFirst("BOOKING_NOTIFICATION_EMAIL_TO") || "ashaacutah@gmail.com";
+  const businessEmail = await sendGraphNotificationEmail(businessEmailTo, subject, details);
+
+  const sid = envFirst("TWILIO_ACCOUNT_SID");
+  const token = envFirst("TWILIO_AUTH_TOKEN");
+  const fromSms = envFirst("TWILIO_FROM_SMS", "TWILIO_FROM_NUMBER");
+  const callerPhone = normalizePhoneForE164(lead.phone);
+  let callerSms: { success: boolean; detail: string } = { success: false, detail: "Caller SMS is not configured" };
+  if (sid && token && fromSms && callerPhone) {
+    try {
+      await sendTwilioSms(
+        sid,
+        token,
+        fromSms,
+        callerPhone,
+        `All Solutions received your ${lead.bookingMode === "owner-message" ? "message" : "callback request"} ${leadId}. The owner or technician will get back to you at his earliest convenience.`,
+      );
+      callerSms = { success: true, detail: "Caller confirmation SMS sent" };
+    } catch (error) {
+      callerSms = { success: false, detail: String((error as Error)?.message || error) };
+    }
+  }
+
+  const callerEmail = lead.email
+    ? await sendGraphNotificationEmail(lead.email, `All Solutions confirmation ${leadId}`, `We received your request.\n\n${details}`)
+    : null;
+  return { businessEmail, callerSms, callerEmail };
+}
+
 async function placeTwilioCall(sid: string, token: string, from: string, to: string, message: string) {
   const auth = Buffer.from(`${sid}:${token}`).toString("base64");
   const twiml = `<Response><Say voice=\"alice\">${message}</Say></Response>`;
@@ -304,7 +370,20 @@ export async function POST(req: Request) {
     ...lead,
     city: normalizeCity(lead.city || "West Jordan"),
   };
-  const leadId = crypto.randomUUID().slice(0, 8).toUpperCase();
+  const leadId = lead.idempotencyKey
+    ? createHash("sha256").update(lead.idempotencyKey).digest("hex").slice(0, 8).toUpperCase()
+    : crypto.randomUUID().slice(0, 8).toUpperCase();
+  if (lead.idempotencyKey) {
+    const existing = (await listAssistantLeads(5000)).find((entry) => entry.leadId === leadId);
+    if (existing) {
+      return NextResponse.json({
+        ok: true,
+        leadId,
+        duplicate: true,
+        detail: "Request already saved; duplicate delivery was suppressed.",
+      });
+    }
+  }
   const scored = scoreLead(leadNormalized);
 
   const shouldSendToHvacPro = leadNormalized.handoffMode !== "callback";
@@ -315,6 +394,7 @@ export async function POST(req: Request) {
     ? await createHvacProFollowup(leadId, leadNormalized, (hvacPro as { customerId?: string }).customerId || "")
     : { success: false, detail: "Skipped HVAC Pro follow-up for callback-only handoff" };
   const liveTechnician = await dispatchLiveTechnician(leadId, leadNormalized);
+  const confirmations = await dispatchRequestConfirmations(leadId, leadNormalized);
 
   // Persist assistant lead telemetry for dashboard metrics.
   await appendAssistantLead({
@@ -353,6 +433,7 @@ export async function POST(req: Request) {
       hvacPro,
       hvacProTask,
       liveTechnician,
+      confirmations,
     },
     bookingActions: {
       bookingUrl: process.env.BOOKING_DESTINATION_URL || "https://ashaac.com/book",

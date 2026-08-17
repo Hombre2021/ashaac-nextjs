@@ -1,4 +1,4 @@
-import { after, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import {
   buildFlowForIntent,
   decodePhoneAssistantState,
@@ -23,6 +23,7 @@ import {
   type MauricioTransferRecord,
   updateMauricioTransferSession,
 } from "@/lib/assistantStore";
+import { isImportedBlockedNumber } from "@/lib/phoneBlockedNumbers";
 import { getTwilioConfig, sendTwilioSms } from "@/lib/twilio";
 import { assistantBusinessFacts, assistantBusinessPolicy } from "@/lib/assistantKnowledge";
 import { retrieveRelevantKnowledge, type RetrievedChunk } from "@/lib/assistantKnowledgeBase";
@@ -1246,6 +1247,7 @@ type SpamDecision = {
 
 async function getSpamDecision(fromE164: string, incomingText: string, callerName: string): Promise<SpamDecision> {
   if (isTrustedCaller(fromE164)) return { blocked: false, reason: "trusted-caller" };
+  if (await isImportedBlockedNumber(fromE164)) return { blocked: true, reason: "imported-android-block-list" };
 
   const rules = await listAssistantSpamRules(1000).catch(() => []);
   const activeRules = rules.filter((rule) => rule.active);
@@ -1347,51 +1349,12 @@ function buildCallerConferenceTwiml(conferenceName: string) {
   return `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="Polly.Matthew" language="en-US">Transferring you to Mauricio now.</Say><Dial><Conference startConferenceOnEnter="false" endConferenceOnExit="true" waitUrl="${escapeXml(waitUrl)}" beep="false">${escapeXml(conferenceName)}</Conference></Dial></Response>`;
 }
 
-function buildOwnerDirectTransferTwiml() {
-  const ownerPhone = resolveOwnerDirectDial();
-  return `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="Polly.Matthew" language="en-US">Connecting you now.</Say><Dial>${escapeXml(ownerPhone)}</Dial></Response>`;
-}
-
-function buildRealtimeSipTwiml() {
+function buildRealtimeSipTwiml(callSid: string, callerPhone: string) {
   const sipUri = getOpenAiRealtimeSipUri();
   const completionUrl = `${getPublicBaseUrl()}/api/assistant/phone?mode=realtime-dial-complete`;
-  return `<?xml version="1.0" encoding="UTF-8"?><Response><Dial answerOnBridge="true" action="${escapeXml(completionUrl)}" method="POST"><Sip>${escapeXml(sipUri)}</Sip></Dial></Response>`;
-}
-
-function buildRealtimeConferenceTwiml(conferenceName: string) {
-  return `<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Conference participantLabel="caller" startConferenceOnEnter="true" endConferenceOnExit="true" beep="false" waitUrl="" jitterBufferSize="small">${escapeXml(conferenceName)}</Conference></Dial></Response>`;
-}
-
-async function addAshConferenceParticipant(conferenceName: string, callerPhone: string) {
-  const twilio = getTwilioConfig();
-  const sipUri = getOpenAiRealtimeSipUri();
-  if (!twilio.configured || !sipUri) throw new Error("Realtime conference settings are incomplete.");
-
   const separator = sipUri.includes("?") ? "&" : "?";
-  const to = `${sipUri}${separator}X-All-Solutions-Conference=${encodeURIComponent(conferenceName)}&X-All-Solutions-Caller=${encodeURIComponent(callerPhone)}`;
-  const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilio.sid}/Conferences/${encodeURIComponent(conferenceName)}/Participants.json`, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${Buffer.from(`${twilio.sid}:${twilio.token}`).toString("base64")}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      From: "all-solutions",
-      To: to,
-      Label: "ash",
-      Beep: "false",
-      EarlyMedia: "false",
-      StartConferenceOnEnter: "true",
-      EndConferenceOnExit: "false",
-    }).toString(),
-  });
-  if (!response.ok) throw new Error(`Unable to add Ash to the conference: ${response.status}`);
-}
-
-function shouldUseRealtimeConference(payload: Record<string, string>) {
-  const configured = normalizePhoneDigits(process.env.OPENAI_REALTIME_CONFERENCE_NUMBER || "");
-  const called = normalizePhoneDigits(payload.To || payload.Called || "");
-  return Boolean(configured && called.endsWith(configured.slice(-10)));
+  const directSipUri = `${sipUri}${separator}X-All-Solutions-Caller=${encodeURIComponent(callerPhone)}&X-All-Solutions-Call-Sid=${encodeURIComponent(callSid)}`;
+  return `<?xml version="1.0" encoding="UTF-8"?><Response><Dial answerOnBridge="true" action="${escapeXml(completionUrl)}" method="POST"><Sip>${escapeXml(directSipUri)}</Sip></Dial></Response>`;
 }
 
 function buildCallerVoicemailTwiml(callerName: string, conferenceName: string) {
@@ -1548,7 +1511,11 @@ export async function POST(request: Request) {
   const spamDecision = await getSpamDecision(fromE164, incomingText, callerName);
 
   if (String(payload.Digits || "").trim() === "0" && mode !== "mauricio-screen") {
-    return new NextResponse(buildOwnerDirectTransferTwiml(), {
+    const flow = buildFlowForIntent("callback");
+    return new NextResponse(toTwiml("I can send the owner or technician a message. Please say your first name.", {
+      gather: true,
+      state: { ...state, intent: "callback", flow, stepIndex: 0, data: {} },
+    }), {
       headers: { "Content-Type": "text/xml" },
     });
   }
@@ -1621,7 +1588,7 @@ export async function POST(request: Request) {
         const emergency = isEmergencyText(incomingText);
         const ownerAssistantCaller = isOwnerAssistantCaller(fromE164, incomingText);
         const opening = emergency
-          ? `${mauricioNamePrompt()} Emergency and after-hours service can include an extra cost of 150 dollars.`
+          ? `${mauricioNamePrompt()} Emergency and after-hours service can include an extra cost of 100 dollars.`
           : mauricioNamePrompt();
 
         return new NextResponse(
@@ -1748,7 +1715,7 @@ export async function POST(request: Request) {
         ? "Emergency line active. Still trying Leandro Mauricio now. Please stay on the line."
         : "Still trying Mauricio. Please hold while we connect you.")
       : (session?.isEmergency
-        ? "Emergency line active. Trying Leandro Mauricio now. Please hold. Emergency and after-hours service can include an extra cost of 150 dollars."
+        ? "Emergency line active. Trying Leandro Mauricio now. Please hold. Emergency and after-hours service can include an extra cost of 100 dollars."
         : "Please hold while we connect you to Mauricio.");
     return new NextResponse(buildMauricioWaitTwiml(waitMessage), { headers: { "Content-Type": "text/xml" } });
   }
@@ -1897,22 +1864,8 @@ export async function POST(request: Request) {
 
   if (!state.intent || state.intent === "menu") {
     if (!incomingText) {
-      if (!realtimeFallback && getOpenAiRealtimeSipUri() && shouldUseRealtimeConference(payload) && /^CA[0-9a-f]{32}$/i.test(callSid)) {
-        const conferenceName = `ash-${callSid}`;
-        after(async () => {
-          try {
-            await new Promise((resolve) => setTimeout(resolve, 300));
-            await addAshConferenceParticipant(conferenceName, fromE164 || from);
-          } catch (error) {
-            console.error("Unable to add Ash conference participant", { conferenceName, detail: String((error as Error).message || error) });
-          }
-        });
-        return new NextResponse(buildRealtimeConferenceTwiml(conferenceName), {
-          headers: { "Content-Type": "text/xml" },
-        });
-      }
       if (!realtimeFallback && getOpenAiRealtimeSipUri()) {
-        return new NextResponse(buildRealtimeSipTwiml(), {
+        return new NextResponse(buildRealtimeSipTwiml(callSid, fromE164 || from), {
           headers: { "Content-Type": "text/xml" },
         });
       }
@@ -2019,7 +1972,7 @@ export async function POST(request: Request) {
       }
 
       const opening = emergency
-        ? `${mauricioNamePrompt()} Emergency and after-hours service can include an extra cost of 150 dollars.`
+        ? `${mauricioNamePrompt()} Emergency and after-hours service can include an extra cost of 100 dollars.`
         : mauricioNamePrompt();
 
       return new NextResponse(
@@ -2070,7 +2023,7 @@ export async function POST(request: Request) {
     state.data.firstName = incomingText;
     const emergency = isEmergencyState(state);
     const connectPrompt = emergency
-      ? "Give me a few seconds while I try to get a hold of him right now. Emergency and after-hours service can include an extra cost of 150 dollars."
+      ? "Give me a few seconds while I try to get a hold of him right now. Emergency and after-hours service can include an extra cost of 100 dollars."
       : "Give me a few seconds while I try to get a hold of him.";
     const thinkingState = withPendingAiQuestion({ ...state, intent: "mauricio", flow: [], stepIndex: 0 }, "Connect me to Leandro Mauricio");
     return new NextResponse(toThinkingTwiml(connectPrompt, {
@@ -2376,7 +2329,7 @@ export async function POST(request: Request) {
         const requestId = String(bookingResponse.data?.requestId || "").trim();
         const nextStep = String(bookingResponse.data?.nextStep || "").trim();
         const emergencyNotice = isEmergencyState(state)
-          ? " Emergency and after-hours service can include an extra cost of 150 dollars."
+          ? " Emergency and after-hours service can include an extra cost of 100 dollars."
           : "";
         const successMessage = requestId
           ? `Your appointment request is confirmed with request ID ${requestId}. ${nextStep}${emergencyNotice}`

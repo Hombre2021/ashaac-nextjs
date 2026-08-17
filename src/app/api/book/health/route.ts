@@ -22,18 +22,13 @@ async function checkManagerHealth(): Promise<ChannelHealth> {
   }
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-
     const response = await fetch(managerUrl, {
       method: "GET",
       headers: {
         [authHeaderName]: managerApiKey,
       },
-      signal: controller.signal,
+      signal: AbortSignal.timeout(12000),
     });
-
-    clearTimeout(timeout);
 
     return {
       channel: "manager",

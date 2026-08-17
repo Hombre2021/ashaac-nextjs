@@ -46,7 +46,7 @@ const faqSchema = {
       name: "How can I contact you?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Call or text 801-755-3040 or 801-512-7103, email contact@ashaac.com, or visit 4434 W 8790 S, West Jordan, Utah 84088.",
+        text: "Call or text 801-755-3040, email contact@ashaac.com, or visit 4434 W 8790 S, West Jordan, Utah 84088.",
       },
     },
   ],
@@ -71,10 +71,10 @@ export default function FaqsPage() {
       <HomepageHeader />
       <AboutHero title="FAQ’s" />
       <ContentContainer title="FAQ’s">
-        <h1 style={{ textAlign: "center", fontSize: 32, marginBottom: 32 }}>Frequently Asked Questions (FAQ)</h1>
+        <h2 style={{ textAlign: "center", fontSize: 32, marginBottom: 32 }}>Frequently Asked Questions</h2>
         <p><strong>All Solutions Heating and Air Conditioning LLC</strong></p>
         <h2>1. What areas do you serve?</h2>
-        <p>We proudly serve West Jordan, Salt Lake County, and surrounding Utah communities. If you’re unsure whether we service your area, feel free to call or text us at 801‑755‑3040 or 801‑512‑7103.</p>
+        <p>We proudly serve West Jordan, Salt Lake County, and surrounding Utah communities. If you’re unsure whether we service your area, feel free to call or text us at 801-755-3040.</p>
         <h2>2. What HVAC services do you provide?</h2>
         <p>We specialize in:</p>
         <ul>
@@ -130,7 +130,7 @@ export default function FaqsPage() {
         </ul>
         <p>Payment is due upon completion unless otherwise arranged.</p>
         <h2>13. How can I contact you?</h2>
-        <p>You can reach us anytime:<br />- Phone: 801‑755‑3040 or 801‑512‑7103<br />- Email: contact@ashaac.com<br />- Address: 4434 W 8790 S, West Jordan, Utah 84088</p>
+        <p>You can reach us anytime:<br />- Phone: 801-755-3040<br />- Email: contact@ashaac.com<br />- Address: 4434 W 8790 S, West Jordan, Utah 84088</p>
       </ContentContainer>
       <HomepageFooter />
     </>

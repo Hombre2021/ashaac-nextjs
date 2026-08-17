@@ -7,7 +7,7 @@ const localBusinessSchema = {
   name: "All Solutions Heating and Air Conditioning",
   url: siteUrl,
   telephone: "+1-801-755-3040",
-  email: "contact@ashaac.com",
+  email: "ashaacutah@gmail.com",
   image: `${siteUrl}/images/homepage/van2.png`,
   address: {
     "@type": "PostalAddress",
@@ -20,6 +20,7 @@ const localBusinessSchema = {
   areaServed: [
     { "@type": "City", name: "West Jordan" },
     { "@type": "City", name: "South Jordan" },
+    { "@type": "City", name: "Riverton" },
     { "@type": "City", name: "Sandy" },
     { "@type": "City", name: "Murray" },
     { "@type": "City", name: "Midvale" },
@@ -67,10 +68,17 @@ const localBusinessSchema = {
           name: "Heat Pump Installation and Repair",
         },
       },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Indoor Air Quality Services",
+        },
+      },
     ],
   },
   sameAs: [
-    "https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709",
+    "https://www.facebook.com/Warrior2021Q",
   ],
   priceRange: "$$",
 };

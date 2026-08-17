@@ -11,9 +11,8 @@ export default function HomepageSection() {
             src="/images/homepage/wj-chinese-ac.webp"
             alt="West Jordan Chinese AC"
             fill
-            sizes="(max-width: 480px) 100vw, (max-width: 1024px) 80vw, 50vw"
+            sizes="(max-width: 480px) 100vw, (max-width: 1199px) 360px, 400px"
             className={styles.wjChineseAcImage}
-            priority
           />
                  </div>
         <div className={styles.hvacText}>
@@ -33,6 +32,12 @@ export default function HomepageSection() {
               See If You Qualify
             </Link>
           </div>
+          <nav className={styles.localServiceLinks} aria-label="Local HVAC service areas">
+            <strong>Local HVAC service areas</strong>
+            <Link href="/emergency-hvac-repair-west-jordan">West Jordan emergency HVAC repair</Link>
+            <Link href="/ac-repair-south-jordan">South Jordan AC repair</Link>
+            <Link href="/furnace-repair-riverton">Riverton furnace repair</Link>
+          </nav>
         </div>
       </div>
     </section>

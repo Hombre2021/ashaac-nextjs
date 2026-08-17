@@ -286,18 +286,6 @@ export async function saveAppointmentHistory(
         managerStatus: record.managerStatus,
         managerDetail: record.managerDetail,
         notificationSummary: record.notificationSummary,
-        attribution: {
-          utm_source: record.utm_source,
-          utm_medium: record.utm_medium,
-          utm_campaign: record.utm_campaign,
-          utm_term: record.utm_term,
-          utm_content: record.utm_content,
-          gclid: record.gclid,
-          gbraid: record.gbraid,
-          wbraid: record.wbraid,
-          fbclid: record.fbclid,
-          msclkid: record.msclkid,
-        },
       });
     }
 

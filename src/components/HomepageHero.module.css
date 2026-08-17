@@ -43,6 +43,95 @@
   }
 }
 
+/* Focused first viewport: one message, one image, two actions. */
+.heroWrap {
+  min-height: 680px;
+  height: min(760px, calc(100vh - 72px));
+  background: #123b59;
+}
+
+.commercialImage {
+  object-position: center;
+  filter: brightness(0.52);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 6;
+  width: min(720px, calc(100% - 48px));
+  margin: 0 auto;
+  padding-top: clamp(150px, 20vh, 210px);
+  color: #fff;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.heroContent .welcomeTitle {
+  position: static;
+  width: auto;
+  margin: 0;
+  transform: none;
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 1.05;
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
+}
+
+.heroContent .professionalSubtitle {
+  position: static;
+  width: auto;
+  max-width: 620px;
+  margin: 24px auto 0;
+  transform: none;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.45;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0,0,0,.55);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.callAction, .bookAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 22px;
+  border-radius: 6px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.callAction { color: #123b59; background: #f4c95d; }
+.bookAction { color: #fff; border: 1px solid rgba(255,255,255,.85); }
+.callAction:hover, .bookAction:hover { transform: translateY(-2px); }
+
+.trustSignal {
+  margin: 22px auto 0;
+  font-size: 15px;
+  line-height: 1.5;
+  text-shadow: 0 2px 8px rgba(0,0,0,.55);
+}
+
+@media (max-width: 480px) {
+  .heroWrap { height: 680px; min-height: 680px; }
+  .heroContent { padding-top: 128px; }
+  .heroContent .welcomeTitle { font-size: 38px; }
+  .heroActions > * { width: 100%; }
+}
+
 .commercialImage {
   object-fit: cover;
   object-position: center;
@@ -190,6 +279,7 @@
 
 @media (orientation: landscape) and (hover: none) and (pointer: coarse) {
   .becauseTagline {
+    top: 40%;
     text-align: center !important;
     white-space: normal !important;
     line-height: 1.3 !important;
@@ -513,6 +603,91 @@
 
   .becauseTaglineMobile {
     top: calc(15% - 35px) !important;
+  }
+}
+
+/* ============================================
+   GALAXY S23 / S25 CLASS PORTRAIT
+   Raise badges to clear AI assistant launcher
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 360px) and (max-width: 430px) and (min-height: 640px) and (max-height: 940px) {
+  .badgeLayer {
+    top: calc(58% - 126px) !important;
+  }
+}
+
+/* ============================================
+   SMALL GALAXY FAMILY PORTRAIT
+   360x640 class devices only
+   ============================================ */
+
+@media (orientation: portrait) and (min-width: 340px) and (max-width: 370px) and (min-height: 620px) and (max-height: 700px) {
+  .heroWrap {
+    min-height: 640px !important;
+  }
+
+  .welcomeTitle {
+    font-size: 0.94rem !important;
+    line-height: 1.32 !important;
+    top: 21% !important;
+    width: 88% !important;
+  }
+
+  .professionalSubtitle {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+    top: 31% !important;
+    width: 86% !important;
+    max-width: 86% !important;
+  }
+
+  .installTagline {
+    top: 43% !important;
+    width: 86% !important;
+    font-size: 0.8rem !important;
+    line-height: 1.22 !important;
+  }
+
+  .installLine,
+  .zeroInterestLine {
+    font-size: 0.8rem !important;
+  }
+
+  .badgeLayer {
+    top: calc(54% - 88px) !important;
+    height: 102px !important;
+    gap: 2px !important;
+  }
+
+  .googleFivestarBadge {
+    width: 98px !important;
+    height: 64px !important;
+  }
+
+  .bbbAccreditedBadge {
+    width: 98px !important;
+    height: 64px !important;
+  }
+
+  .googleVerifiedBadge {
+    width: 98px !important;
+    height: 62px !important;
+  }
+
+  .heroManWrap {
+    width: 114px !important;
+    height: 162px !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+
+  .becauseTaglineMobile {
+    font-size: 0.78rem !important;
+    top: 82% !important;
+    left: -112px !important;
+    right: 88px !important;
+    line-height: 1.35 !important;
   }
 }
 
@@ -954,7 +1129,7 @@
   /* Scale desktop Because tagline */
   .becauseTagline {
     font-size: 1.2rem !important;
-    top: 85% !important;
+    top: 78% !important;
     left: 50% !important;
     transform: translateX(-160%) !important;
   }

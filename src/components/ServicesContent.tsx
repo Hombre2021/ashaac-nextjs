@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./ServicesContent.module.css";
 
 export default function ServicesContent() {
@@ -36,6 +37,9 @@ export default function ServicesContent() {
             <br /><br />
             Not only do we install and maintain furnaces, but we also fix them if something’s wrong. Sometimes furnaces can act up, especially after a long time. We’ve got the skills to figure out the issue and make it work like it should. So, if your furnace is acting strange, don’t worry—we’ve got your back! We’ll have it up and running in no time, keeping you warm and cozy.
           </p>
+          <Link className={styles.emergencyServiceLink} href="/emergency-hvac-repair-west-jordan">
+            Need urgent heating or cooling help in West Jordan? Review emergency HVAC repair options.
+          </Link>
           <div className={styles.heatingExperienceBlock} data-label="HeatingExperience">
             <h3 className={styles.heatingExperienceTitle} data-label="HeatingExperienceTitle">Heating Services Experience</h3>
             <p className={styles.heatingExperienceDescription} data-label="HeatingExperienceDescription">
@@ -66,6 +70,15 @@ export default function ServicesContent() {
                 Regular maintenance is essential to keep your heating and cooling systems running smoothly and efficiently. Our comprehensive HVAC maintenance services include thorough inspections, and tune-ups for furnaces, AC units, heat pumps, mini split systems, and through-the-window or wall units. With routine maintenance, we can identify and address potential issues before they become major problems, ensuring reliable and energy-efficient operation. Don’t wait to have to pay a large bill and call us to do regular maintenance on your system.
               </p>
             </div>
+          </div>
+          <div className={styles.heatingExperienceBlock} data-label="IndoorAirQualitySection">
+            <h3 className={styles.heatingExperienceTitle}>Indoor Air Quality Services</h3>
+            <p className={styles.heatingExperienceDescription}>
+              Indoor comfort is more than temperature. If you are noticing dust, odors, dry air, or uneven airflow, we can discuss indoor air quality options alongside your existing heating and cooling equipment.
+            </p>
+            <Link className={styles.emergencyServiceLink} href="/services/west-jordan/indoor-air-quality">
+              Explore indoor air quality services in West Jordan.
+            </Link>
           </div>
         </div>
       </div>

@@ -93,6 +93,24 @@
   transition: color 0.2s;
 }
 
+.localServiceLinks {
+  display: grid;
+  gap: 6px;
+  margin-top: 22px;
+  font-size: 0.95rem;
+}
+
+.localServiceLinks strong {
+  color: #173f5f;
+}
+
+.localServiceLinks a {
+  color: #0b6385;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .receiveLink:hover {
   color: #a00;
 }

@@ -52,7 +52,7 @@ export type PhoneAssistantResponse = {
 };
 
 export const phoneAssistantGreeting =
-  "Thank you for calling All Solutions Heating and Air Conditioning. We offer free estimates, so one of our technicians can come to your location and discuss pricing before you commit to or authorize any work. Would you like to schedule an appointment at our earliest convenience?";
+  "Thank you for calling All Solutions Heating and Air Conditioning. I am your AI assistant. I can help you book an appointment, or have one of our technicians text you or call you back at his earliest convenience. We offer free estimates, so a technician can come to your location at no charge to you, explain a solution, and discuss pricing before you commit to or authorize any work. Would you like to schedule an appointment at our earliest convenience?";
 
 function isBookingRequest(lower: string) {
   return /(\bbook(?:ing)?\b|\bschedul(?:e|ing)\b|make\s+(?:me\s+)?an?\s+appointment|set\s+up\s+an?\s+appointment|need\s+an?\s+appointment|want\s+an?\s+appointment|technician\s+(?:can\s+)?come|technician\s+(?:to\s+)?visit|(?:can|could|would)\s+you\s+come|come\s+(?:today|tomorrow|this\s+(?:morning|afternoon|evening))|\b(?:next\s+)?(?:monday|tuesday|wednesday|thursday|friday|saturday)(?:\s+(?:morning|afternoon|evening))?\b|come\s+to\s+(?:my|our|the)\s+(?:home|house|location|address))/.test(lower);
@@ -80,7 +80,7 @@ export function detectPhoneIntent(text: string): PhoneAssistantIntent {
   const lower = text.toLowerCase();
   const asksAvailability = /(next\s+available|when\s+is\s+your\s+next\s+available|when\s+can\s+you\s+(come|guys\s+come)|how\s+soon\s+can\s+your\s+technician\s+come|when\s+can\s+your\s+technician\s+come)/.test(lower);
   if (/(good\s*bye|goodbye|bye\b|hang up|end this call)/.test(lower)) return "goodbye";
-  if (lower.includes("mauricio") || lower.includes("leandro") || (lower.includes("talk") && (lower.includes("mauricio") || lower.includes("leandro")))) return "mauricio";
+  if (lower.includes("mauricio") || lower.includes("leandro") || lower.includes("owner")) return "callback";
   if (lower.includes("status") || (lower.includes("check") && lower.includes("status"))) return "check-status";
   if (lower.includes("reschedule") || /\bre[-\s]?schedule\b/.test(lower)) return "reschedule";
   if (lower.includes("cancel")) return "cancel";
@@ -96,7 +96,7 @@ export function detectPhoneInterruptIntent(text: string): PhoneAssistantIntent |
   const lower = text.toLowerCase().trim();
 
   if (/(good\s*bye|goodbye|bye\b|hang up|end this call)/.test(lower)) return "goodbye";
-  if (/(talk\s+to\s+mauricio|talk\s+to\s+leandro|mauricio|leandro)/.test(lower)) return "mauricio";
+  if (/(talk\s+to\s+(?:mauricio|leandro|the\s+owner)|mauricio|leandro|the\s+owner)/.test(lower)) return "callback";
   if (/(question\s+about\s+service|service\s+question)/.test(lower)) return "question";
   if (/(next\s+available|when\s+is\s+your\s+next\s+available|when\s+can\s+you\s+(come|guys\s+come)|how\s+soon\s+can\s+your\s+technician\s+come|when\s+can\s+your\s+technician\s+come)/.test(lower)) return "booking";
   if (isBookingRequest(lower) || /get\s+service\s+as\s+soon\s+as\s+possible/.test(lower)) return "booking";
@@ -150,7 +150,7 @@ export function parseMenuChoice(text: string): PhoneAssistantIntent {
   const lower = text.toLowerCase();
   const asksAvailability = /(next\s+available|when\s+is\s+your\s+next\s+available|when\s+can\s+you\s+(come|guys\s+come)|how\s+soon\s+can\s+your\s+technician\s+come|when\s+can\s+your\s+technician\s+come)/.test(lower);
   if (/(good\s*bye|goodbye|bye\b|hang up|end this call)/.test(lower)) return "goodbye";
-  if (lower.includes("mauricio") || lower.includes("leandro") || (lower.includes("talk") && (lower.includes("mauricio") || lower.includes("leandro")))) return "mauricio";
+  if (lower.includes("mauricio") || lower.includes("leandro") || lower.includes("owner")) return "callback";
   if (lower.includes("status")) return "check-status";
   if (lower.includes("reschedule")) return "reschedule";
   if (lower.includes("cancel")) return "cancel";

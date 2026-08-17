@@ -1,3 +1,7 @@
+"use client";
+
+import Link from "next/link";
+import { trackLeadEvent, trackPhoneClick } from "@/lib/analytics";
 import styles from "./ContactButtons.module.css";
 
 type ContactButtonsProps = {
@@ -22,19 +26,19 @@ export default function ContactButtons({
         className={styles.blueButton}
         href="tel:8017553040"
         aria-label={phoneAriaLabel}
+        onClick={() => trackPhoneClick("/contact")}
       >
         Text or call: 801-755-3040
       </a>
-      <a
+      <Link
         data-label="BookButton"
         className={styles.blueButton}
-        href="https://calendly.com/ashaacutah/30min?month=2026-02&_gl=1%2A1owpxfg%2A_ga%2AODYzMjgyOTI3LjE3NTIyODkwNzY.%2A_ga_WNKN6Z7Y46%2AczE3NzA2ODU3ODIkbzU3JGcxJHQxNzcwNjg1NzgyJGo2MCRsMCRoMA.."
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/book"
         aria-label="Book your appointment now from Contact page"
+        onClick={() => trackLeadEvent("click_hvac_pro_booking", { source: "contact" })}
       >
         Book your appointment now!
-      </a>
+      </Link>
     </div>
   );
 }

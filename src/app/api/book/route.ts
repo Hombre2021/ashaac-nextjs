@@ -1,8 +1,15 @@
+const MANAGER_BOOKING_TIMEOUT_MS = 8000;
+const MANAGER_STATUS_TIMEOUT_MS = 5000;
+
 import { NextResponse } from "next/server";
 import {
   buildPrototypeAvailability,
   getCurrentDateInBookingTimeZone,
+  isPhoneBookingWindowAvailable,
+  phoneBookingTimeWindowOptions,
   bookingRequestSchema,
+  resolveSupportedBookingCity,
+  strictServiceAreaCities,
   type BookingRequest,
   type BookingSubmissionResponse,
 } from "@/lib/booking";
@@ -44,63 +51,12 @@ function log(entry: Omit<LogEntry, "timestamp">) {
   console[level as "error" | "info"]("booking:notification", fullEntry);
 }
 
-async function retryWithBackoff<T>(
-  fn: () => Promise<T>,
-  channel: string,
-  requestId: string,
-  maxAttempts = 3,
-): Promise<{ result: T | null; attempts: number; lastError: string | null }> {
-  let lastError: string | null = null;
-  let attempts = 0;
-
-  for (let i = 1; i <= maxAttempts; i++) {
-    attempts = i;
-    const startTime = Date.now();
-
-    try {
-      log({
-        requestId,
-        channel: channel as "webhook" | "email" | "sms",
-        attempt: i,
-        status: "pending",
-      });
-
-      const result = await fn();
-
-      const duration = Date.now() - startTime;
-      log({
-        requestId,
-        channel: channel as "webhook" | "email" | "sms",
-        attempt: i,
-        status: "success",
-        duration,
-      });
-
-      return { result, attempts: i, lastError: null };
-    } catch (error) {
-      const duration = Date.now() - startTime;
-      lastError = String(error);
-
-      log({
-        requestId,
-        channel: channel as "webhook" | "email" | "sms",
-        attempt: i,
-        status: "failure",
-        error: lastError,
-        duration,
-      });
-
-      if (i < maxAttempts) {
-        const backoffMs = Math.pow(2, i - 1) * 1000;
-        await new Promise((resolve) => setTimeout(resolve, backoffMs));
-      }
-    }
-  }
-
-  return { result: null, attempts, lastError };
-}
-
 function buildManagerPayload(bookingId: string, data: BookingRequest & { mediaUrls?: string[] }) {
+  const serviceDescription = [data.customServiceDescription, data.notes]
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .join("\n\n");
+
   return {
     bookingId,
     serviceType: data.serviceType,
@@ -114,24 +70,13 @@ function buildManagerPayload(bookingId: string, data: BookingRequest & { mediaUr
     serviceAddress: data.addressLine1,
     serviceCity: data.addressCity,
     serviceZip: data.addressZip,
-    notes: data.notes || "",
+    callerLanguage: data.callerLanguage,
+    customerConfirmationSms: data.customerConfirmationSms,
+    notes: serviceDescription,
     mediaUrls: Array.isArray(data.mediaUrls) ? data.mediaUrls : [],
     sourcePage: data.sourcePage,
     source: {
       system: "ashaac-nextjs-booking",
-      sourcePage: data.sourcePage,
-      utm_source: data.utm_source || "",
-      utm_medium: data.utm_medium || "",
-      utm_campaign: data.utm_campaign || "",
-      utm_term: data.utm_term || "",
-      utm_content: data.utm_content || "",
-      gclid: data.gclid || "",
-      gbraid: data.gbraid || "",
-      wbraid: data.wbraid || "",
-      fbclid: data.fbclid || "",
-      msclkid: data.msclkid || "",
-    },
-    attribution: {
       sourcePage: data.sourcePage,
       utm_source: data.utm_source || "",
       utm_medium: data.utm_medium || "",
@@ -160,52 +105,71 @@ async function submitToManager(
     return null;
   }
 
-  const { result, attempts, lastError } = await retryWithBackoff(
-    async () => {
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (managerApiKey) headers[authHeaderName] = managerApiKey;
+  const startedAt = Date.now();
+  log({ requestId: bookingId, channel: "manager", attempt: 1, status: "pending" });
 
-      if (managerApiKey) {
-        headers[authHeaderName] = managerApiKey;
-      }
-
-      const response = await fetch(managerUrl, {
-        method: "POST",
+  let response: Response;
+  try {
+    response = await fetch(managerUrl, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(buildManagerPayload(bookingId, data)),
+      signal: AbortSignal.timeout(MANAGER_BOOKING_TIMEOUT_MS),
+    });
+  } catch (error) {
+    const lastError = String(error);
+    try {
+      const statusUrl = new URL(managerUrl);
+      statusUrl.searchParams.set("bookingId", bookingId);
+      const statusResponse = await fetch(statusUrl, {
+        method: "GET",
         headers,
-        body: JSON.stringify(buildManagerPayload(bookingId, data)),
+        cache: "no-store",
+        signal: AbortSignal.timeout(MANAGER_STATUS_TIMEOUT_MS),
       });
-
-      if (!response.ok) {
-        throw new Error(`manager returned ${response.status}`);
+      const statusBody = await statusResponse.json().catch(() => null) as Record<string, unknown> | null;
+      if (statusResponse.ok && statusBody?.managerId && statusBody?.customerId) {
+        response = new Response(JSON.stringify(statusBody), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+        console.info("booking:manager-status-recovered", {
+          requestId: bookingId,
+          duration: Date.now() - startedAt,
+          calendarLinked: Boolean(statusBody.calendarEventId),
+        });
+      } else {
+        throw new Error(`manager status returned ${statusResponse.status}`);
       }
-
-      const responseBody = (await response.json().catch(() => null)) as Record<
-        string,
-        unknown
-      > | null;
-      return { response, body: responseBody };
-    },
-    "manager",
-    bookingId,
-    2,
-  );
-
-  if (!result) {
-    return {
-      ok: false,
-      detail: `failed: ${lastError}`,
-      attempts,
-      lastError: lastError || undefined,
-    };
+    } catch (statusError) {
+      const recoveryError = `${lastError}; status recovery failed: ${String(statusError)}`;
+      log({ requestId: bookingId, channel: "manager", attempt: 1, status: "failure", error: recoveryError, duration: Date.now() - startedAt });
+      return {
+        ok: false,
+        detail: `failed: ${recoveryError}`,
+        attempts: 1,
+        lastError: recoveryError,
+      };
+    }
   }
 
-  const managerId = (result.body?.managerId || result.body?.id || result.body?.leadId || result.body?.requestId) as
+  if (!response.ok) {
+    const lastError = `manager returned ${response.status}`;
+    log({ requestId: bookingId, channel: "manager", attempt: 1, status: "failure", statusCode: response.status, error: lastError, duration: Date.now() - startedAt });
+    return { ok: false, detail: `failed: ${lastError}`, attempts: 1, lastError };
+  }
+
+  log({ requestId: bookingId, channel: "manager", attempt: 1, status: "success", statusCode: response.status, duration: Date.now() - startedAt });
+  const responseBody = (await response.json().catch(() => null)) as Record<string, unknown> | null;
+
+  const managerId = (responseBody?.managerId || responseBody?.id || responseBody?.leadId || responseBody?.requestId) as
     | string
     | undefined;
-  const customerId = (result.body?.customerId || result.body?.crmCustomerId) as string | undefined;
-  const calendarEventId = (result.body?.calendarEventId || result.body?.eventId) as string | undefined;
-  const calendarHtmlLink = (result.body?.calendarHtmlLink || result.body?.htmlLink) as string | undefined;
+  const customerId = (responseBody?.customerId || responseBody?.crmCustomerId) as string | undefined;
+  const calendarEventId = (responseBody?.calendarEventId || responseBody?.eventId) as string | undefined;
+  const calendarHtmlLink = (responseBody?.calendarHtmlLink || responseBody?.htmlLink) as string | undefined;
 
   if (!managerId || !customerId) {
     return {
@@ -218,7 +182,7 @@ async function submitToManager(
         managerId ? `appointment recorded: ${managerId}` : "appointment ID not returned",
         customerId ? `customer linked: ${customerId}` : "customer ID not returned",
       ].join(" | "),
-      attempts,
+      attempts: 1,
       lastError: "hvac-pro intake did not confirm both appointment and customer linkage",
     };
   }
@@ -234,13 +198,44 @@ async function submitToManager(
       customerId ? `customer ID: ${customerId}` : "customer ID: not returned",
       calendarEventId ? `Google Calendar event: ${calendarEventId}` : "Google Calendar event: not returned",
     ].join(" | "),
-    attempts,
+    attempts: 1,
   };
+}
+
+export async function GET(request: Request) {
+  const internalPhoneToken = String(request.headers.get("x-phone-booking-token") || "");
+  const expectedPhoneToken = String(process.env.OPENAI_REALTIME_MCP_TOKEN || "");
+  if (!expectedPhoneToken || internalPhoneToken !== expectedPhoneToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const bookingId = String(new URL(request.url).searchParams.get("bookingId") || "").trim();
+  if (!/^[A-F0-9]{8}$/.test(bookingId)) {
+    return NextResponse.json({ error: "Invalid booking ID" }, { status: 400 });
+  }
+  const managerUrl = process.env.MANAGER_BOOKING_URL;
+  if (!managerUrl) return NextResponse.json({ error: "Manager not configured" }, { status: 503 });
+  const statusUrl = new URL(managerUrl);
+  statusUrl.searchParams.set("bookingId", bookingId);
+  const headers: Record<string, string> = {};
+  const managerApiKey = process.env.MANAGER_API_KEY;
+  if (managerApiKey) headers[process.env.MANAGER_AUTH_HEADER || "X-API-Key"] = managerApiKey;
+  try {
+    const response = await fetch(statusUrl, {
+      method: "GET",
+      headers,
+      cache: "no-store",
+      signal: AbortSignal.timeout(MANAGER_STATUS_TIMEOUT_MS),
+    });
+    const payload = await response.json().catch(() => ({})) as Record<string, unknown>;
+    return NextResponse.json(payload, { status: response.status });
+  } catch {
+    return NextResponse.json({ error: "Booking status unavailable" }, { status: 503 });
+  }
 }
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
-  const { mediaUrls, ...bookingBody } = (body || {}) as Record<string, unknown>;
+  const { mediaUrls, bookingId: requestedBookingId, ...bookingBody } = (body || {}) as Record<string, unknown>;
   const parsed = bookingRequestSchema.safeParse(bookingBody);
 
   if (!parsed.success) {
@@ -249,6 +244,16 @@ export async function POST(request: Request) {
         error: parsed.error.issues[0]?.message || "Booking request is invalid.",
       },
       { status: 400 },
+    );
+  }
+
+  const requestedCity = resolveSupportedBookingCity(parsed.data.city);
+  const addressCity = resolveSupportedBookingCity(parsed.data.addressCity);
+  const strictCities = new Set<string>(strictServiceAreaCities);
+  if (!requestedCity || !addressCity || requestedCity !== addressCity || !strictCities.has(requestedCity)) {
+    return NextResponse.json(
+      { error: "We currently serve West Jordan, South Jordan, Riverton, and Herriman only." },
+      { status: 422 },
     );
   }
 
@@ -262,7 +267,10 @@ export async function POST(request: Request) {
   }
 
   const selectedDate = availability.find((slot) => slot.date === parsed.data.preferredDate);
-  const selectedWindowIsValid = Boolean(selectedDate?.windows.includes(parsed.data.preferredTimeWindow));
+  const isPhoneTwoHourWindow = (phoneBookingTimeWindowOptions as readonly string[]).includes(parsed.data.preferredTimeWindow);
+  const selectedWindowIsValid = isPhoneTwoHourWindow
+    ? isPhoneBookingWindowAvailable(parsed.data.preferredDate, parsed.data.preferredTimeWindow)
+    : Boolean(selectedDate?.windows.includes(parsed.data.preferredTimeWindow as typeof selectedDate.windows[number]));
 
   if (!selectedWindowIsValid) {
     return NextResponse.json(
@@ -271,9 +279,14 @@ export async function POST(request: Request) {
     );
   }
 
+  const internalPhoneToken = String(request.headers.get("x-phone-booking-token") || "");
+  const expectedPhoneToken = String(process.env.OPENAI_REALTIME_MCP_TOKEN || "");
+  const trustedPhoneBooking = Boolean(expectedPhoneToken) && internalPhoneToken === expectedPhoneToken;
   const payload: BookingSubmissionResponse = {
     mode: "prototype",
-    requestId: crypto.randomUUID().slice(0, 8).toUpperCase(),
+    requestId: trustedPhoneBooking && /^[A-F0-9]{8}$/.test(String(requestedBookingId || ""))
+      ? String(requestedBookingId)
+      : crypto.randomUUID().slice(0, 8).toUpperCase(),
     nextStep: "Booking received. Processing...",
   };
 

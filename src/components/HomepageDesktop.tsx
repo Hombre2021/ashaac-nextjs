@@ -1,5 +1,6 @@
 import HomepageHeader from "./HomepageHeader";
 import HomepageHero from "./HomepageHero";
+import ServiceAreasSection from "./ServiceAreasSection";
 import HomepageSection from "./HomepageSection";
 import HomepageSubtitle from "./HomepageSubtitle";
 import HomepageDualFeature from "./HomepageDualFeature";
@@ -13,6 +14,7 @@ export default function HomepageDesktop() {
     <>
       <HomepageHeader />
       <HomepageHero />
+      <ServiceAreasSection />
       <HomepageSection />
       <HomepageSubtitle />
       <HomepageDualFeature />

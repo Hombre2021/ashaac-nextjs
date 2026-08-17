@@ -1,5 +1,6 @@
 import HomepageHeader from "./HomepageHeader";
 import HomepageHero from "./HomepageHero";
+import ServiceAreasSection from "./ServiceAreasSection";
 import HomepageSection from "./HomepageSection";
 import HomepageSubtitle from "./HomepageSubtitle";
 import HomepageDualFeature from "./HomepageDualFeature";
@@ -14,6 +15,7 @@ export default function HomepageMobile() {
     <div className={styles.homepageMobile}>
       <HomepageHeader />
       <HomepageHero />
+      <ServiceAreasSection />
       <HomepageSection />
       <HomepageSubtitle />
       <HomepageDualFeature />

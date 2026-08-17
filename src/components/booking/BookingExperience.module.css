@@ -154,6 +154,74 @@
   color: #b42318;
 }
 
+.datePicker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #d8e6f5;
+  border-radius: 14px;
+  background: #f8fbff;
+}
+
+.dateOption {
+  min-height: 42px;
+  border: 1px solid #b8cfe2;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #123b59;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dateOption:hover,
+.dateOption:focus-visible {
+  border-color: #095f91;
+  background: #eaf5fb;
+  outline: none;
+}
+
+.calendarLoading {
+  grid-column: 1 / -1;
+  padding: 8px;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.customServiceRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.inlineSubmitButton {
+  border: none;
+  border-radius: 12px;
+  background: #095f91;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  padding: 12px 16px;
+  cursor: pointer;
+  min-height: 46px;
+  white-space: nowrap;
+}
+
+.inlineSubmitButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.inlineSaved {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #067647;
+  font-weight: 600;
+}
+
 .fieldLabel {
   font-size: 0.94rem;
   font-weight: 600;
@@ -285,6 +353,13 @@
   cursor: wait;
 }
 
+.callAlternative {
+  color: #095f91;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .submitHint {
   margin: 0;
   max-width: 420px;
@@ -330,6 +405,10 @@
   }
 
   .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .customServiceRow {
     grid-template-columns: 1fr;
   }
 }

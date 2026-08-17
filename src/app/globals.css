@@ -57,6 +57,12 @@ body {
   overflow-x: hidden;
 }
 
+@media (max-width: 640px) {
+  body {
+    padding-bottom: calc(74px + env(safe-area-inset-bottom));
+  }
+}
+
 @media (orientation: landscape) {
   html,
   body,

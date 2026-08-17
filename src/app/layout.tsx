@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import GoogleTracking from "@/components/GoogleTracking";
+import AttributionCapture from "@/components/AttributionCapture";
+import MetaPixel from "@/components/MetaPixel";
 import StructuredData from "@/components/StructuredData";
 import WebsiteAIAssistant from "@/components/WebsiteAIAssistant";
+import MobileCallAction from "@/components/MobileCallAction";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com";
@@ -9,11 +13,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -52,6 +58,9 @@ export const metadata: Metadata = {
     description:
       "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County.",
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+  },
   robots: {
     index: true,
     follow: true,
@@ -75,8 +84,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <GoogleTracking />
+        <AttributionCapture />
+        <MetaPixel />
         <StructuredData />
         <div className="appRoot">{children}</div>
+        <MobileCallAction />
         <WebsiteAIAssistant />
       </body>
     </html>

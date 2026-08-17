@@ -672,47 +672,6 @@ export default function WebsiteAIAssistant() {
     }
   };
 
-  const openInstantLiveText = async () => {
-    if (!payload.phone) {
-      setStatus("Add a phone number first so I can open a live text thread.");
-      return;
-    }
-
-    setBusy(true);
-    setStatus("Opening live text thread...");
-
-    try {
-      const response = await fetch("/api/assistant/text-threads/open", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customerPhone: payload.phone,
-          firstName: payload.firstName || "Customer",
-          city: payload.city || "West Jordan",
-          serviceType: payload.serviceType || "general-service",
-          urgency: payload.urgency || "now",
-        }),
-      });
-
-      const data = (await response.json().catch(() => null)) as { ok?: boolean; thread?: { code?: string } } | null;
-
-      if (!response.ok || !data?.ok) {
-        throw new Error("Unable to open live text thread.");
-      }
-
-      const code = data.thread?.code || "";
-      const message = code
-        ? `Live text thread opened. Reference #${code}. A technician can message you shortly.`
-        : "Live text thread opened.";
-      setStatus(message);
-      appendMessage({ from: "assistant", text: message });
-    } catch (error) {
-      setStatus(String((error as Error)?.message || "Unable to open text thread."));
-    } finally {
-      setBusy(false);
-    }
-  };
-
   const submitTextHandoff = async (finalPayload: AssistantPayload) => {
     if (!finalPayload.firstName.trim() || !finalPayload.phone.trim()) {
       setStatus("Please provide your name and phone number.");
@@ -1218,9 +1177,6 @@ export default function WebsiteAIAssistant() {
             <a className={styles.topActionLink} href="https://ashaac.com/book">Book now</a>
             <a className={styles.topActionLink} href="tel:+18017553040">Call</a>
             <a className={styles.topActionLink} href="sms:+18017553040">Text</a>
-            <button className={styles.topActionBtn} onClick={() => void openInstantLiveText()} type="button" disabled={busy}>
-              Open live text thread
-            </button>
           </div>
 
           <div className={styles.thread}>
@@ -1260,7 +1216,7 @@ export default function WebsiteAIAssistant() {
                   className={styles.input}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={manualServiceTypeEntry ? "Describe your issue in your own words..." : step?.placeholder || "Type answer..."}
+                  placeholder={manualServiceTypeEntry ? "Describe your issue in your own words..." : step?.placeholder || "Type your question here"}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();

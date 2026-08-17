@@ -1,12 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import HomepageDesktop from "./HomepageDesktop";
-import HomepageMobile from "./HomepageMobile";
+import dynamic from "next/dynamic";
 import styles from "./HomepageResponsive.module.css";
 
 const DESKTOP_BASE = { width: 1920, height: 1080 };
 const MOBILE_BASE = { width: 390, height: 844 };
+
+const HomepageDesktop = dynamic(() => import("./HomepageDesktop"), {
+  ssr: false,
+});
+
+const HomepageMobile = dynamic(() => import("./HomepageMobile"), {
+  ssr: false,
+});
 
 type ScaleMode = "contain" | "fit-height" | "fit-width";
 

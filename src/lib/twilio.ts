@@ -2,7 +2,7 @@ function envFirst(...keys: string[]) {
   for (const key of keys) {
     const value = process.env[key];
     if (typeof value === "string" && value.trim().length > 0) {
-      return value.trim();
+      return value.replace(/(?:\\[rn]|[\r\n])+$/g, "").trim();
     }
   }
 

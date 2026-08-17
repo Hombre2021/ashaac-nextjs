@@ -204,6 +204,12 @@ async function writeStore(store: AssistantStoreShape) {
 
 export async function appendAssistantLead(record: Omit<AssistantLeadRecord, "id" | "createdAt">) {
   const store = await readStore();
+  const existing = store.leads.find((lead) => lead.leadId === record.leadId);
+  if (existing) {
+    Object.assign(existing, record);
+    await writeStore(store);
+    return;
+  }
   store.leads.unshift({
     id: randomUUID(),
     createdAt: nowIso(),

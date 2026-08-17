@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDeviceDetection } from "../hooks/useDeviceDetection";
+import { trackLeadEvent, trackPhoneClick } from "@/lib/analytics";
 import styles from "./HomepageHeader.module.css";
 
 export default function HomepageHeader() {
@@ -52,7 +53,7 @@ export default function HomepageHeader() {
           src="/images/homepage/White-stripe.png"
           alt="White stripe"
           fill
-          sizes="(max-width: 480px) 95vw, (max-width: 1024px) 90vw, 80vw"
+          sizes="100vw"
           priority
           className={styles.whitestripeImage}
         />
@@ -77,22 +78,24 @@ export default function HomepageHeader() {
                 <Link href="/" className={styles.headermenuLink} data-label="NavHome">Home</Link>
                 <Link href="/about" className={styles.headermenuLink} data-label="NavAbout">About</Link>
                 <Link href="/services" className={styles.headermenuLink} data-label="NavServices">Services</Link>
+                <Link href="/service-areas" className={styles.headermenuLink} data-label="NavServiceAreas">Service Areas</Link>
                 <Link href="/projects" className={styles.headermenuLink} data-label="NavProjects">Projects</Link>
                 <Link href="/reviews" className={styles.headermenuLink} data-label="NavReviews">Reviews</Link>
                 <Link href="/contact" className={styles.headermenuLink} data-label="NavContact">Contact</Link>
               </nav>
               <div className={`${styles.headerbuttonsDesktop} ${nestHub ? styles.headerbuttonsDesktopNesthub : ''} ${nestHubMax ? styles.headerbuttonsDesktopNesthubMax : ''}`}>
-                <a data-label="CallButton" href="tel:801-755-3040" className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}>
+                <a data-label="CallButton" href="tel:801-755-3040" onClick={() => trackPhoneClick("/")} className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}>
                   <span className={styles.callButtonTop}>Text/Call now</span>
                   <span className={styles.callButtonBottom}>801-755-3040</span>
                 </a>
-                <a data-label="EstimateButton" href="https://calendly.com/ashaacutah/30min?month=2026-02&_gl=1%2A1owpxfg%2A_ga%2AODYzMjgyOTI3LjE3NTIyODkwNzY.%2A_ga_WNKN6Z7Y46%2AczE3NzA2ODU3ODIkbzU3JGcxJHQxNzcwNjg1NzgyJGo2MCRsMCRoMA.." target="_blank" rel="noopener noreferrer" className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}>
+                <Link data-label="EstimateButton" href="/book" onClick={() => trackLeadEvent("click_hvac_pro_booking", { source: "homepage" })} className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}>
                   <span className={styles.estimateButtonTop}>Request a</span>
                   <span className={styles.estimateButtonBottom}>free Estimate</span>
-                </a>
+                </Link>
                 <Link
                   data-label="FinancingButton"
                   href="/financing"
+                  onClick={() => trackLeadEvent("click_financing_prequal", { source: "homepage" })}
                   className={`${styles.headerbuttonsButton} ${nestHub ? styles.headerbuttonsButtonNesthub : ''} ${nestHubMax ? styles.headerbuttonsButtonNesthubMax : ''}`}
                   aria-label="Apply for financing"
                 >
@@ -105,6 +108,7 @@ export default function HomepageHeader() {
               <a
                 data-label="CallButtonMobileHeader"
                 href="tel:801-755-3040"
+                onClick={() => trackPhoneClick("/")}
                 className={styles.mobileHeaderCallButton}
               >
                 <span>Call/Text now</span>
@@ -124,11 +128,12 @@ export default function HomepageHeader() {
                 <span className={styles.headermenuLabel}>Menu</span>
               </button>
               <nav className={`${styles.headermenuNavMobile} ${menuOpen ? styles.headermenuOpen : ""}`} data-label="MainNavigationMobile">
-                <a href="https://calendly.com/ashaacutah/30min?month=2026-02&_gl=1%2A1owpxfg%2A_ga%2AODYzMjgyOTI3LjE3NTIyODkwNzY.%2A_ga_WNKN6Z7Y46%2AczE3NzA2ODU3ODIkbzU3JGcxJHQxNzcwNjg1NzgyJGo2MCRsMCRoMA.." target="_blank" rel="noopener noreferrer" className={styles.headermenuLink} data-label="NavEstimateMobile">Request a free Estimate</a>
+                <Link href="/book" className={styles.headermenuLink} data-label="NavEstimateMobile">Request a free Estimate</Link>
                 <Link href="/financing" className={styles.headermenuLink} data-label="NavFinancingMobile">Apply For Financing</Link>
                 <Link href="/" className={styles.headermenuLink} data-label="NavHomeMobile">Home</Link>
                 <Link href="/about" className={styles.headermenuLink} data-label="NavAboutMobile">About</Link>
                 <Link href="/services" className={styles.headermenuLink} data-label="NavServicesMobile">Services</Link>
+                <Link href="/service-areas" className={styles.headermenuLink} data-label="NavServiceAreasMobile">Service Areas</Link>
                 <Link href="/projects" className={styles.headermenuLink} data-label="NavProjectsMobile">Projects</Link>
                 <Link href="/reviews" className={styles.headermenuLink} data-label="NavReviewsMobile">Reviews</Link>
                 <Link href="/contact" className={styles.headermenuLink} data-label="NavContactMobile">Contact</Link>

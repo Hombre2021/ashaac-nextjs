@@ -53,8 +53,7 @@ export default function HomepageFooter() {
         </div>
         <div className={styles.footerLinksCol} data-label="ContactCol">
           <div className={styles.footerLinksTitle} data-label="ContactTitle">Contact Us</div>
-          <a href="tel:801-512-7103" data-label="Phone1">801-512-7103</a>
-          <a href="tel:801-755-3040" data-label="Phone2">801-755-3040</a>
+          <a href="tel:801-755-3040" data-label="Phone">801-755-3040</a>
           <a href="mailto:ashaacutah@gmail.com" data-label="EmailLink">ashaacutah@gmail.com</a>
           <div data-label="Address">4434 W 8790 S West Jordan,<br />Utah</div>
         </div>

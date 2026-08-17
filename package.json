@@ -22,7 +22,8 @@
     "assistant:spam:reviews": "pwsh -NoProfile -Command \"$url = if ($env:ASSISTANT_SPAM_REVIEWS_URL) { $env:ASSISTANT_SPAM_REVIEWS_URL } else { 'http://localhost:3000/api/assistant/spam/reviews?limit=50' }; $token = $env:BOOKING_MANAGER_VIEW_TOKEN; $headers = @{}; if ($token) { $headers.Authorization = 'Bearer ' + $token }; Invoke-RestMethod -Method Get -Uri $url -Headers $headers\"",
     "assistant:parity": "pwsh -ExecutionPolicy Bypass -File ./scripts/run-assistant-parity-check.ps1",
     "assistant:verify-deployment": "node ./scripts/verify-assistant-deployment.mjs",
-    "prebuild": "npm run assistant:verify-deployment",
+    "assistant:verify-script": "node ./scripts/verify-phone-script-parity.mjs",
+    "prebuild": "npm run assistant:verify-deployment && npm run assistant:verify-script",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

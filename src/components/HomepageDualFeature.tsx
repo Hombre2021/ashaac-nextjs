@@ -11,9 +11,8 @@ export default function HomepageDualFeature() {
               src="/images/homepage/double-furnace-wj.png"
               alt="Double Furnace West Jordan"
               fill
-              sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 50vw"
+              sizes="100vw"
               className={styles.doubleFurnaceWestJordanImage}
-              priority
             />
           </div>
           <div className={styles.featureDescription}>
@@ -26,9 +25,8 @@ export default function HomepageDualFeature() {
               src="/images/homepage/double-ac-condenser.webp"
               alt="Double AC Condenser"
               fill
-              sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 50vw"
+              sizes="100vw"
               className={styles.doubleAcCondenserImage}
-              priority
             />
           </div>
           <div className={styles.featureDescription}>

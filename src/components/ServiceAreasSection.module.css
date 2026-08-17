@@ -1,0 +1,12 @@
+.section { background: #eef5f7; color: #173047; padding: 42px 24px; }
+.inner { width: min(1120px, 100%); margin: 0 auto; }
+.eyebrow { margin: 0 0 8px; color: #0b6385; font-size: .82rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.section h2 { max-width: 720px; margin: 0; font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.15; }
+.intro { margin: 12px 0 24px; font-size: 1rem; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.area { background: #fff; border: 1px solid #d5e3e8; border-radius: 6px; padding: 18px; }
+.area h3 { margin: 0 0 12px; font-size: 1.25rem; }
+.area h3 a, .links a, .allLink { color: #075b78; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }
+.links { display: grid; gap: 8px; font-size: .95rem; }
+.allLink { display: inline-block; margin-top: 22px; }
+@media (max-width: 700px) { .section { padding: 34px 18px; } .grid { grid-template-columns: 1fr; gap: 12px; } }

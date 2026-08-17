@@ -4,7 +4,7 @@ import SectionShell from "./SectionShell";
 const testimonials = [
   {
     name: "General",
-    text: `For example, don’t just take our word for it. Read what our valued customers have to say about their experience with All Solutions Heating and Air Conditioning, All Solutions Heating and Air Conditioning exceeded my expectations. Then, from the initial consultation to the final installation, their team was professional, knowledgeable, and efficient. The new furnace they installed in my home has been working flawlessly, and I couldn't be happier with the level of comfort it provides. Highly recommended!`,
+    text: `All Solutions Heating and Air Conditioning exceeded my expectations. Then, from the initial consultation to the final installation, their team was professional, knowledgeable, and efficient. The new furnace they installed in my home has been working flawlessly, and I couldn't be happier with the level of comfort it provides. Highly recommended!`,
   },
   {
     name: "John M",
