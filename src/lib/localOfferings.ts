@@ -8,6 +8,12 @@ export const cityNames: Record<LocalCitySlug, string> = {
   riverton: "Riverton",
 };
 
+export const cityContext: Record<LocalCitySlug, string> = {
+  "west-jordan": "West Jordan homeowners can request help with aging systems, uneven comfort, no-heat concerns, and cooling problems across the west side of the Salt Lake Valley.",
+  "south-jordan": "South Jordan homeowners can request service for new construction planning, replacement systems, uneven room temperatures, and seasonal heating or cooling problems.",
+  riverton: "Riverton homeowners can request help with older equipment, urgent comfort problems, airflow concerns, and heating or cooling projects in the southwest Salt Lake Valley.",
+};
+
 export const localOfferings = [
   {
     slug: "hvac-installation",

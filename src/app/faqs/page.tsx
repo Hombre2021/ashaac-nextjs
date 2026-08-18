@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import HomepageHeader from "@/components/HomepageHeader";
 import AboutHero from "@/components/AboutHero";
 import HomepageFooter from "@/components/HomepageFooter";
@@ -73,6 +74,7 @@ export default function FaqsPage() {
       <ContentContainer title="FAQ’s">
         <h2 style={{ textAlign: "center", fontSize: 32, marginBottom: 32 }}>Frequently Asked Questions</h2>
         <p><strong>All Solutions Heating and Air Conditioning LLC</strong></p>
+        <p>Looking for city-specific help? Review our <Link href="/service-areas">HVAC service areas</Link>, <Link href="/emergency-hvac-repair-west-jordan">emergency repair in West Jordan</Link>, or <Link href="/services/south-jordan/hvac-maintenance">HVAC maintenance in South Jordan</Link>.</p>
         <h2>1. What areas do you serve?</h2>
         <p>We proudly serve West Jordan, Salt Lake County, and surrounding Utah communities. If you’re unsure whether we service your area, feel free to call or text us at 801-755-3040.</p>
         <h2>2. What HVAC services do you provide?</h2>

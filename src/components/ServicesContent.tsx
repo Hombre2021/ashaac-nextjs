@@ -40,6 +40,10 @@ export default function ServicesContent() {
           <Link className={styles.emergencyServiceLink} href="/emergency-hvac-repair-west-jordan">
             Need urgent heating or cooling help in West Jordan? Review emergency HVAC repair options.
           </Link>
+          <div className={styles.emergencyServiceLink}>
+            <Link href="/ac-repair-south-jordan">Review AC repair options in South Jordan</Link>{" "}
+            <Link href="/furnace-repair-riverton">or furnace repair in Riverton.</Link>
+          </div>
           <div className={styles.heatingExperienceBlock} data-label="HeatingExperience">
             <h3 className={styles.heatingExperienceTitle} data-label="HeatingExperienceTitle">Heating Services Experience</h3>
             <p className={styles.heatingExperienceDescription} data-label="HeatingExperienceDescription">

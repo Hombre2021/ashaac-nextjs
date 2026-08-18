@@ -13,7 +13,7 @@ export default function AboutHero({ title = "About us" }) {
         className={styles.heroBg}
       />
       <div className={styles.blueOverlay} />
-      <div className={styles.heroTitle} data-label="AboutHeroTitle">{title}</div>
+      <h1 className={styles.heroTitle} data-label="AboutHeroTitle">{title}</h1>
     </div>
   );
 }

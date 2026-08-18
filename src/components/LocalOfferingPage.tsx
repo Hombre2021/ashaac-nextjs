@@ -2,7 +2,7 @@ import Link from "next/link";
 import HomepageFooter from "./HomepageFooter";
 import HomepageHeader from "./HomepageHeader";
 import styles from "./LocalServicePage.module.css";
-import type { LocalCitySlug } from "@/lib/localOfferings";
+import { cityContext, type LocalCitySlug } from "@/lib/localOfferings";
 
 type LocalOfferingPageProps = {
   city: string;
@@ -79,6 +79,7 @@ export default function LocalOfferingPage({ city, citySlug, offering }: LocalOff
           <p>
             Share the service address, your current equipment, and what you want to improve. All Solutions can review the request and discuss the appropriate next step.
           </p>
+          <p>{cityContext[citySlug]}</p>
           <h2>What this service can help with</h2>
           <ul>{offering.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
           <section className={styles.faqs} aria-labelledby="offering-faq-heading">

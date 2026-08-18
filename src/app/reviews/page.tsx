@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import HomepageHeader from "../../components/HomepageHeader";
 import ReviewsHero from "../../components/ReviewsHero";
 import ReviewsContent from "../../components/ReviewsContent";
@@ -24,6 +25,9 @@ export default function ReviewsPage() {
       <HomepageHeader />
       <ReviewsHero />
       <ReviewsContent />
+      <p style={{ maxWidth: 920, margin: "24px auto", padding: "0 24px", lineHeight: 1.6 }}>
+        See how our local service pages connect customer feedback with <Link href="/ac-repair-west-jordan">AC repair in West Jordan</Link>, <Link href="/furnace-repair-south-jordan">furnace repair in South Jordan</Link>, and <Link href="/emergency-hvac-repair-riverton">emergency HVAC repair in Riverton</Link>.
+      </p>
       <HomepageFooter />
     </>
   );

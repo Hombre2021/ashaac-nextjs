@@ -18,7 +18,7 @@ export default function SimpleHero({ title, subtitle }: SimpleHeroProps) {
         className={styles.heroBg}
       />
       <div className={styles.blueOverlay} />
-      <div className={styles.heroTitle} data-label="HeroTitle">{title}</div>
+      <h1 className={styles.heroTitle} data-label="HeroTitle">{title}</h1>
       {subtitle && <div className={styles.heroSubtitle} data-label="HeroSubtitle">{subtitle}</div>}
     </div>
   );

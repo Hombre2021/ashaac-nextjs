@@ -51,12 +51,14 @@ export const metadata: Metadata = {
       "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County.",
     siteName: "All Solutions Heating and Air Conditioning",
     locale: "en_US",
+    images: [{ url: "/images/homepage/van2-no-phone.png", alt: "All Solutions Heating and Air Conditioning service van" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
     description:
       "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County.",
+    images: ["/images/homepage/van2-no-phone.png"],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,

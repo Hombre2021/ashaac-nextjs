@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import HomepageFooter from "@/components/HomepageFooter";
 import HomepageHeader from "@/components/HomepageHeader";
 
@@ -19,6 +20,9 @@ export default function DiyHelpCenterPage() {
         <p style={{ lineHeight: 1.7 }}>
           Need quick HVAC guidance before a service visit? Call or text 801-755-3040 and our team can help with
           troubleshooting and next steps.
+        </p>
+        <p style={{ lineHeight: 1.7 }}>
+          For service options, compare <Link href="/services">HVAC services</Link>, browse <Link href="/service-areas">local service areas</Link>, or request <Link href="/book">an appointment</Link>.
         </p>
       </main>
       <HomepageFooter />
