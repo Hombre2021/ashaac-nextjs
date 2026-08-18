@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LocalServicePage from "@/components/LocalServicePage";
 
 export const metadata: Metadata = {
-  title: "AC Repair in West Jordan, UT | All Solutions",
+  title: "AC Repair in West Jordan, UT",
   description: "Request AC repair in West Jordan from All Solutions Heating and Air Conditioning. Call or submit your service address for a callback.",
   alternates: { canonical: "/ac-repair-west-jordan" },
 };

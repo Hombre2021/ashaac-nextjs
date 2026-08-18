@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/projects", priority: 0.85, changeFrequency: "weekly" },
     { path: "/reviews", priority: 0.8, changeFrequency: "weekly" },
     { path: "/contact", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/book", priority: 0.85, changeFrequency: "monthly" },
     { path: "/financing", priority: 0.8, changeFrequency: "monthly" },
     { path: "/faqs", priority: 0.7, changeFrequency: "monthly" },
     { path: "/diy-help-center", priority: 0.6, changeFrequency: "monthly" },
