@@ -45,10 +45,6 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: "/",
-    title: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
-    description:
-      "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County.",
     siteName: "All Solutions Heating and Air Conditioning",
     locale: "en_US",
     images: [{ url: "/images/homepage/van2-no-phone.png", alt: "All Solutions Heating and Air Conditioning service van" }],
