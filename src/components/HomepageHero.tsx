@@ -16,9 +16,9 @@ export default function HomepageHero() {
 
       <div className={styles.heroContent}>
         <p className={styles.eyebrow}>All Solutions Heating and Air Conditioning</p>
-        <h2 className={styles.welcomeTitle} data-label="HeroMainTitle">
+        <h1 className={styles.welcomeTitle} data-label="HeroMainTitle">
           HVAC Repair, Installation, and Maintenance in West Jordan
-        </h2>
+        </h1>
         <p className={styles.professionalSubtitle} data-label="HeroSubtitle">
           Straightforward HVAC help for homeowners in West Jordan, South Jordan, and Riverton.
         </p>
