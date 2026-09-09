@@ -140,8 +140,31 @@ export async function controlRealtimeCall(callId: string, apiKey: string, projec
         followUpTimer = null;
       }
       followUpPending = false;
+      const activeTool = toolName || followUpToolName;
       followUpToolName = "";
       if (closingCall || socket.readyState !== WebSocket.OPEN) return;
+      if (activeTool === "create_booking") {
+        socket.send(JSON.stringify({
+          type: "response.create",
+          response: {
+            conversation: "default",
+            metadata: { purpose: "booking_confirmation" },
+            tool_choice: "none",
+            input: [{
+              type: "message",
+              role: "user",
+              content: [{
+                type: "input_text",
+                text: `Say exactly: ${BOOKING_SUCCESS_FAREWELL}`,
+              }],
+            }],
+            output_modalities: ["audio"],
+            instructions: `Say exactly: ${BOOKING_SUCCESS_FAREWELL} Do not say any other words, do not stay silent, and do not call any tool.`,
+          },
+        }));
+        console.info("OpenAI Realtime forced booking confirmation farewell response", { callId, eventType });
+        return;
+      }
       const toolInstructions: Record<string, string> = {
         check_availability: "The availability check finished. Follow only its latest result. If it returned a recommended block, say exactly: That time is available. Then speak the date with the full month name, day, and four-digit year, for example August 5, 2026, followed by the full two-hour block, and ask exactly: Would you like that exact block? Never speak the ISO date returned by the tool and never use a time from an earlier result. If no matching block was returned or the lookup failed, say so briefly and ask for another date or time. If the returned block is after-hours, wait for acceptance before giving the after-hours disclosure and $100 fee question.",
         send_booking_code: "The verification-text action finished. Follow only its latest result. If it succeeded, do not discuss availability, offer a different time, or repeat an earlier time. Say exactly: I sent you a text message. Please read only the six-digit number in that message. Then wait for the caller. If it failed, do not claim a text was sent; apologize briefly and offer one retry or a callback.",
