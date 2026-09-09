@@ -188,7 +188,7 @@ if (!realtimeWebhookSource.includes("requestRealtimeContinuation") || !realtimeW
 if (!realtimeWebhookSource.includes("CONTROLLER_HANDOFF_MS = 240000") || !realtimeWebhookSource.includes("CONTROLLER_FORCED_RENEWAL_MS = 280000") || !realtimeWebhookSource.includes('/api/webhooks/openai/realtime/control')) {
   failures.push("src/app/api/webhooks/openai/realtime/route.ts: Realtime controller must hand off long booking calls");
 }
-if (!realtimeWebhookSource.includes('const reminderText = "I am still searching, just verifying that for you."') || !realtimeWebhookSource.includes("}, 4000)")) {
+if (!realtimeWebhookSource.includes('const reminderText = activeToolName === "check_availability"') || !realtimeWebhookSource.includes("}, 4000)")) {
   failures.push("src/app/api/webhooks/openai/realtime/route.ts: pending searches and verifications require the standard four-second reminder");
 }
 if (!realtimeWebhookSource.includes("activeToolGeneration") || !realtimeWebhookSource.includes("toolGeneration !== activeToolGeneration")) {

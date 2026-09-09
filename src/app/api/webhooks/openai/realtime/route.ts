@@ -167,17 +167,20 @@ export async function controlRealtimeCall(callId: string, apiKey: string, projec
       });
     };
     const scheduleToolReminder = (toolGeneration = activeToolGeneration) => {
-      if (closingCall) return;
+      if (closingCall || activeToolName === "create_booking" || activeToolName === "end_call") return;
       if (reminderTimer) clearTimeout(reminderTimer);
       reminderTimer = setTimeout(() => {
         reminderTimer = null;
         if (closingCall || !toolInProgress || toolGeneration !== activeToolGeneration || socket.readyState !== WebSocket.OPEN) return;
+        if (activeToolName === "create_booking" || activeToolName === "end_call") return;
         if (reminderResponseActive || reminderRequestPending) {
           scheduleToolReminder(toolGeneration);
           return;
         }
         reminderRequestPending = true;
-        const reminderText = "I am still searching, just verifying that for you.";
+        const reminderText = activeToolName === "check_availability"
+          ? "I am still looking to see if that time is available, thank you for your patience."
+          : "I am still searching, just verifying that for you.";
         socket.send(JSON.stringify({
           type: "response.create",
           response: {
