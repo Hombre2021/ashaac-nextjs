@@ -39,3 +39,98 @@
   transform: translateY(-4px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
+
+.contactSection {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 20px 56px;
+}
+
+.mapCard,
+.formCard,
+.reviewCard {
+  background: #ffffff;
+  border: 1px solid #d9e1ee;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 18px;
+}
+
+.mapTitle,
+.reviewTitle {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: 1.5rem;
+}
+
+.mapText {
+  margin: 0 0 12px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.mapWrap {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.form {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  border: 1px solid #cfd9e6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.form button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font: inherit;
+  font-weight: 700;
+  color: #ffffff;
+  background: #095f91;
+  cursor: pointer;
+}
+
+.form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.successMsg {
+  margin-top: 10px;
+  color: #0a7d44;
+  font-weight: 600;
+}
+
+.errorMsg {
+  margin-top: 10px;
+  color: #b42318;
+  font-weight: 600;
+}
+
+.reviewButton {
+  display: inline-block;
+  background: #095f91;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.reviewButton:hover,
+.reviewButton:focus {
+  background: #0d4a70;
+}

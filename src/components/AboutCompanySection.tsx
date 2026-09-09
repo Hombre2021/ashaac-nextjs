@@ -16,7 +16,7 @@ export default function AboutCompanySection() {
           />
           <Image
             data-label="CommercialImage"
-            src="/images/homepage/Commercial.webp"
+            src="/images/homepage/commercial.jpg"
             alt="Commercial HVAC"
             width={340}
             height={220}
