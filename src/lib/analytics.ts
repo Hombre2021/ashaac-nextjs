@@ -152,3 +152,19 @@ export function trackPhoneClick(sourcePage = "") {
     window.gtag("event", "click_phone", phoneEvent);
   }
 }
+
+export function trackBookEstimateClick(source = "") {
+  trackLeadEvent("click_hvac_pro_booking", { source });
+}
+
+export function trackCallClick(source = "", phone = "") {
+  trackPhoneClick(source);
+}
+
+export function trackFinancingClick(source = "") {
+  trackLeadEvent("click_financing_prequal", { source });
+}
+
+export function trackFormSubmit(path = "", formName = "") {
+  trackLeadEvent("form_submit", { path, formName });
+}
