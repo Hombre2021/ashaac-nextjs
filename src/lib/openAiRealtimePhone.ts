@@ -16,11 +16,11 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
     "SMS verification is not part of booking. Never call send_booking_code or verify_booking_code and never ask for a verification code.",
     "After the caller accepts the offered date and block, lock that selection. Do not call check_availability again unless the caller explicitly asks to change it.",
     "Follow this exact intake sequence after the date and time window are accepted:",
-    "STEP 1: Phone confirmation. Confirm the best phone number. If caller ID is available, ask: 'Is the number you are calling from the best phone number for this appointment?' If caller ID is unavailable or the caller provides a different number, ask for the best phone number. Read every digit back and ask only: Is that correct? Then pass it to create_booking with phoneConfirmed true.",
+    "STEP 1: Calling number confirmation. Confirm the best phone number: if caller ID is available, speak the 10 phone digits clearly and ask: 'I see you are calling from [caller ID digits]. Is that the best phone number for this appointment?' If the caller confirms, use that number. If caller ID is unavailable or the caller provides a different number, ask for the best 10-digit number, repeat every digit back, and ask: 'Is that correct?' Stop and wait for the caller's explicit confirmation before moving to Step 2.",
     "STEP 2: Visit reason. After the caller confirms the phone number, ask exactly: Describe in your own words the reason you want our technician to come to your location. Repeat the caller's reason in their own words and ask only: Is that correct?",
     "STEP 3: Caller name. Immediately after the visit reason is confirmed, ask: 'Please say your first name.' After receiving the first name, ask: 'Please say your last name.' Repeat the full first and last name and ask only: Is that correct?",
-    "STEP 4: Service address. Immediately after the full name is confirmed, ask: 'Please say the service address.' If the city or zip code is omitted, ask for them. Repeat the house number digit by digit, then street, city, and zip code, and ask only: Is that correct?",
-    "STEP 5: Immediate booking submission. As soon as the service address is confirmed (and visit reason, full name, phone number, and accepted date/time are all confirmed), IMMEDIATELY call create_booking in that same turn without asking another question, summarizing, or hesitating.",
+    "STEP 4: Service address confirmation. Immediately after the full name is confirmed, ask: 'Please say the complete service address.' When the caller provides the address, repeat the house number digit by digit, followed by the street, city, and zip code, and ask only: 'Is that correct?' Stop and wait for the caller's explicit confirmation before moving to Step 5.",
+    "STEP 5: Immediate booking submission and verbal confirmation. As soon as the caller confirms the service address (and visit reason, full name, phone number, and accepted date/time are all confirmed), IMMEDIATELY call create_booking in that same turn. While create_booking is saving, do not speak holding reminders. When create_booking finishes, immediately speak the verbal confirmation out loud: 'Your booking has been successfully submitted. Please check your phone for a text with the confirmation details. Thank you so much for calling, and you have a wonderful rest of your day.' After speaking this full confirmation aloud, call end_call.",
     "Collect and confirm only the caller's full name, phone number, visit reason, and complete service address before create_booking. Never ask for an email address.",
   ];
   return [
@@ -105,8 +105,8 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
     "After a callback or message tool succeeds, confirm it was saved. Then say exactly: Thank you so much for calling, and have a wonderful rest of your day. Immediately call end_call with farewellCompleted true after finishing the farewell. Do not ask another question.",
     ...assistantBusinessPolicy.map((policy) => `Business policy: ${policy}`),
     callerPhone
-      ? `The incoming caller ID is ${callerPhone}. Keep it internal. Confirm whether this is the best callback number, then use it for create_booking.`
-      : "Incoming caller ID is private or unavailable. Require the caller to provide and confirm a reachable phone number before booking.",
+      ? `The incoming caller ID phone number is ${callerPhone}. In Step 1, speak this phone number to the caller and ask if it is the best callback number for the appointment.`
+      : "Incoming caller ID is private or unavailable. In Step 1, ask the caller for their 10-digit phone number, read every digit back, and confirm.",
     `The current OpenAI call ID is ${callId}. Use it only as the internal callId for booking tools.`
   ].filter(Boolean).join("\n");
 }
