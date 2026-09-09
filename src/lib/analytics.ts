@@ -38,10 +38,27 @@ export function trackLeadEvent(event: "click_hvac_pro_booking" | "click_financin
 
   if (typeof window !== "undefined" && typeof window.fbq === "function") {
     if (event === "form_submit") {
-      window.fbq("track", "Lead", details);
-    } else {
       window.fbq("trackCustom", event, details);
     }
+  }
+}
+
+export function trackAssistantAction(
+  action: "assistant_revenue" | "assistant_booking_redirect" | "assistant_question_answered" | "assistant_callback_started",
+  details: Record<string, unknown> = {},
+) {
+  pushDataLayer({
+    event: action,
+    page_path: typeof window === "undefined" ? "" : `${window.location.pathname}${window.location.search}`,
+    page_title: typeof document === "undefined" ? "" : document.title,
+    ...details,
+  });
+
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", action, {
+      event_category: "assistant",
+      ...details,
+    });
   }
 }
 
@@ -130,10 +147,6 @@ export function trackPhoneClick(sourcePage = "") {
   };
 
   pushDataLayer(phoneEvent);
-
-  if (typeof window.fbq === "function") {
-    window.fbq("track", "Contact", { content_name: "phone_click", source_page: sourcePage });
-  }
 
   if (typeof window.gtag === "function") {
     window.gtag("event", "click_phone", phoneEvent);

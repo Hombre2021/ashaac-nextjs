@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { trackAssistantAction } from "@/lib/analytics";
 import styles from "./WebsiteAIAssistant.module.css";
 
 type TurnstileApi = {
@@ -535,6 +536,11 @@ export default function WebsiteAIAssistant() {
     if (pickedIntent === "booking" || pickedIntent === "asap") {
       setSuppressQuickReplies(true);
       setPostAnswerAction("none");
+      trackAssistantAction("assistant_booking_redirect", {
+        intent: pickedIntent,
+        source: "assistant-intent",
+        service_type: inferredServiceType,
+      });
       appendMessage({ from: "assistant", text: "I’m sending you to the booking form now so you can book your same-day appointment." });
       setStatus("");
       window.location.assign("/book");
@@ -565,6 +571,11 @@ export default function WebsiteAIAssistant() {
         const aiResult = await fetchRealAiAnswer(requestText, turnstileToken);
         if (aiResult.answer) {
           assistantReply = appendCitationTrail(aiResult.answer, aiResult.sources);
+          trackAssistantAction("assistant_question_answered", {
+            intent: pickedIntent,
+            source: "assistant-question",
+            question_length: requestText.length,
+          });
         }
       } catch {
         // Keep local fallback reply when AI is unavailable.
@@ -1021,6 +1032,11 @@ export default function WebsiteAIAssistant() {
       appendMessage({ from: "user", text: choice });
 
       if (lower.includes("book")) {
+        trackAssistantAction("assistant_booking_redirect", {
+          intent: "post-answer-book",
+          source: "assistant-choice",
+          service_type: payload.serviceType || "general-service",
+        });
         appendMessage({ from: "assistant", text: "I’m sending you to the booking form now so you can book your same-day appointment." });
         setPostAnswerAction("none");
         setSuppressQuickReplies(true);
@@ -1066,6 +1082,11 @@ export default function WebsiteAIAssistant() {
     }
 
     if (lower === "i need service asap" || lower === "i want to book an appointment") {
+      trackAssistantAction("assistant_booking_redirect", {
+        intent: "quick-action",
+        source: "assistant-quick-choice",
+        service_type: payload.serviceType || "general-service",
+      });
       appendMessage({ from: "user", text: choice });
       appendMessage({ from: "assistant", text: "I’m sending you to the booking form now so you can book your same-day appointment." });
       setSuppressQuickReplies(true);
@@ -1117,6 +1138,10 @@ export default function WebsiteAIAssistant() {
       const result = (await response.json()) as LeadResponse;
       setActions(result.bookingActions);
       if (intent === "callback") {
+        trackAssistantAction("assistant_callback_started", {
+          lead_id: result.leadId,
+          service_type: finalPayload.serviceType || "general-service",
+        });
         appendMessage({ from: "assistant", text: "Callback request sent to technician with your message. He will probably text you first, can you recieve texts to this number?" });
         setCallbackTextabilityPending(true);
         setCallbackFollowup({
@@ -1127,6 +1152,12 @@ export default function WebsiteAIAssistant() {
         setStepIndex(-1);
         setStatus("");
       } else {
+        trackAssistantAction("assistant_revenue", {
+          lead_id: result.leadId,
+          priority: result.priority,
+          service_type: finalPayload.serviceType || "general-service",
+          booking_mode: finalPayload.bookingMode || "assistant",
+        });
         setStatus(`Lead ${result.leadId.slice(0, 8).toUpperCase()} routed as ${result.priority}.`);
         appendMessage({ from: "assistant", text: "Done. Your request was sent to the HVAC team with transcript and handoff details." });
         setStepIndex(queue.length);

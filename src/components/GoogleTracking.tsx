@@ -1,6 +1,6 @@
 import DeferredTrackingScripts from "./DeferredTrackingScripts";
 
-const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "";
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5T45DHXK";
 
 const hasGtm = /^GTM-[A-Z0-9]+$/i.test(gtmId);
 

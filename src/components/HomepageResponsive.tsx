@@ -1,19 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
+import HomepageDesktop from "./HomepageDesktop";
+import HomepageMobile from "./HomepageMobile";
 import styles from "./HomepageResponsive.module.css";
 
 const DESKTOP_BASE = { width: 1920, height: 1080 };
 const MOBILE_BASE = { width: 390, height: 844 };
-
-const HomepageDesktop = dynamic(() => import("./HomepageDesktop"), {
-  ssr: false,
-});
-
-const HomepageMobile = dynamic(() => import("./HomepageMobile"), {
-  ssr: false,
-});
 
 type ScaleMode = "contain" | "fit-height" | "fit-width";
 
@@ -105,6 +98,11 @@ export default function HomepageResponsive() {
     "--base-height": `${base.height}px`,
     "--content-height": `${contentHeight || base.height}px`,
   } as React.CSSProperties;
+
+  if (viewport.width === 0) {
+    // Initial SSR output for search engines and fast first paint
+    return <HomepageDesktop />;
+  }
 
   if (isFullDesktop) {
     return <HomepageDesktop />;

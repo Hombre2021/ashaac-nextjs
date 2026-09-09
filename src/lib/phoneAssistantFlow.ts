@@ -131,7 +131,6 @@ export function buildFlowForIntent(intent: PhoneAssistantIntent): PhoneAssistant
         "firstName",
         "lastName",
         "phone",
-        "email",
         "address",
         "addressCity",
         "addressZip",

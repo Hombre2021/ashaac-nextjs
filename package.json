@@ -23,26 +23,29 @@
     "assistant:parity": "pwsh -ExecutionPolicy Bypass -File ./scripts/run-assistant-parity-check.ps1",
     "assistant:verify-deployment": "node ./scripts/verify-assistant-deployment.mjs",
     "assistant:verify-script": "node ./scripts/verify-phone-script-parity.mjs",
-    "prebuild": "npm run assistant:verify-deployment && npm run assistant:verify-script",
+    "validate:productivity": "node ./scripts/validate-productivity.mjs",
+    "prebuild": "npm run validate:productivity && npm run assistant:verify-deployment && npm run assistant:verify-script",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "appointments:list": "node ./scripts/manage-appointments.mjs list",
+    "appointments:find": "node ./scripts/manage-appointments.mjs find",
+    "appointments:delete": "node ./scripts/manage-appointments.mjs delete"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "@vercel/blob": "^2.6.1",
-    "next": "16.1.1",
+    "next": "^16.3.3",
     "next-seo": "^7.0.1",
     "next-sitemap": "^4.2.3",
     "openai": "^7.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.70.0",
-    "ws": "^8.21.1",
-    "zod": "^4.3.5"
+    "ws": "^8.21.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.45.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

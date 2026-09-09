@@ -41,7 +41,7 @@ function responseWaitsForCaller(spokenText: string) {
   if (/\?\s*$/.test(normalized) || /\bis that correct[?.]?\s*$/i.test(normalized)) return true;
   const finalSentence = normalized.split(/(?<=[.!?])\s+/).at(-1) || normalized;
   return /^(?:what|when|where|which|who|why|how|would|could|can|may|do|does|did|is|are|was|were|have|has|will|should)\b/i.test(finalSentence)
-    || /^(?:please\s+)?(?:read|describe|tell|say|repeat|provide|spell|confirm|explain)\b/i.test(finalSentence)
+    || /^(?:please\s+)?(?:read|describe|tell|say|repeat|provide|spell|confirm|explain|share|give)\b/i.test(finalSentence)
     || /\b(?:please read|please tell me|let me know)\b/i.test(finalSentence);
 }
 

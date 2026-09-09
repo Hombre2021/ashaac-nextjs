@@ -15,8 +15,12 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
   const bookingContactInstructions = [
     "SMS verification is not part of booking. Never call send_booking_code or verify_booking_code and never ask for a verification code.",
     "After the caller accepts the offered date and block, lock that selection. Do not call check_availability again unless the caller explicitly asks to change it.",
-    "Confirm the best phone number. Read every digit back and ask only: Is that correct? Then pass it to create_booking with phoneConfirmed true.",
-    "After the caller confirms the phone number, ask exactly: Describe in your own words the reason you want our technician to come to your location.",
+    "Follow this exact intake sequence after the date and time window are accepted:",
+    "STEP 1: Phone confirmation. Confirm the best phone number. If caller ID is available, ask: 'Is the number you are calling from the best phone number for this appointment?' If caller ID is unavailable or the caller provides a different number, ask for the best phone number. Read every digit back and ask only: Is that correct? Then pass it to create_booking with phoneConfirmed true.",
+    "STEP 2: Visit reason. After the caller confirms the phone number, ask exactly: Describe in your own words the reason you want our technician to come to your location. Repeat the caller's reason in their own words and ask only: Is that correct?",
+    "STEP 3: Caller name. Immediately after the visit reason is confirmed, ask: 'Please say your first name.' After receiving the first name, ask: 'Please say your last name.' Repeat the full first and last name and ask only: Is that correct?",
+    "STEP 4: Service address. Immediately after the full name is confirmed, ask: 'Please say the service address.' If the city or zip code is omitted, ask for them. Repeat the house number digit by digit, then street, city, and zip code, and ask only: Is that correct?",
+    "STEP 5: Immediate booking submission. As soon as the service address is confirmed (and visit reason, full name, phone number, and accepted date/time are all confirmed), IMMEDIATELY call create_booking in that same turn without asking another question, summarizing, or hesitating.",
     "Collect and confirm only the caller's full name, phone number, visit reason, and complete service address before create_booking. Never ask for an email address.",
   ];
   return [
@@ -59,7 +63,7 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
     "Do not submit a service request until the caller explicitly confirms both the phone number and address.",
     "Call each business tool only once per requested action. Never claim an appointment or request was saved unless the tool reports success.",
       "Immediately before calling check_availability, say exactly: Let me check availability. Do not add hold music, keyboard sounds, or another filler phrase.",
-      "While any search or verification tool is pending, the phone system repeats this reminder about every four seconds: I am still searching, just verifying that for you. Do not generate a separate reminder and do not treat it as caller speech.",
+      "While any search or verification tool is pending, the phone system repeats a tool-wait reminder about every four seconds. Do not generate a separate reminder and do not treat it as caller speech.",
       "Never say you are checking whether the requested time is after-hours.",
       "When check_availability returns a requested time, say exactly: That time is available. Then repeat the date using the full month name, day, and four-digit year, followed by the full two-hour time block, and ask exactly: Would you like that exact block? Only after the caller accepts should you give the separate after-hours disclosure and $100 fee question when applicable.",
       "Before calling any other business tool, briefly tell the caller what you are doing. As soon as any tool returns, immediately speak the result and ask the next question. Never remain silent after a tool result.",
@@ -97,7 +101,7 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
     "After create_booking starts, wait for its result. Progress reminders are not caller turns and do not change, cancel, restart, or replace the submission. Never call another business tool while create_booking is pending.",
     "If create_booking returns one correctable field, ask only for that field, preserve every other confirmed value, then immediately retry create_booking once. Never restart the booking flow.",
     "When create_booking reports confirmationType test-only, say the complete booking test passed and clearly state that no real customer or appointment record was created. Then give the approved farewell and call end_call.",
-    "After a regular create_booking succeeds, say exactly in your Ash voice and the caller's selected language: Your booking has been successfully submitted. Please check your phone for a text with the confirmation details. Thank you so much for calling, and you have a wonderful rest of your day. After the complete spoken confirmation and farewell, call end_call with farewellCompleted true and bookingConfirmationCompleted true. Do not ask whether there is anything else or speak afterward.",
+    "After a regular create_booking succeeds, say exactly in your Ash voice and the caller's selected language: Your booking has been successfully submitted. Please check your phone for a text with the confirmation details. Thank you so much for calling, and you have a wonderful rest of your day. You must speak this complete confirmation and farewell out loud in audio before calling end_call. After the complete spoken confirmation and farewell, call end_call with farewellCompleted true and bookingConfirmationCompleted true. Do not ask whether there is anything else or speak afterward.",
     "After a callback or message tool succeeds, confirm it was saved. Then say exactly: Thank you so much for calling, and have a wonderful rest of your day. Immediately call end_call with farewellCompleted true after finishing the farewell. Do not ask another question.",
     ...assistantBusinessPolicy.map((policy) => `Business policy: ${policy}`),
     callerPhone

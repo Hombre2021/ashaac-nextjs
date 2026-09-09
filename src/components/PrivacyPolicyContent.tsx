@@ -7,10 +7,10 @@ export default function PrivacyPolicyContent() {
       <div className={`${sharedStyles.contentBase} ${styles.privacyText}`}>
         <h1 style={{ textAlign: "center", fontSize: 32, marginBottom: 32 }}>Privacy Policy</h1>
         <p><strong>All Solutions Heating and Air Conditioning LLC</strong><br />
-          4434 W 8790 S, West Jordan, Utah 84088<br />
+          West Jordan, Utah 84088<br />
           <strong>Last updated: January 2026</strong></p>
         <h2>1. Introduction</h2>
-        <p>All Solutions Heating and Air Conditioning LLC (“we,” “our,” or “us”) respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, store, and safeguard your information when you visit our website, request service, or communicate with our team.<br />
+        <p>All Solutions Heating and Air Conditioning LLC (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, store, and safeguard your information when you visit our website, request service, or communicate with our team.<br />
           By using our website or providing information to us, you agree to the practices described in this policy.</p>
         <h2>2. Information We Collect</h2>
         <h3>A. Personal Information</h3>
@@ -22,7 +22,7 @@ export default function PrivacyPolicyContent() {
           <li>Billing address</li>
           <li>Preferred contact method</li>
         </ul>
-        <h3>B. Service‑Related Information</h3>
+        <h3>B. Service&#8209;Related Information</h3>
         <ul>
           <li>HVAC system details</li>
           <li>Photos you upload for service requests</li>
@@ -36,8 +36,8 @@ export default function PrivacyPolicyContent() {
           <li>Transaction amount and payment history</li>
         </ul>
         <p>We do not store full credit card or bank account numbers on our servers.<br />
-          All payments are processed securely through trusted third‑party providers.</p>
-        <h3>D. Website & Technical Data</h3>
+          All payments are processed securely through trusted third&#8209;party providers.</p>
+        <h3>D. Website &amp; Technical Data</h3>
         <ul>
           <li>IP address</li>
           <li>Browser type</li>
@@ -58,7 +58,7 @@ export default function PrivacyPolicyContent() {
         </ul>
         <p>We do not sell or rent your personal information.</p>
         <h2>4. Payment Processing</h2>
-        <p>We use secure third‑party payment processors to handle financial transactions. These may include:</p>
+        <p>We use secure third&#8209;party payment processors to handle financial transactions. These may include:</p>
         <ul>
           <li>Credit/debit card processors</li>
           <li>ACH or bank transfer processors</li>
@@ -83,7 +83,7 @@ export default function PrivacyPolicyContent() {
           <li>When required by law, regulation, or legal process</li>
         </ul>
         <p>We do not share your information with third parties for marketing purposes.</p>
-        <h2>7. Cookies & Tracking Technologies</h2>
+        <h2>7. Cookies &amp; Tracking Technologies</h2>
         <p>Our website may use cookies and similar technologies to:</p>
         <ul>
           <li>Improve website functionality</li>
@@ -100,7 +100,7 @@ export default function PrivacyPolicyContent() {
           <li>Legal compliance</li>
         </ul>
         <p>After this period, data is securely deleted or anonymized.</p>
-        <h2>9. Your Rights & Choices</h2>
+        <h2>9. Your Rights &amp; Choices</h2>
         <p>You may:</p>
         <ul>
           <li>Request a copy of your personal information</li>
@@ -109,22 +109,21 @@ export default function PrivacyPolicyContent() {
           <li>Opt out of marketing communications</li>
         </ul>
         <p>To make a request, contact us using the information below.</p>
-        <h2>10. Children’s Privacy</h2>
+        <h2>10. Children&rsquo;s Privacy</h2>
         <p>Our services are not directed to children under 13.<br />
           We do not knowingly collect information from children.</p>
-        <h2>11. Links to Third‑Party Websites</h2>
+        <h2>11. Links to Third&#8209;Party Websites</h2>
         <p>Our website may contain links to external sites.<br />
           We are not responsible for the privacy practices of those websites.</p>
         <h2>12. Changes to This Policy</h2>
         <p>We may update this Privacy Policy from time to time.<br />
-          The “Last updated” date at the top will reflect the most recent revision.</p>
+          The &ldquo;Last updated&rdquo; date at the top will reflect the most recent revision.</p>
         <h2>13. Contact Us</h2>
         <p>If you have questions about this Privacy Policy or how your information is handled, contact us:<br />
           <strong>All Solutions Heating and Air Conditioning LLC</strong><br />
-          4434 W 8790 S<br />
           West Jordan, Utah 84088<br />
-          Email: <a href="mailto:contact@ashaac.com">contact@ashaac.com</a><br />
-          Phone: <a href="tel:8017553040">801‑755‑3040</a></p>
+          Email: <a href="mailto:ashaacutah@gmail.com">ashaacutah@gmail.com</a><br />
+          Phone: <a href="tel:8017553040">801&#8209;755&#8209;3040</a></p>
       </div>
     </section>
   );

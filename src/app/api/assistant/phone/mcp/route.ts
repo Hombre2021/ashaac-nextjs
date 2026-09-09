@@ -430,6 +430,7 @@ function createServer(origin: string, conferenceName: string, callerPhone: strin
     }
     const addressCity = resolveSupportedBookingCity(args.addressCity || city) || city;
     const addressState = String(args.addressState || "").trim() || "UT";
+    const addressZip = String(args.addressZip || "").replace(/\D/g, "").slice(0, 5) || String(args.addressZip || "").trim();
     const webFormPreflight = bookingRequestSchema.safeParse({
       ...args,
       preferredDate,
@@ -563,7 +564,7 @@ function createServer(origin: string, conferenceName: string, callerPhone: strin
         confirmationType: afterHours ? "temporary-after-hours" : "confirmed",
         instruction: afterHours
           ? "Say exactly in the caller's selected language: Your after-hours appointment has been recorded and is pending additional confirmation from our technician for the service address you provided. The appointment is for [full date], between [full two-hour time block]. The after-hours charge is $100. Thank you so much for calling, and have a wonderful rest of your day. Replace only the bracketed date and time block with the accepted values. After finishing the complete spoken confirmation and farewell, call end_call with farewellCompleted true and bookingConfirmationCompleted true. Do not ask another question, repeat the caller's name or street address, repeat the fee question, or describe it as a final technician confirmation."
-          : "Say exactly in the caller's selected language: Your booking has been successfully submitted. Please check your phone for a text with the confirmation details. Thank you so much for calling, and you have a wonderful rest of your day. After finishing the complete spoken confirmation and farewell, call end_call with farewellCompleted true and bookingConfirmationCompleted true.",
+          : "Speak this exact confirmation and warm farewell aloud to the caller right now in audio: 'Your booking has been successfully submitted. Please check your phone for a text with the confirmation details. Thank you so much for calling, and you have a wonderful rest of your day.' You must speak this confirmation aloud first. Do not stay silent and do not call end_call until after this confirmation and farewell are completely spoken in audio.",
       });
     } catch (error) {
       const detail = String((error as Error).message || error);

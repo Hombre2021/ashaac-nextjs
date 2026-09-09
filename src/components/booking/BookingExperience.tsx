@@ -60,6 +60,7 @@ const defaultValues: CallbackRequestInput = {
 export default function BookingExperience() {
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const today = new Date().toISOString().split("T")[0];
   const {
     register,
     handleSubmit,
@@ -72,6 +73,15 @@ export default function BookingExperience() {
     const attribution = captureAttribution(window.location.search);
     setValue("sourcePage", `${window.location.pathname}${window.location.search}`);
 
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "booking_form_view",
+        page_path: `${window.location.pathname}${window.location.search}`,
+        page_title: document.title,
+      });
+    }
+
     for (const key of bookingAttributionKeys) {
       if (attribution[key]) setValue(key, attribution[key]);
     }
@@ -80,6 +90,16 @@ export default function BookingExperience() {
   const onSubmit = handleSubmit(async (values) => {
     setSubmitError(null);
     setSubmitMessage(null);
+
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "booking_submit_attempt",
+        service_type: values.serviceType,
+        city: values.city,
+        source_page: values.sourcePage,
+      });
+    }
 
     const response = await fetch("/api/book", {
       method: "POST",
@@ -208,14 +228,14 @@ export default function BookingExperience() {
             <label className={styles.field}>
               <span>City</span>
               <select {...register("city", { required: "Choose a service area." })}>
-                {supportedBookingCities.slice(0, 3).map((city) => <option key={city}>{city}</option>)}
+                {supportedBookingCities.map((city) => <option key={city}>{city}</option>)}
               </select>
               {errors.city ? <em>{errors.city.message}</em> : null}
             </label>
 
             <label className={styles.field}>
               <span>Appointment date</span>
-              <input type="date" aria-label="Appointment date" {...register("preferredDate", { required: "Choose an appointment date." })} />
+              <input type="date" min={today} aria-label="Appointment date" {...register("preferredDate", { required: "Choose an appointment date." })} />
               {errors.preferredDate ? <em>{errors.preferredDate.message}</em> : null}
             </label>
 

@@ -58,6 +58,11 @@
   text-align: center;
 }
 
+.featureDescription a {
+  color: inherit;
+  text-decoration: none;
+}
+
 @media (max-width: 480px) {
   .dualFeatureSection {
     padding: 32px 0;

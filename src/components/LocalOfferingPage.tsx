@@ -71,6 +71,7 @@ export default function LocalOfferingPage({ city, citySlug, offering }: LocalOff
           <p className={styles.lede}>{offering.summary}</p>
           <div className={styles.actions}>
             <a className={styles.primary} href="tel:8017553040">Call 801-755-3040</a>
+            {" "}
             <Link className={styles.secondary} href="/book">Request an appointment</Link>
           </div>
         </section>

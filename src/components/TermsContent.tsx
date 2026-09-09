@@ -8,25 +8,25 @@ export default function TermsContent() {
         <p><strong>All Solutions Heating and Air Conditioning LLC</strong><br />
         <strong>Last updated: January 2026</strong></p>
         <h2>1. Overview</h2>
-        <p>These Terms & Conditions (“Terms”) govern your use of the services provided by All Solutions Heating and Air Conditioning LLC (“we,” “our,” or “us”), including our website, service requests, estimates, installations, repairs, and maintenance services. By using our website or scheduling service with us, you agree to these Terms.</p>
+        <p>These Terms &amp; Conditions (&ldquo;Terms&rdquo;) govern your use of the services provided by All Solutions Heating and Air Conditioning LLC (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;), including our website, service requests, estimates, installations, repairs, and maintenance services. By using our website or scheduling service with us, you agree to these Terms.</p>
         <h2>2. Services Provided</h2>
         <p>We offer residential and commercial HVAC services, including:</p>
         <ul>
           <li>Installation of new heating and cooling systems</li>
           <li>Replacement of existing HVAC equipment</li>
           <li>Repairs and diagnostics</li>
-          <li>Maintenance and tune‑ups</li>
+          <li>Maintenance and tune&#8209;ups</li>
           <li>System evaluations and recommendations</li>
         </ul>
         <p>Service availability may vary based on location, weather, and scheduling.</p>
-        <h2>3. Estimates & Pricing</h2>
+        <h2>3. Estimates &amp; Pricing</h2>
         <ul>
           <li>Estimates are based on the information available at the time of inspection.</li>
           <li>Prices may change if additional issues are discovered during service.</li>
           <li>Customers will be notified before any additional charges are applied.</li>
           <li>Written estimates may have expiration dates depending on equipment availability and market conditions.</li>
         </ul>
-        <h2>4. Scheduling & Appointments</h2>
+        <h2>4. Scheduling &amp; Appointments</h2>
         <p>By scheduling an appointment, you agree to:</p>
         <ul>
           <li>Provide accurate information about your HVAC system</li>
@@ -40,7 +40,7 @@ export default function TermsContent() {
           <li>Providing truthful and accurate information</li>
           <li>Maintaining their HVAC equipment according to manufacturer guidelines</li>
           <li>Ensuring the work area is safe and accessible</li>
-          <li>Following post‑installation care instructions</li>
+          <li>Following post&#8209;installation care instructions</li>
         </ul>
         <p>We are not responsible for issues caused by neglect, improper use, or unauthorized modifications.</p>
         <h2>6. Payment Terms</h2>
@@ -55,7 +55,7 @@ export default function TermsContent() {
         <h3>A. Workmanship Warranty</h3>
         <p>We guarantee our labor for 1 year from the date of service unless otherwise stated.</p>
         <h3>B. Manufacturer Warranty</h3>
-        <p>Equipment installed by us is covered by the manufacturer’s warranty.<br />Coverage varies by brand and product.</p>
+        <p>Equipment installed by us is covered by the manufacturer&rsquo;s warranty.<br />Coverage varies by brand and product.</p>
         <h3>C. Warranty Exclusions</h3>
         <p>Warranty does not cover:</p>
         <ul>
@@ -66,16 +66,16 @@ export default function TermsContent() {
         </ul>
         <h2>8. Limitations of Liability</h2>
         <ul>
-          <li>Pre‑existing issues</li>
+          <li>Pre&#8209;existing issues</li>
           <li>Damage caused by improper use or lack of maintenance</li>
           <li>Losses resulting from delays due to weather, supply shortages, or emergencies</li>
           <li>Indirect, incidental, or consequential damages</li>
         </ul>
         <p>Our liability is limited to the cost of the service provided.</p>
-        <h2>9. Cancellations & Refunds</h2>
+        <h2>9. Cancellations &amp; Refunds</h2>
         <ul>
-          <li>Service fees are non‑refundable once work has been performed.</li>
-          <li>Deposits for equipment orders are non‑refundable once materials have been purchased.</li>
+          <li>Service fees are non&#8209;refundable once work has been performed.</li>
+          <li>Deposits for equipment orders are non&#8209;refundable once materials have been purchased.</li>
           <li>Refunds for equipment follow manufacturer policies.</li>
         </ul>
         <p>If you believe you were billed incorrectly, contact us within 7 days.</p>
@@ -90,17 +90,16 @@ export default function TermsContent() {
         <p>We reserve the right to modify or discontinue website features at any time.</p>
         <h2>11. Privacy</h2>
         <p>Your use of our website and services is also governed by our Privacy Policy, which explains how we collect, use, and protect your information.</p>
-        <h2>12. Third‑Party Links</h2>
-        <p>Our website may contain links to third‑party websites.<br />We are not responsible for the content, policies, or practices of those websites.</p>
+        <h2>12. Third&#8209;Party Links</h2>
+        <p>Our website may contain links to third&#8209;party websites.<br />We are not responsible for the content, policies, or practices of those websites.</p>
         <h2>13. Changes to Terms</h2>
         <p>We may update these Terms at any time.<br />Continued use of our services constitutes acceptance of updated Terms.</p>
         <h2>14. Contact Information</h2>
-        <p>For questions about these Terms & Conditions, contact us:<br />
+        <p>For questions about these Terms &amp; Conditions, contact us:<br />
         <strong>All Solutions Heating and Air Conditioning LLC</strong><br />
-        4434 W 8790 S<br />
         West Jordan, Utah 84088<br />
         Email: <a href="mailto:contact@ashaac.com">contact@ashaac.com</a><br />
-        Phone: <a href="tel:8017553040">801‑755‑3040</a></p>
+        Phone: <a href="tel:8017553040">801&#8209;755&#8209;3040</a></p>
       </div>
     </section>
   );

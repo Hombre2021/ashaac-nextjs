@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./HomepageDualFeature.module.css";
 
 export default function HomepageDualFeature() {
@@ -16,7 +17,7 @@ export default function HomepageDualFeature() {
             />
           </div>
           <div className={styles.featureDescription}>
-            Such as double or single furnace Installation and replacement.
+            <Link href="/services/west-jordan/furnace-installation">Such as double or single furnace Installation and replacement.</Link>
           </div>
         </div>
         <div className={styles.featureColumn}>
@@ -30,7 +31,7 @@ export default function HomepageDualFeature() {
             />
           </div>
           <div className={styles.featureDescription}>
-            single or double AC units or Heat pumps.
+            <Link href="/services/west-jordan/ac-installation">single or double AC units or Heat pumps.</Link>
           </div>
         </div>
       </div>

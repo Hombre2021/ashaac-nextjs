@@ -6,7 +6,7 @@ type DeferredTrackingScriptsProps = {
   gtmId: string;
 };
 
-const DELAY_MS = 10000;
+const IDLE_DELAY_MS = 1500;
 
 function isTagAssistantDebugMode() {
   if (typeof window === "undefined") {
@@ -17,24 +17,28 @@ function isTagAssistantDebugMode() {
   return /[?&](gtm_debug|tagassistant_debug|gtm_preview|gtm_auth)=/i.test(q);
 }
 
-function injectScript(src?: string, inlineCode?: string, id?: string) {
+function injectGtm(gtmId: string) {
+  if (typeof window === "undefined" || document.getElementById("gtm-script")) {
+    return;
+  }
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    "gtm.start": new Date().getTime(),
+    event: "gtm.js",
+  });
+
   const script = document.createElement("script");
-
-  if (id) {
-    script.id = id;
-  }
-
+  script.id = "gtm-script";
   script.async = true;
-
-  if (src) {
-    script.src = src;
-  }
-
-  if (inlineCode) {
-    script.text = inlineCode;
-  }
-
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`;
   document.head.appendChild(script);
+}
+
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+  }
 }
 
 export default function DeferredTrackingScripts({
@@ -45,54 +49,92 @@ export default function DeferredTrackingScripts({
       return;
     }
 
+    let loaded = false;
     let timerId: number | undefined;
-    let idleId: number | undefined;
-    let cancelled = false;
 
     const loadTracking = () => {
-      if (cancelled) {
-        return;
-      }
-
-      if (gtmId) {
-        injectScript(
-          undefined,
-          `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${gtmId}');`,
-          "gtm-script"
-        );
-      }
-
+      if (loaded) return;
+      loaded = true;
+      injectGtm(gtmId);
+      cleanupListeners();
     };
 
-    const schedule = () => {
-      const delayMs = isTagAssistantDebugMode() ? 0 : DELAY_MS;
-      timerId = window.setTimeout(() => {
-        if (typeof window.requestIdleCallback === "function") {
-          idleId = window.requestIdleCallback(loadTracking, { timeout: 2000 });
-        } else {
-          loadTracking();
-        }
-      }, delayMs);
+    const interactionEvents = ["pointerdown", "touchstart", "scroll", "keydown"] as const;
+
+    const onUserInteraction = () => {
+      loadTracking();
     };
 
-    if (document.readyState === "complete") {
-      schedule();
-    } else {
-      window.addEventListener("load", schedule, { once: true });
-    }
-
-    return () => {
-      cancelled = true;
+    const cleanupListeners = () => {
       if (timerId !== undefined) {
         window.clearTimeout(timerId);
       }
-      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
-        window.cancelIdleCallback(idleId);
+      interactionEvents.forEach((evt) => {
+        window.removeEventListener(evt, onUserInteraction);
+      });
+    };
+
+    if (isTagAssistantDebugMode()) {
+      loadTracking();
+    } else {
+      interactionEvents.forEach((evt) => {
+        window.addEventListener(evt, onUserInteraction, { once: true, passive: true });
+      });
+
+      timerId = window.setTimeout(() => {
+        if (typeof window.requestIdleCallback === "function") {
+          window.requestIdleCallback(loadTracking, { timeout: 1000 });
+        } else {
+          loadTracking();
+        }
+      }, IDLE_DELAY_MS);
+    }
+
+    const trackConversionClick = (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+
+      const anchor = event.target.closest<HTMLAnchorElement>("a[href]");
+      if (!anchor) return;
+
+      const destination = anchor.href;
+      const url = new URL(destination, window.location.href);
+      window.dataLayer = window.dataLayer || [];
+
+      if (url.protocol === "tel:") {
+        const phone = destination.replace(/^tel:/, "");
+        window.dataLayer.push({
+          event: "click_to_call",
+          event_category: "Lead Conversion",
+          event_action: "Phone Call Click",
+          event_label: phone,
+          phone_number: phone,
+          page_path: `${window.location.pathname}${window.location.search}`,
+        });
+      } else if (url.origin === window.location.origin && url.pathname === "/book") {
+        window.dataLayer.push({
+          event: "begin_booking",
+          event_category: "Lead Conversion",
+          event_action: "Online Booking Click",
+          page_path: `${window.location.pathname}${window.location.search}`,
+        });
+      } else if (
+        (url.origin === window.location.origin && url.pathname === "/financing") ||
+        (url.hostname === "wisetack.us" && url.hash.includes("prequalify"))
+      ) {
+        window.dataLayer.push({
+          event: "click_financing",
+          event_category: "Lead Conversion",
+          event_action: "Financing Prequal Click",
+          page_path: `${window.location.pathname}${window.location.search}`,
+        });
       }
+    };
+
+    document.addEventListener("click", trackConversionClick, { passive: true });
+
+    return () => {
+      cleanupListeners();
+      document.removeEventListener("click", trackConversionClick);
     };
   }, [gtmId]);
 

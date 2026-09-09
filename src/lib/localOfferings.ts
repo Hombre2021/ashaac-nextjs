@@ -1,4 +1,15 @@
-export const localCities = ["west-jordan", "south-jordan", "riverton"] as const;
+export const localCities = [
+  "west-jordan",
+  "south-jordan",
+  "riverton",
+  "herriman",
+  "sandy",
+  "draper",
+  "taylorsville",
+  "murray",
+  "midvale",
+  "salt-lake-city",
+] as const;
 
 export type LocalCitySlug = (typeof localCities)[number];
 
@@ -6,12 +17,26 @@ export const cityNames: Record<LocalCitySlug, string> = {
   "west-jordan": "West Jordan",
   "south-jordan": "South Jordan",
   riverton: "Riverton",
+  herriman: "Herriman",
+  sandy: "Sandy",
+  draper: "Draper",
+  taylorsville: "Taylorsville",
+  murray: "Murray",
+  midvale: "Midvale",
+  "salt-lake-city": "Salt Lake City",
 };
 
 export const cityContext: Record<LocalCitySlug, string> = {
-  "west-jordan": "West Jordan homeowners can request help with aging systems, uneven comfort, no-heat concerns, and cooling problems across the west side of the Salt Lake Valley.",
-  "south-jordan": "South Jordan homeowners can request service for new construction planning, replacement systems, uneven room temperatures, and seasonal heating or cooling problems.",
-  riverton: "Riverton homeowners can request help with older equipment, urgent comfort problems, airflow concerns, and heating or cooling projects in the southwest Salt Lake Valley.",
+  "west-jordan": "West Jordan homeowners can request fast on-site help with aging systems, uneven comfort, no-heat emergencies, and AC cooling problems across the west side of the Salt Lake Valley.",
+  "south-jordan": "South Jordan homeowners can request prompt HVAC service for Daybreak and valley homes, replacement systems, uneven room temperatures, and seasonal heating or cooling tune-ups.",
+  riverton: "Riverton homeowners can request expert help with older equipment, urgent comfort problems, airflow balance, heat pumps, and furnace or AC installations in the southwest Salt Lake Valley.",
+  herriman: "Herriman homeowners can request high-efficiency HVAC installations, heat pump upgrades, emergency AC repairs, and new construction or residential climate solutions across the foothills.",
+  sandy: "Sandy homeowners can request expert furnace repair, central air conditioning replacements, mini-splits, and seasonal tune-ups near the Wasatch foothills.",
+  draper: "Draper homeowners can request precision heating and air conditioning installations, multi-zone heat pumps, emergency repairs, and high-efficiency climate control.",
+  taylorsville: "Taylorsville homeowners can request same-day emergency HVAC repair, furnace replacement, AC freon recharge, and seasonal maintenance across central Salt Lake County.",
+  murray: "Murray homeowners and commercial businesses can request rapid diagnostic service, HVAC replacements, and energy-efficient heat pump installations in central Salt Lake Valley.",
+  midvale: "Midvale homeowners can request affordable, licensed HVAC repairs, furnace tune-ups, AC condenser replacements, and ductless mini-split systems.",
+  "salt-lake-city": "Salt Lake City residents can request complete HVAC system replacements, emergency no-heat or no-cooling troubleshooting, heat pump conversions, and indoor air quality services.",
 };
 
 export const localOfferings = [

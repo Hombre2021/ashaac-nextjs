@@ -2,16 +2,31 @@ param(
   [int]$Port = 3000
 )
 
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 
-$pwshPath = Join-Path $env:ProgramFiles 'PowerShell\7\pwsh.exe'
-if ($PSVersionTable.PSEdition -ne 'Core' -and (Test-Path $pwshPath)) {
-  & $pwshPath -NoLogo -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath -Port $Port
-  exit $LASTEXITCODE
+$scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Definition }
+$projectRoot = Split-Path -Parent $scriptDir
+
+if (-not (Test-Path (Join-Path $projectRoot 'package.json'))) {
+  $projectRoot = $scriptDir
 }
 
-$projectRoot = Split-Path -Parent $PSScriptRoot
-Set-Location $projectRoot
+Push-Location $projectRoot
 
-$env:NODE_OPTIONS = '--max-old-space-size=4096'
-npm.cmd run dev -- --port $Port
+try {
+  $env:NODE_OPTIONS = '--max-old-space-size=4096'
+  Write-Host "Starting All Solutions HVAC development server on port $Port..." -ForegroundColor Cyan
+
+  $npmCmd = if (Get-Command 'npm.cmd' -ErrorAction SilentlyContinue) {
+    'npm.cmd'
+  } elseif (Get-Command 'npm' -ErrorAction SilentlyContinue) {
+    'npm'
+  } else {
+    'npm'
+  }
+
+  & $npmCmd run dev -- --port $Port
+}
+finally {
+  Pop-Location
+}

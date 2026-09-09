@@ -86,6 +86,7 @@ export default function LocalServicePage({ city, service, summary, symptoms, pro
           <p className={styles.lede}>{summary}</p>
           <div className={styles.actions}>
             <a className={styles.primary} href="tel:8017553040">Call 801-755-3040</a>
+            {" "}
             <Link className={styles.secondary} href="/book">Request an appointment</Link>
           </div>
         </section>

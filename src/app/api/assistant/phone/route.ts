@@ -2280,7 +2280,7 @@ export async function POST(request: Request) {
           msclkid: "",
         };
 
-        if (!bookingPayload.email || !bookingPayload.addressLine1 || bookingPayload.addressZip.length < 5) {
+        if (!bookingPayload.addressLine1 || bookingPayload.addressZip.length < 5) {
           const bookingUrl = `${url.origin}/book`;
           if (from) {
             await sendSmsToCaller(from, `I need a few details to complete booking. Please finish here: ${bookingUrl}`);

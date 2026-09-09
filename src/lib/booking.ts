@@ -57,6 +57,7 @@ export const supportedBookingCities = [
   "West Jordan",
   "South Jordan",
   "Riverton",
+  "Herriman",
   "Kearns",
   "Midvale",
   "Sandy",
@@ -82,6 +83,10 @@ export function resolveSupportedBookingCity(value: string) {
   const aliases: Record<string, typeof supportedBookingCities[number]> = {
     slc: "Salt Lake City",
     "kearns metro township": "Kearns",
+    herriman: "Herriman",
+    "south jordan": "South Jordan",
+    "west jordan": "West Jordan",
+    riverton: "Riverton",
   };
   return aliases[normalized]
     || supportedBookingCities.find((city) => city.toLowerCase() === normalized)

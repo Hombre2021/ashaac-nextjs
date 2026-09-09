@@ -33,9 +33,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${page.offering.title} in ${page.cityName}, UT`,
-    description: `${page.offering.title} for homeowners in ${page.cityName}, Utah. Request an appointment with All Solutions Heating and Air Conditioning.`,
+    title: `${page.offering.title} in ${page.cityName}, UT | All Solutions Heating and Air Conditioning`,
+    description: `${page.offering.title} for homeowners in ${page.cityName}, Utah. Request service from a local HVAC contractor with experience in ${page.cityName} and surrounding Salt Lake County communities.`,
+    keywords: [
+      `${page.offering.title} ${page.cityName}`,
+      `${page.offering.title} in ${page.cityName} Utah`,
+      `${page.cityName} HVAC service`,
+      "All Solutions Heating and Air Conditioning",
+    ],
     alternates: { canonical: `/services/${page.citySlug}/${page.offering.slug}` },
+    openGraph: {
+      type: "website",
+      title: `${page.offering.title} in ${page.cityName}, UT | All Solutions Heating and Air Conditioning`,
+      description: `${page.offering.title} for homeowners in ${page.cityName}, Utah. Request service from a local HVAC contractor with experience in ${page.cityName} and surrounding Salt Lake County communities.`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${page.offering.title} in ${page.cityName}, UT | All Solutions Heating and Air Conditioning`,
+      description: `${page.offering.title} for homeowners in ${page.cityName}, Utah. Request service from a local HVAC contractor with experience in ${page.cityName} and surrounding Salt Lake County communities.`,
+    },
   };
 }
 
