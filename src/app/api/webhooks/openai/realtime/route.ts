@@ -98,6 +98,7 @@ export async function controlRealtimeCall(callId: string, apiKey: string, projec
     let followUpTimer: ReturnType<typeof setTimeout> | null = null;
     let reminderTimer: ReturnType<typeof setTimeout> | null = null;
     let callerResponseTimer: ReturnType<typeof setTimeout> | null = null;
+    let bookingFallbackTimer: ReturnType<typeof setTimeout> | null = null;
     const enterClosingCall = () => {
       closingCall = true;
       toolInProgress = true;
@@ -113,6 +114,10 @@ export async function controlRealtimeCall(callId: string, apiKey: string, projec
       if (callerResponseTimer) {
         clearTimeout(callerResponseTimer);
         callerResponseTimer = null;
+      }
+      if (bookingFallbackTimer) {
+        clearTimeout(bookingFallbackTimer);
+        bookingFallbackTimer = null;
       }
     };
     const controllerStartedAt = Date.now();
@@ -448,6 +453,10 @@ export async function controlRealtimeCall(callId: string, apiKey: string, projec
               && normalizedSpokenText.includes("wonderful rest of your day");
             if ((bookingFarewellSpoken || afterHoursFarewellSpoken || (bookingFarewellPending && completedWarmFarewell)) && !bookingFarewellObserved) {
               bookingFarewellObserved = true;
+              if (bookingFallbackTimer) {
+                clearTimeout(bookingFallbackTimer);
+                bookingFallbackTimer = null;
+              }
               enterClosingCall();
               void endDirectCallerAfterAsh(callerCallSid).then((ended) => {
                 if (ended) void clearPhoneBookingFarewellPending(callId);
