@@ -104,7 +104,7 @@ if (!realtimePhoneSource.includes("Thank you so much for calling, and have a won
 if (!realtimePhoneSource.includes("I am your AI assistant. I can help you book an appointment") || !realtimePhoneSource.includes("immediately continue the active workflow")) {
   failures.push("src/lib/openAiRealtimePhone.ts: missing requested greeting or silence recovery behavior");
 }
-if (!realtimePhoneSource.includes("Your booking has been successfully submitted. Please check your phone for a text with the confirmation details. Thank you so much for calling, and you have a wonderful rest of your day.")) {
+if (!realtimePhoneSource.includes("Your booking is being submitted as we speak and you will soon receive a text with your confirmation details. Thank you so much for calling All Solutions Heating and Air, and have a wonderful rest of your day.")) {
   failures.push("src/lib/openAiRealtimePhone.ts: missing exact successful-booking confirmation and farewell");
 }
 if (!realtimePhoneSource.includes("If the caller answers no to the opening appointment question, ask exactly: Would you like a call back?")) {
