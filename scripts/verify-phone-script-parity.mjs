@@ -16,7 +16,7 @@ const requiredRunbookText = [
   "Let me check availability.",
   "after-hours bookings will incur a $100 additional fee",
   "The after-hours charge is $100",
-  "Please say your first name.",
+  "Please say your first and last name.",
   "Please say the best phone number.",
   "Please describe the message for the technician.",
 ];

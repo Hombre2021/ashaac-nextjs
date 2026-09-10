@@ -118,11 +118,7 @@ If corrected, repeat the corrected reason and ask only:
 
 ### 4.2 Name
 
-**Ash:** "Please say your first name."
-
-[Wait for answer.]
-
-**Ash:** "Please say your last name."
+**Ash:** "Please say your first and last name."
 
 [Wait for answer.]
 
