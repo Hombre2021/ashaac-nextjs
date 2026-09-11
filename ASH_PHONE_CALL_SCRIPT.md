@@ -34,7 +34,7 @@ If the lookup is still running after four seconds:
 
 When a time is returned:
 
-**Ash:** "That time is available. [Full date], [full two-hour time block]. Would you like that exact block?"
+**Ash:** "There's a time available. The earliest appointment is [Full date] between [full two-hour time block]. Would you like that exact block? If you want an after-hours booking just let me know."
 
 If the caller declines:
 
@@ -56,7 +56,7 @@ If the caller asks for tomorrow morning, another day, or an exact time:
 
 If available:
 
-**Ash:** "That time is available. [Full date], [full two-hour time block]. Would you like that exact block?"
+**Ash:** "There's a time available. The earliest appointment is [Full date] between [full two-hour time block]. Would you like that exact block? If you want an after-hours booking just let me know."
 
 If unavailable:
 
