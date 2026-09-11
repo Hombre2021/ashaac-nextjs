@@ -340,9 +340,8 @@ if (!phoneMcpSource.includes('code: z.string().regex(/^\\d{6}$/')) {
   failures.push("src/app/api/assistant/phone/mcp/route.ts: verification code must be exactly six numerical digits");
 }
 if (!createBookingSource.includes("Phone create_booking caller-confirmed address accepted")
-  || !createBookingSource.includes('"address could not be verified"')
   || createBookingSource.includes("await verifyPhoneServiceAddress")) {
-  failures.push("phone booking: caller-confirmed served-Utah addresses must be noted and submitted without electronic verification blocking create_booking");
+  failures.push("phone booking: caller-confirmed served-Utah addresses must be submitted without electronic verification blocking create_booking");
 }
 if (!phoneMcpSource.includes('server.registerTool("submit_owner_message"') || !phoneMcpSource.includes('server.registerTool("block_spam_caller"')) {
   failures.push("src/app/api/assistant/phone/mcp/route.ts: missing owner text-message or persistent spam-block tool");

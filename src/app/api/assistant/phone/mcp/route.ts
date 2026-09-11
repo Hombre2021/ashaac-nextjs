@@ -505,7 +505,6 @@ function createServer(origin: string, conferenceName: string, callerPhone: strin
       callerLanguage: nonEnglishCallerLanguage,
       customerConfirmationSms: nonEnglishCallerLanguage ? customerConfirmationSms : "",
       notes: [
-        "address could not be verified",
         nonEnglishCallerLanguage ? `CALLER LANGUAGE: ${nonEnglishCallerLanguage}` : "",
         afterHours
           ? "AFTER-HOURS BOOKING: Customer explicitly accepted the $100 additional fee. Technician must provide additional confirmation directly to the customer."
