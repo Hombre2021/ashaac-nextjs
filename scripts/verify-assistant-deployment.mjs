@@ -101,7 +101,7 @@ if (!realtimePhoneSource.includes("The first time any part is unclear") || !real
 if (!realtimePhoneSource.includes("Thank you so much for calling, and have a wonderful rest of your day.")) {
   failures.push("src/lib/openAiRealtimePhone.ts: missing exact final farewell");
 }
-if (!realtimePhoneSource.includes("I am your AI assistant. I can help you book an appointment") || !realtimePhoneSource.includes("immediately continue the active workflow")) {
+if ((!realtimePhoneSource.includes("I'm your AI assistant") && !realtimePhoneSource.includes("I am your AI assistant")) || !realtimePhoneSource.includes("immediately continue the active workflow")) {
   failures.push("src/lib/openAiRealtimePhone.ts: missing requested greeting or silence recovery behavior");
 }
 if (!realtimePhoneSource.includes("Your booking is being submitted as we speak and you will soon receive a text with your confirmation details. Thank you so much for calling All Solutions Heating and Air, and have a wonderful rest of your day.")) {

@@ -51,8 +51,7 @@ export type PhoneAssistantResponse = {
     | null;
 };
 
-export const phoneAssistantGreeting =
-  "Thank you for calling All Solutions Heating and Air Conditioning. I am your AI assistant. I can help you book an appointment, or have one of our technicians text you or call you back at his earliest convenience. We offer free estimates, so a technician can come to your location at no charge to you, explain a solution, and discuss pricing before you commit to or authorize any work. Would you like to schedule an appointment at our earliest convenience?";
+export const phoneAssistantGreeting = "Thank you for calling All Solutions Heating and Air Conditioning. I'm your AI assistant. We offer free estimates — a technician can come to your location at no cost, explain the issue, and review pricing before you approve any work. I can schedule an appointment, deliver your message right away, or have a technician text with you or call you back as soon as he's available. Puedes hablarme en Español, Portuguese, or use your preferred language. Would you like to schedule an appointment at our earliest availability?";
 
 function isBookingRequest(lower: string) {
   return /(\bbook(?:ing)?\b|\bschedul(?:e|ing)\b|make\s+(?:me\s+)?an?\s+appointment|set\s+up\s+an?\s+appointment|need\s+an?\s+appointment|want\s+an?\s+appointment|technician\s+(?:can\s+)?come|technician\s+(?:to\s+)?visit|(?:can|could|would)\s+you\s+come|come\s+(?:today|tomorrow|this\s+(?:morning|afternoon|evening))|\b(?:next\s+)?(?:monday|tuesday|wednesday|thursday|friday|saturday)(?:\s+(?:morning|afternoon|evening))?\b|come\s+to\s+(?:my|our|the)\s+(?:home|house|location|address))/.test(lower);

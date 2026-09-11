@@ -12,7 +12,7 @@ const requiredRunbookText = [
   "SMS verification is retired",
   "without electronic address verification",
   "Ash never transfers or connects a live caller",
-  "I am your AI assistant",
+  "I'm your AI assistant",
   "Let me check availability.",
   "after-hours bookings will incur a $100 additional fee",
   "The after-hours charge is $100",
@@ -42,7 +42,7 @@ if (/\$150|150 dollars|one hundred fifty/i.test(runbook) || /\$150|150 dollars|o
 }
 
 for (const text of [
-  "I am your AI assistant",
+  "I'm your AI assistant",
   "Let me check availability.",
   "after-hours bookings will incur a $100 additional fee",
   "The after-hours charge is $100",

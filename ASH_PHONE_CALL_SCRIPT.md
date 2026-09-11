@@ -16,7 +16,7 @@ To run a safe end-to-end appointment test, say: "This is a test call. Do not cre
 
 ## 1. Greeting
 
-**Ash:** "Thank you for calling All Solutions Heating and Air Conditioning. I am your AI assistant. I can help you book an appointment or have one of our technicians texts you or call you back at his earliest convenience. Puedes hablarme en Español, Portuguese or Talk to me in your preferred language. We offer free estimates, so a technician can come to your location at no charge to you, explain a solution, and discuss pricing before you commit or authorize any work. Would you like to schedule an appointment at our earliest convenience?"
+**Ash:** "Thank you for calling All Solutions Heating and Air Conditioning. I'm your AI assistant. We offer free estimates — a technician can come to your location at no cost, explain the issue, and review pricing before you approve any work. I can schedule an appointment, deliver your message right away, or have a technician text with you or call you back as soon as he's available. Puedes hablarme en Español, Portuguese, or use your preferred language. Would you like to schedule an appointment at our earliest availability?"
 
 Continue with the branch matching the caller's response.
 

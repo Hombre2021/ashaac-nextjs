@@ -2,7 +2,7 @@ import { assistantBusinessPolicy } from "@/lib/assistantKnowledge";
 
 const REALTIME_ENABLED_PATTERN = /^(1|true|yes|on)$/i;
 
-export const OPENAI_REALTIME_PHONE_GREETING = "Thank you for calling All Solutions Heating and Air Conditioning. I am your AI assistant. I can help you book an appointment or have one of our technicians texts you or call you back at his earliest convenience. Puedes hablarme en Español, Portuguese or Talk to me in your preferred language. We offer free estimates, so a technician can come to your location at no charge to you, explain a solution, and discuss pricing before you commit or authorize any work. Would you like to schedule an appointment at our earliest convenience?";
+export const OPENAI_REALTIME_PHONE_GREETING = "Thank you for calling All Solutions Heating and Air Conditioning. I'm your AI assistant. We offer free estimates — a technician can come to your location at no cost, explain the issue, and review pricing before you approve any work. I can schedule an appointment, deliver your message right away, or have a technician text with you or call you back as soon as he's available. Puedes hablarme en Español, Portuguese, or use your preferred language. Would you like to schedule an appointment at our earliest availability?";
 
 export function getOpenAiRealtimeSipUri() {
   const enabled = REALTIME_ENABLED_PATTERN.test(String(process.env.TWILIO_OPENAI_REALTIME_ENABLED || "").trim());
@@ -67,7 +67,7 @@ export function buildRealtimePhoneInstructions(callId: string, callerPhone: stri
       "Immediately before calling check_availability, say exactly: Let me check availability. Do not add hold music, keyboard sounds, or another filler phrase.",
       "While any search or verification tool is pending, the phone system repeats a tool-wait reminder about every four seconds. Do not generate a separate reminder and do not treat it as caller speech.",
       "Never say you are checking whether the requested time is after-hours.",
-      "When check_availability returns a requested time, say exactly: That time is available. Then repeat the date using the full month name, day, and four-digit year, followed by the full two-hour time block, and ask exactly: Would you like that exact block? Only after the caller accepts should you give the separate after-hours disclosure and $100 fee question when applicable.",
+      "When check_availability returns a requested time, say: The earliest appointment is [full month name, day, and four-digit year] between [full two-hour time block]. Would you like that exact block? If you want an after-hours booking just let me know. Only after the caller accepts should you give the separate after-hours disclosure and $100 fee question when applicable.",
       "For check_availability, inform the caller before checking. For create_booking, DO NOT tell the caller you are submitting or ask them to wait. For other business tools, briefly tell the caller what you are doing. As soon as any tool returns, immediately speak the result. Never remain silent.",
       "If a lookup is still pending, the phone system may play a tool-wait reminder. Do not answer it, repeat it, or treat it as caller speech. Do not ask the caller to repeat information you already heard.",
     "If a tool fails, apologize briefly and offer to retry, arrange a callback, or send the owner or technician a text message.",
