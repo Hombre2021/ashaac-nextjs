@@ -81,7 +81,18 @@ export default function ProjectsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <HomepageHeader />
-      <AboutHero title="Projects & Recent Work" />
+      <AboutHero
+        eyebrow="Projects"
+        title={
+          <>
+            Recent HVAC Installations &amp;{" "}
+            <span style={{ color: "#f4c95d" }}>System Upgrades</span>
+          </>
+        }
+        subtitle="Explore completed furnace replacements, heat pumps, mini-splits, and central AC installations across Salt Lake County."
+        backgroundSrc="/images/homepage/commercial.jpg"
+        backgroundAlt="All Solutions Heating and Air Conditioning Projects and Commercial HVAC"
+      />
 
       <section className={styles.pageSection}>
         <div className={styles.introCard}>
@@ -108,25 +119,14 @@ export default function ProjectsPage() {
               <div className={styles.projectBody}>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
+                <div className={styles.projectCardFooter}>
+                  <Link href="/book" className={styles.cardAction}>
+                    Schedule Similar Service &rarr;
+                  </Link>
+                </div>
               </div>
             </article>
           ))}
-        </div>
-
-        <div className={styles.tipsWrap}>
-          <h2>Our Quality Guarantee on Every Job</h2>
-          <ul>
-            <li><strong>Licensed &amp; Insured Technicians:</strong> Experienced HVAC professionals serving Salt Lake Valley.</li>
-            <li><strong>Upfront Estimates:</strong> Clear pricing with 0% financing options and cash/ACH discounts.</li>
-            <li><strong>Top-Tier Equipment:</strong> Energy Star qualified furnaces, AC units, heat pumps, and mini-splits.</li>
-            <li><strong>1-Year Labor Warranty:</strong> Full workmanship guarantee alongside manufacturer warranties.</li>
-          </ul>
-        </div>
-
-        <div className={styles.ctaRow}>
-          <Link href="/book" className={styles.ctaButton}>Request a Free Estimate</Link>
-          <Link href="/services" className={styles.ctaButton}>Explore All HVAC Services</Link>
-          <Link href="/reviews" className={styles.ctaButton}>Read Verified Customer Reviews</Link>
         </div>
       </section>
 

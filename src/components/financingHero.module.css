@@ -6,10 +6,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 150px 24px 64px; /* top padding = space for white stripe */
+  padding: clamp(140px, 16vh, 185px) 24px 64px; /* top padding = space for white stripe */
   box-sizing: border-box;
   gap: 16px;
   overflow: hidden;
+  background: #123b59;
 }
 
 .backgroundimageIcon {
@@ -18,26 +19,64 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center bottom;
+  object-position: center;
   z-index: 1;
+  filter: brightness(0.52);
 }
 
 .blueOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 123, 255, 0.35);
+  background: rgba(18, 59, 89, 0.20);
   z-index: 2;
+  pointer-events: none;
+}
+
+.eyebrow {
+  position: relative;
+  z-index: 3;
+  display: inline-block;
+  margin: 0 auto 14px;
+  padding: 8px 24px;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #f4c95d;
+  background: rgba(10, 35, 56, 0.78);
+  border: 1.5px solid rgba(244, 201, 93, 0.55);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  line-height: 1.35;
 }
 
 .heroTitle {
   position: relative; /* keep it in normal flow */
   z-index: 3;
-  margin: 0 0 12px;
+  margin: 0 auto 12px;
   color: #fff;
-  font-size: 1.70rem;
-  font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 38px);
+  font-weight: 800;
   text-align: center;
-  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.85);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+}
+
+.highlight {
+  color: #f4c95d;
+}
+
+.heroSubtitle {
+  position: relative;
+  z-index: 3;
+  font-size: clamp(15px, 1.7vw, 18px);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 680px;
+  margin: 0 auto 28px;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .stepHeader {
@@ -49,6 +88,11 @@
   font-weight: 600;
   text-align: center;
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
+  background: #1f7a3f;
+  border: 1px solid rgba(10, 44, 22, 0.55);
+  border-radius: 16px;
+  padding: 14px 26px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 
 .stepDescriptions {
@@ -64,29 +108,14 @@
   margin: 0;
   color: #fff;
   font-size: 1.6rem;
-  padding-left: 1.5rem;
+  padding-left: 0;
+  list-style: none;
   line-height: 1.6;
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
 }
 
 .yourInitialApplicationIsOn li {
   margin-bottom: 12px; /* space between Step 1 and Step 2 */
-}
-
-.stepHeader {
-  background: #1f7a3f;
-  border: 1px solid rgba(10, 44, 22, 0.55);
-  border-radius: 16px;
-  padding: 14px 26px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-}
-
-.yourInitialApplicationIsOn {
-  padding-left: 0;
-  list-style: none;
-}
-
-.yourInitialApplicationIsOn li {
   background: #1f7a3f;
   border: 1px solid rgba(10, 44, 22, 0.55);
   border-radius: 14px;
@@ -96,60 +125,20 @@
 
 .subOptions {
   margin-top: 10px;
-}
-
-.youAlready {
-  margin: 0;
-  color: #fff;
-  font-size: 1.6rem;
-  padding-left: 1.5rem;
+  margin-left: 2.5rem; /* increased from 1.5rem */
+  padding-left: 2.5rem; /* increased from 1.5rem */
   line-height: 1.6;
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
 }
 
-.youAlready li {
-  margin-bottom: 16px;
-}
-
-.ifYouQualify {
-  margin: 0;
-  color: #fff;
-  font-size: 1.6rem;
-  padding-left: 1.5rem;
-  line-height: 1.6;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
-}
-
-.ifYouQualify li {
-  margin-bottom: 16px;
-}
-
-.ifYouQualify li ol,
-.ifYouQualify li ul {
-  margin-top: 8px;
-  margin-left: 1.5rem;
-  padding-left: 1.5rem;
-}
-
-.ifYouQualify li ol li {
-  margin-bottom: 6px;
-  font-size: 0.95rem;
-}
 .subOptions li {
   margin-bottom: 0px; /* reduced from 6px */
   font-size: 1.6rem;
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
 }
-.subOptions {
-  margin-top: 10px;
-  margin-left: 2.5rem; /* increased from 1.5rem */
-  padding-left: 2.5rem; /* increased from 1.5rem */
-  line-height: 1.6;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
- }
 
 .preQualificationButton {
-    display: none;
+  display: none;
 }
 
 .greenButtonLink {
@@ -189,8 +178,6 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-.preQualificationLink {
   position: absolute;
   left: 50%;
   top: 120%;

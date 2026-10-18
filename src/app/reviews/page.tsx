@@ -125,7 +125,7 @@ export default function ReviewsPage() {
           </p>
           <div style={{ margin: "16px 0" }}>
             <a
-              href="https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+              href="https://g.page/r/CcYRzkuNjdfdEAE/review"
               target="_blank"
               rel="noreferrer"
               style={{

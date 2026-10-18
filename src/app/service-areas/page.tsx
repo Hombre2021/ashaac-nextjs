@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import HomepageFooter from "@/components/HomepageFooter";
 import HomepageHeader from "@/components/HomepageHeader";
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
     "furnace installation Draper",
     "Salt Lake County HVAC service",
     "All Solutions Heating and Air Conditioning",
+    "All Solutions HVAC",
   ],
   alternates: { canonical: "/service-areas" },
   openGraph: {
@@ -70,25 +72,49 @@ export default function ServiceAreasPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <HomepageHeader />
-      <main className={styles.section}>
-        <div className={styles.inner}>
-          <p className={styles.eyebrow}>All Solutions Heating and Air Conditioning</p>
-          <h1>Mobile HVAC Service Areas Across Salt Lake County</h1>
-          <p className={styles.intro}>
-            We provide fast, licensed, on-site heating, cooling, heat pump, and mini-split services throughout the Salt Lake Valley. Select your city below:
+      
+      {/* Hero Section with Home page commercial background image & transparent dark blue film */}
+      <div className={styles.heroContainer} data-label="ServiceAreasHeroSection">
+        <Image
+          src="/images/homepage/commercial.jpg"
+          alt="All Solutions Heating and Air Conditioning Mobile HVAC Van and Equipment"
+          fill
+          style={{ objectFit: "cover", objectPosition: "center" }}
+          priority
+          className={styles.heroBg}
+        />
+        <div className={styles.blueOverlay} />
+        <div className={styles.heroContent}>
+          <p className={styles.eyebrow}>Service Areas</p>
+          <h1 className={styles.heroTitle} data-label="ServiceAreasHeroTitle">
+            Mobile HVAC Service Areas Across <span className={styles.highlight}>Salt Lake County</span>
+          </h1>
+          <p className={styles.heroSubtitle}>
+            Fast, licensed on-site heating, cooling, heat pump, and mini-split services throughout the Salt Lake Valley. Select your city and service below:
           </p>
+        </div>
+      </div>
+
+      {/* Main Grid with full-card clickable links and city badges */}
+      <main className={styles.mainSection}>
+        <div className={styles.inner}>
           <div className={styles.grid}>
             {pages.map(([city, service, href]) => (
-              <article className={styles.area} key={href}>
-                <h2>{city}, UT</h2>
-                <Link className={styles.allLink} href={href}>
-                  {service}
-                </Link>
-              </article>
+              <Link className={styles.areaCard} href={href} key={href}>
+                <div className={styles.cardTop}>
+                  <span className={styles.cityBadge}>{city}, UT</span>
+                  <h2 className={styles.serviceTitle}>{service}</h2>
+                </div>
+                <div className={styles.cardBottom}>
+                  <span className={styles.actionLabel}>View Service</span>
+                  <span className={styles.actionArrow} aria-hidden="true">&rarr;</span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </main>
+
       <HomepageFooter />
     </>
   );

@@ -14,8 +14,7 @@ export const businessEmail = "contact@ashaac.com";
 export const googleBusinessProfileUrl =
   "https://www.google.com/search?q=All+Solutions+Heating+And+Air+Conditioning";
 
-export const googleReviewUrl =
-  "https://www.google.com/search?q=all+solutions+Heating+And+Air+Conditioning+google+reviews";
+export const googleReviewUrl = "https://g.page/r/CcYRzkuNjdfdEAE/review";
 
 export const areaServed = [
   "West Jordan",

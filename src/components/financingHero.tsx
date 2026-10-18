@@ -12,15 +12,22 @@ const FinancingPage: NextPage = () => {
       <HomepageHeader />
       <div className={styles.financingpage}>
         <Image
-          src="/images/homepage/living-room.png"
-          alt="Living Room Background"
+          src="/images/homepage/commercial.jpg"
+          alt="All Solutions Heating and Air Conditioning Mobile HVAC Van and Financing"
           fill
           className={styles.backgroundimageIcon}
-          style={{ objectFit: "cover", objectPosition: "center bottom" }}
-          loading="eager"
+          style={{ objectFit: "cover", objectPosition: "center" }}
+          priority
         />
         <div className={styles.blueOverlay} />
-        <h1 className={styles.heroTitle}>How to apply for 0% interest on your financing</h1>
+        
+        <p className={styles.eyebrow}>Apply for Financing</p>
+        <h1 className={styles.heroTitle}>
+          How to Apply for <span className={styles.highlight}>0% Interest Financing</span>
+        </h1>
+        <p className={styles.heroSubtitle}>
+          Flexible payment terms, fast online pre-qualification with no impact on your credit score, and cash discounts.
+        </p>
 
         <a href={PREQUALIFY_URL} className={styles.greenButtonLink} target="_blank" rel="noreferrer">
           <h3 className={styles.stepHeader}>Steps to follow and things for you to know</h3>
@@ -42,28 +49,28 @@ const FinancingPage: NextPage = () => {
                 applying for.
               </a>
             </li>
-      <li>
-        <a href={PREQUALIFY_URL} className={styles.greenButtonLink} target="_blank" rel="noreferrer">
-          3. If you qualify for 0% financing, you can choose how fast you want to pay off your approved loan, by choosing one
-          of the following options:
-          <ol className={styles.subOptions}>
-            <li>a. 0% interest for 3 months</li>
-            <li>b. 0% interest for 6 months</li>
-            <li>c. 0% interest for 1 year</li>
-            <li>d. 0% interest for 2 years</li>
-          </ol>
-        </a>
-      </li>
-      <li>
-        <a href={PREQUALIFY_URL} className={styles.greenButtonLink} target="_blank" rel="noreferrer">
-          4. 0% financing is based on your credit history. Other options are available depending on your credit eligibility.
-        </a>
-      </li>
-      <li>
-        <a href={PREQUALIFY_URL} className={styles.greenButtonLink} target="_blank" rel="noreferrer">
-          5. If you pay cash or ACH (Electronic check), you will receive a $500 discount.
-        </a>
-      </li>
+            <li>
+              <a href={PREQUALIFY_URL} className={styles.greenButtonLink} target="_blank" rel="noreferrer">
+                3. If you qualify for 0% financing, you can choose how fast you want to pay off your approved loan, by choosing one
+                of the following options:
+                <ol className={styles.subOptions}>
+                  <li>a. 0% interest for 3 months</li>
+                  <li>b. 0% interest for 6 months</li>
+                  <li>c. 0% interest for 1 year</li>
+                  <li>d. 0% interest for 2 years</li>
+                </ol>
+              </a>
+            </li>
+            <li>
+              <a href={PREQUALIFY_URL} className={styles.greenButtonLink} target="_blank" rel="noreferrer">
+                4. 0% financing is based on your credit history. Other options are available depending on your credit eligibility.
+              </a>
+            </li>
+            <li>
+              <a href={PREQUALIFY_URL} className={styles.greenButtonLink} target="_blank" rel="noreferrer">
+                5. If you pay cash or ACH (Electronic check), you will receive a $500 discount.
+              </a>
+            </li>
           </ol>
           <a
             href={PREQUALIFY_URL}
