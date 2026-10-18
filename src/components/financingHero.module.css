@@ -2,13 +2,11 @@
   position: relative;
   width: 100%;
   min-height: 90vh;
-  padding-bottom: 300px; /* extra space before footer */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: clamp(140px, 16vh, 185px) 24px 64px; /* top padding = space for white stripe */
+  padding: clamp(140px, 16vh, 185px) 24px 80px; /* top padding = space for fixed white stripe */
   box-sizing: border-box;
-  gap: 16px;
   overflow: hidden;
   background: #123b59;
 }
@@ -53,7 +51,7 @@
 }
 
 .heroTitle {
-  position: relative; /* keep it in normal flow */
+  position: relative;
   z-index: 3;
   margin: 0 auto 12px;
   color: #fff;
@@ -79,254 +77,185 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
-.stepHeader {
+.stepHeaderLink {
   position: relative;
   z-index: 3;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 auto 24px;
+}
+
+/* Enclosed container just like About Us */
+.stepHeader {
   margin: 0;
-  color: #fff;
-  font-size: 1.6rem;
-  font-weight: 600;
+  color: #f4c95d;
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
   text-align: center;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
-  background: #1f7a3f;
-  border: 1px solid rgba(10, 44, 22, 0.55);
-  border-radius: 16px;
-  padding: 14px 26px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  background: rgba(10, 35, 56, 0.78);
+  border: 1.5px solid rgba(244, 201, 93, 0.55);
+  border-radius: 9999px;
+  padding: 12px 30px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  line-height: 1.35;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.stepHeaderLink:hover .stepHeader {
+  transform: translateY(-2px);
+  border-color: #f4c95d;
+  box-shadow: 0 8px 24px rgba(244, 201, 93, 0.28);
+  background: rgba(10, 35, 56, 0.92);
 }
 
 .stepDescriptions {
   position: relative;
   z-index: 3;
   color: #fff;
-  font-size: 1.4rem;
-  max-width: 2080px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+  width: min(960px, 100%);
+  margin: 0 auto;
 }
 
 .yourInitialApplicationIsOn {
   margin: 0;
-  color: #fff;
-  font-size: 1.6rem;
-  padding-left: 0;
+  padding: 0;
   list-style: none;
-  line-height: 1.6;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
+/* Enclosed in the same dark blue container look with gold borders as About Us */
 .yourInitialApplicationIsOn li {
-  margin-bottom: 12px; /* space between Step 1 and Step 2 */
-  background: #1f7a3f;
-  border: 1px solid rgba(10, 44, 22, 0.55);
+  margin: 0;
+  background: rgba(10, 35, 56, 0.78);
+  border: 1.5px solid rgba(244, 201, 93, 0.45);
   border-radius: 14px;
-  padding: 16px 22px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  padding: 18px 24px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.yourInitialApplicationIsOn li:hover {
+  transform: translateY(-3px);
+  border-color: #f4c95d;
+  box-shadow: 0 8px 24px rgba(244, 201, 93, 0.25);
+  background: rgba(10, 35, 56, 0.92);
+}
+
+.stepCardLink {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: clamp(1.02rem, 1.35vw, 1.25rem);
+  line-height: 1.6;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.stepPrefix {
+  color: #f4c95d;
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+.stepHighlight {
+  color: #f4c95d;
+  font-weight: 800;
 }
 
 .subOptions {
   margin-top: 10px;
-  margin-left: 2.5rem; /* increased from 1.5rem */
-  padding-left: 2.5rem; /* increased from 1.5rem */
-  line-height: 1.6;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
+  margin-left: 1.25rem;
+  padding-left: 0.75rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .subOptions li {
-  margin-bottom: 0px; /* reduced from 6px */
-  font-size: 1.6rem;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
+  background: none !important;
+  border: none !important;
+  padding: 2px 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  font-size: clamp(0.98rem, 1.25vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.95);
+  transform: none !important;
 }
 
-.preQualificationButton {
-  display: none;
+.subPrefix {
+  color: #f4c95d;
+  font-weight: 700;
+  margin-right: 6px;
 }
 
-.greenButtonLink {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+.preQualificationWrapper {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0 16px;
 }
 
-.heroTitle .greenButtonLink {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 4;
-  pointer-events: auto;
-}
-
-.greenButtonLink:hover,
-.greenButtonLink:focus-visible {
-  color: inherit;
-  text-decoration: none;
-}
-
+/* Bottom CTA enclosed in the About Us container style with bold yellow text */
 .preQualificationLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  padding: 16px 32px;
-  background: #1f7a3f;
-  border: 1px solid rgba(10, 44, 22, 0.55);
-  color: #fff;
-  font-size: 1.4rem;
-  font-weight: 700;
+  padding: 15px 36px;
+  background: rgba(10, 35, 56, 0.85);
+  border: 2px solid #f4c95d;
+  color: #f4c95d;
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   text-decoration: none;
-  border-radius: 14px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  position: absolute;
-  left: 50%;
-  top: 120%;
-  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+  text-align: center;
 }
 
 .preQualificationLink:hover {
-  background: #1f7a3f;
-  transform: translate(-50%, -50%) translateY(-3px);
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.3);
+  background: #f4c95d;
+  color: #0a2338;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(244, 201, 93, 0.35);
+  text-shadow: none;
 }
 
 .preQualificationLink:focus-visible {
-  outline: 3px solid #9ec5fe;
+  outline: 3px solid #f4c95d;
   outline-offset: 3px;
-}
-
-@media (orientation: portrait) and (max-width: 1366px) {
-  .stepDescriptions,
-  .yourInitialApplicationIsOn,
-  .subOptions li,
-  .preQualificationLink {
-    font-size: calc(1em * 1.25) !important;
-    line-height: 1.6 !important;
-  }
 }
 
 @media (max-width: 768px) {
   .financingpage {
-    padding-bottom: 220px;
-  }
-
-  .preQualificationLink {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-    margin: 24px auto 0;
-    text-align: center;
-  }
-
-  .preQualificationLink:hover {
-    transform: translateY(-3px);
-  }
-}
-
-/* ============================================
-   iPHONE XR LANDSCAPE (896x414)
-   ============================================ */
-
-@media (orientation: landscape) and (width: 896px) and (height: 414px) {
-  .financingpage {
-    padding-top: 110px !important;
-    padding-bottom: 280px !important;
-    gap: 18px !important;
-  }
-
-  .heroTitle {
-    margin: 0 auto 10px !important;
-    max-width: fit-content !important;
+    padding-bottom: 48px;
   }
 
   .stepHeader {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 9999px;
   }
 
   .yourInitialApplicationIsOn li {
-    margin-top: 0 !important;
-    margin-bottom: 10px !important;
+    padding: 14px 18px;
+    border-radius: 12px;
   }
 
   .preQualificationLink {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    margin: 26px auto 0 !important;
-  }
-
-  .preQualificationLink:hover {
-    transform: translateY(-3px) !important;
-  }
-}
-
-/* ============================================
-   ALL LANDSCAPE DEVICES — ENSURE PREQUALIFICATION VISIBILITY
-   ============================================ */
-
-@media (orientation: landscape) and (max-height: 800px) {
-  .preQualificationLink {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    margin: 16px auto 0 !important;
-  }
-
-  .preQualificationLink:hover {
-    transform: translateY(-3px) !important;
-  }
-}
-
-/* ============================================
-   ASUS ZENBOOK FOLD (853x1280 portrait)
-   ============================================ */
-
-@media (orientation: portrait) and (width: 853px) and (height: 1280px) {
-  .financingpage {
-    padding-bottom: 400px !important;
-  }
-
-  .preQualificationLink {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    margin: 32px auto 0 !important;
-  }
-
-  .preQualificationLink:hover {
-    transform: translateY(-3px) !important;
-  }
-}
-
-/* ============================================
-   ASUS ZENBOOK FOLD (1280x853 landscape)
-   ============================================ */
-
-@media (orientation: landscape) and (width: 1280px) and (height: 853px) {
-  .financingpage {
-    padding-bottom: 350px !important;
-  }
-
-  .preQualificationLink {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    margin: 24px auto 0 !important;
-  }
-
-  .preQualificationLink:hover {
-    transform: translateY(-3px) !important;
-  }
-}
-
-@media (min-width: 1400px) {
-  .financingpage {
-    padding-bottom: 320px;
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    box-sizing: border-box;
   }
 }
