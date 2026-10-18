@@ -83,6 +83,7 @@
   text-decoration: none;
   display: inline-block;
   margin: 0 auto 24px;
+  max-width: 100%;
 }
 
 /* Enclosed container just like About Us */
@@ -103,6 +104,7 @@
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   line-height: 1.35;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-sizing: border-box;
 }
 
 .stepHeaderLink:hover .stepHeader {
@@ -139,6 +141,7 @@
   backdrop-filter: blur(8px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  box-sizing: border-box;
 }
 
 .yourInitialApplicationIsOn li:hover {
@@ -238,24 +241,27 @@
 
 @media (max-width: 768px) {
   .financingpage {
+    padding-top: 115px;
+    padding-left: 16px;
+    padding-right: 16px;
     padding-bottom: 48px;
   }
 
   .stepHeader {
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 10px 18px;
+    font-size: 13px;
     border-radius: 9999px;
   }
 
   .yourInitialApplicationIsOn li {
-    padding: 14px 18px;
+    padding: 14px 16px;
     border-radius: 12px;
   }
 
   .preQualificationLink {
     width: 100%;
-    padding: 14px 20px;
-    font-size: 1rem;
+    padding: 14px 18px;
+    font-size: 0.98rem;
     box-sizing: border-box;
   }
 }

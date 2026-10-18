@@ -108,19 +108,19 @@ export default function ReviewsPage() {
       <ReviewsHero />
 
       {/* Review Velocity CTA Box */}
-      <section style={{ maxWidth: 880, margin: "32px auto 16px auto", padding: "0 20px" }}>
+      <section style={{ maxWidth: 880, margin: "32px auto 16px auto", padding: "0 16px" }}>
         <div style={{
           background: "linear-gradient(135deg, #095f91 0%, #064062 100%)",
           color: "#ffffff",
           borderRadius: 16,
-          padding: "28px 24px",
+          padding: "28px 20px",
           textAlign: "center",
           boxShadow: "0 8px 24px rgba(9, 95, 145, 0.18)"
         }}>
-          <h2 style={{ fontSize: "1.6rem", margin: "0 0 10px 0", color: "#ffffff", fontWeight: 700 }}>
+          <h2 style={{ fontSize: "clamp(1.25rem, 3.5vw, 1.6rem)", margin: "0 0 10px 0", color: "#ffffff", fontWeight: 700 }}>
             Had a Great Experience with All Solutions HVAC?
           </h2>
-          <p style={{ fontSize: "1.05rem", margin: "0 auto 18px auto", maxWidth: 680, lineHeight: 1.6, color: "#f0f9ff" }}>
+          <p style={{ fontSize: "clamp(0.95rem, 2.5vw, 1.05rem)", margin: "0 auto 18px auto", maxWidth: 680, lineHeight: 1.6, color: "#f0f9ff" }}>
             Your feedback helps local homeowners across Salt Lake County find trustworthy heating and cooling service. Please take a moment to share your experience on Google!
           </p>
           <div style={{ margin: "16px 0" }}>
@@ -131,16 +131,19 @@ export default function ReviewsPage() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: 8,
                 background: "#ffffff",
                 color: "#095f91",
                 fontWeight: 700,
-                fontSize: "1.05rem",
-                padding: "14px 28px",
+                fontSize: "clamp(0.92rem, 2.8vw, 1.05rem)",
+                padding: "14px 24px",
                 borderRadius: 8,
                 textDecoration: "none",
                 boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
-                transition: "transform 0.15s ease"
+                transition: "transform 0.15s ease",
+                maxWidth: "100%",
+                boxSizing: "border-box"
               }}
             >
               ⭐ Leave a Review on Google ⭐
