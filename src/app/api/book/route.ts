@@ -252,7 +252,7 @@ export async function POST(request: Request) {
   const strictCities = new Set<string>(strictServiceAreaCities);
   if (!requestedCity || !addressCity || requestedCity !== addressCity || !strictCities.has(requestedCity)) {
     return NextResponse.json(
-      { error: "We currently serve West Jordan, South Jordan, Riverton, and Herriman only." },
+      { error: "We currently serve West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Midvale, Murray, Taylorsville, Kearns, and Salt Lake City only." },
       { status: 422 },
     );
   }

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import GoogleTracking from "@/components/GoogleTracking";
 import AttributionCapture from "@/components/AttributionCapture";
@@ -21,6 +21,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   preload: false,
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0284c7",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -45,6 +51,7 @@ export const metadata: Metadata = {
     "mini split installation West Jordan",
     "emergency HVAC repair Utah",
     "All Solutions Heating and Air Conditioning",
+    "All Solutions HVAC",
   ],
   alternates: {
     canonical: "/",

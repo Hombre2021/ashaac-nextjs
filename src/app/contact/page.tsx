@@ -121,7 +121,7 @@ export default function ContactPage() {
               <em>(100% Mobile Service &ndash; We Come Directly to Your Door)</em>
             </p>
             <p style={{ margin: "12px 0 0", color: "#475569", lineHeight: 1.5, fontSize: "0.95rem" }}>
-              Serving West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, and all of Salt Lake County.
+              Serving West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, Kearns, Salt Lake City, and all of Salt Lake County.
             </p>
           </div>
 

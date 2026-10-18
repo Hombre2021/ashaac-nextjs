@@ -30,7 +30,7 @@ Continue with the branch matching the caller's response.
 
 If the lookup is still running after four seconds:
 
-**Ash:** "I am still looking to see if that time is available, thank you for your patience."
+**Ash:** "I am still checking for availability, thank you for your patience."
 
 When a time is returned:
 
@@ -56,7 +56,7 @@ If the caller asks for tomorrow morning, another day, or an exact time:
 
 If available:
 
-**Ash:** "That time is available. The appointment is [full date] between [full two-hour time block]. Would you like that exact block?"
+**Ash:** "The following time is available. The appointment is [full date] between [full two-hour time block]. Would you like that exact block?"
 
 If unavailable:
 

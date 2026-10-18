@@ -72,6 +72,13 @@ export const strictServiceAreaCities = [
   "South Jordan",
   "Riverton",
   "Herriman",
+  "Kearns",
+  "Midvale",
+  "Sandy",
+  "Murray",
+  "Taylorsville",
+  "Draper",
+  "Salt Lake City",
 ] as const;
 
 export function resolveSupportedBookingCity(value: string) {

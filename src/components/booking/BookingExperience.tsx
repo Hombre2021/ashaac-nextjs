@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { allBookingTimeWindowOptions, bookingAttributionKeys, bookingServiceOptions, supportedBookingCities } from "@/lib/booking";
-import { trackBookingSuccess } from "@/lib/analytics";
+import { pushDataLayer, trackBookingSuccess } from "@/lib/analytics";
 import { captureAttribution, readStoredAttribution } from "@/lib/attribution";
 import styles from "./BookingExperience.module.css";
 
@@ -73,14 +73,11 @@ export default function BookingExperience() {
     const attribution = captureAttribution(window.location.search);
     setValue("sourcePage", `${window.location.pathname}${window.location.search}`);
 
-    if (typeof window !== "undefined") {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: "booking_form_view",
-        page_path: `${window.location.pathname}${window.location.search}`,
-        page_title: document.title,
-      });
-    }
+    pushDataLayer({
+      event: "booking_form_view",
+      page_path: `${window.location.pathname}${window.location.search}`,
+      page_title: document.title,
+    });
 
     for (const key of bookingAttributionKeys) {
       if (attribution[key]) setValue(key, attribution[key]);
@@ -91,15 +88,12 @@ export default function BookingExperience() {
     setSubmitError(null);
     setSubmitMessage(null);
 
-    if (typeof window !== "undefined") {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: "booking_submit_attempt",
-        service_type: values.serviceType,
-        city: values.city,
-        source_page: values.sourcePage,
-      });
-    }
+    pushDataLayer({
+      event: "booking_submit_attempt",
+      service_type: values.serviceType,
+      city: values.city,
+      source_page: values.sourcePage,
+    });
 
     const response = await fetch("/api/book", {
       method: "POST",

@@ -1,11 +1,11 @@
 Directory,Category,URL,LoginOwner,NAP_Exact_Match,Status,DateSubmitted,DateLive,NeedsVerification,Notes
-Google Business Profile,Core Local,https://business.google.com/,Owner,Yes,Live,,,No,
-Bing Places,Core Local,https://www.bingplaces.com/,Owner,Yes,Planned,,,Yes,
-Apple Business Connect,Core Local,https://businessconnect.apple.com/,Owner,Yes,Planned,,,Yes,
-Yelp,Core Local,https://biz.yelp.com/,Owner,Yes,Planned,,,Yes,
-BBB,Trust/Citation,https://www.bbb.org/,Owner,Yes,Live,,,No,
-Facebook Business,Social/Citation,https://www.facebook.com/business/,Owner,Yes,Planned,,,No,
-Nextdoor,Local,https://business.nextdoor.com/,Owner,Yes,Planned,,,Yes,
-Angi,Industry,https://www.angi.com/,Owner,Yes,Planned,,,Yes,
-HomeAdvisor,Industry,https://www.homeadvisor.com/,Owner,Yes,Planned,,,Yes,
-Houzz,Industry,https://www.houzz.com/professionals,Owner,Yes,Planned,,,Yes,
+Google Business Profile,Core Local,https://business.google.com/,Owner,Yes,Live,,,No,"Primary: HVAC Contractor | Secondary: AC Repair, Heating Contractor, AC Contractor, Furnace Repair | SAB West Jordan, UT 84088"
+Bing Places,Core Local,https://www.bingplaces.com/,Owner,Yes,Pending Publish,2026-10-17,,No,"Synced with Google Business Profile. Verified. ETA publishing 7-12 days."
+Apple Business Connect,Core Local,https://businessconnect.apple.com/,Owner,Yes,In Review,2026-10-17,,Yes,"Organization Org ID 669920319780 submitted for review. Powers Apple Maps + Siri."
+Yelp,Core Local,https://biz.yelp.com/,Owner,Yes,Live,2026-10-17,,No,"Category: Heating & Air Conditioning/HVAC | Address hidden | Typo fixed | Phone (801) 755-3040"
+Nextdoor,Local,https://business.nextdoor.com/,Owner,Yes,Pending Verification,2026-10-17,,Yes,"Claimed West Jordan hub. Bio, phone, website added. Waiting on verification to post."
+BBB,Trust/Citation,https://www.bbb.org/,Owner,Yes,Live,,,No,"Accredited listing active | Name: All Solutions Heating and Air Conditioning LLC"
+Facebook Business,Social/Citation,https://www.facebook.com/business/,Owner,Yes,Planned,,,No,"Page with matching NAP and link to ashaac.com"
+Angi,Industry,https://www.angi.com/,Owner,Yes,Planned,,,Yes,"Industry HVAC citation | Service-area West Jordan"
+HomeAdvisor,Industry,https://www.homeadvisor.com/,Owner,Yes,Planned,,,Yes,"Industry HVAC citation"
+Houzz,Industry,https://www.houzz.com/professionals,Owner,Yes,Planned,,,Yes,"Visual HVAC/Mini-split installation portfolio citation"

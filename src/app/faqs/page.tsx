@@ -16,7 +16,7 @@ const faqSchema = {
       name: "What areas do you serve?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We proudly serve West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Salt Lake City, and surrounding Salt Lake County communities.",
+        text: "We proudly serve West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, Kearns, Salt Lake City, and surrounding Salt Lake County communities.",
       },
     },
     {
@@ -168,7 +168,7 @@ export default function FaqsPage() {
           Looking for city-specific service? Review our <Link href="/service-areas">HVAC service areas</Link>, <Link href="/emergency-hvac-repair-west-jordan">emergency repair in West Jordan</Link>, or <Link href="/services/south-jordan/hvac-maintenance">HVAC maintenance in South Jordan</Link>.
         </p>
         <h2>1. What areas do you serve?</h2>
-        <p>We proudly serve West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Salt Lake City, and surrounding Salt Lake County communities. If you&apos;re unsure whether we service your area, feel free to call or text us at 801-755-3040.</p>
+        <p>We proudly serve West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, Kearns, Salt Lake City, and surrounding Salt Lake County communities. If you&apos;re unsure whether we service your area, feel free to call or text us at 801-755-3040.</p>
         
         <h2>2. What HVAC services do you provide?</h2>
         <p>We specialize in:</p>

@@ -10,7 +10,7 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com").repla
 export const metadata: Metadata = {
   title: "HVAC Service Areas in West Jordan, South Jordan, Riverton & Salt Lake County, UT",
   description:
-    "Explore local HVAC repair and installation service area pages across West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, and Salt Lake City.",
+    "Explore local HVAC repair and installation service area pages across West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, Kearns, and Salt Lake City.",
   keywords: [
     "HVAC service areas Utah",
     "HVAC West Jordan UT",

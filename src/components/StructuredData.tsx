@@ -99,6 +99,7 @@ const localBusinessSchema = {
     { "@type": "City", name: "Midvale" },
     { "@type": "City", name: "Taylorsville" },
     { "@type": "City", name: "Draper" },
+    { "@type": "City", name: "Kearns" },
     { "@type": "City", name: "Salt Lake City" },
     { "@type": "AdministrativeArea", name: "Salt Lake County" },
     { "@type": "AdministrativeArea", name: "Salt Lake Valley" },
@@ -181,6 +182,7 @@ const localBusinessSchema = {
   sameAs: [
     "https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
     "https://www.facebook.com/Warrior2021Q",
+    "https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709",
   ],
 };
 
@@ -194,50 +196,6 @@ const websiteSchema = {
   publisher: {
     "@id": `${siteUrl}/#business`,
   },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${siteUrl}/services?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
-};
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Do you offer emergency HVAC repair in West Jordan, Utah?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. All Solutions Heating and Air Conditioning provides fast emergency HVAC repair and same-day troubleshooting for homeowners across West Jordan, South Jordan, Riverton, and Salt Lake County.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What HVAC services do you provide in Salt Lake County?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "We provide complete residential and commercial HVAC services including AC repair, AC installation, furnace repair, furnace replacement, heat pumps, ductless mini-splits, and maintenance tune-ups.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do you offer free estimates on new HVAC installations?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes, we provide free in-person or upfront estimates for new HVAC systems, furnace replacements, and heat pump installations.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do you serve South Jordan, Riverton, Herriman, and nearby Utah cities?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. We serve homeowners throughout West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, and surrounding communities in Salt Lake County, Utah.",
-      },
-    },
-  ],
 };
 
 export default function StructuredData() {
@@ -250,10 +208,6 @@ export default function StructuredData() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
     </>
   );

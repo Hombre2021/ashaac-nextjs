@@ -255,7 +255,7 @@ function createServer(origin: string, conferenceName: string, callerPhone: strin
         recommended: matching[0] || null,
         alternatives: matching.slice(1),
         instruction: matching.length > 0
-          ? "Say exactly: That time is available. Then repeat only the recommended date and full two-hour time block returned here and ask exactly: Would you like that exact block? Never use a time from an earlier result. For broad or next-available searches, offer only regular-hours results. Keep slot classification internal. If the caller explicitly requested the returned time and it has afterHours true, then give the separate after-hours disclosure and $100 fee question after acceptance."
+          ? "Say exactly: The following time is available. Then repeat only the recommended date and full two-hour time block returned here and ask exactly: Would you like that exact block? Never use a time from an earlier result. For broad or next-available searches, offer only regular-hours results. Keep slot classification internal. If the caller explicitly requested the returned time and it has afterHours true, then give the separate after-hours disclosure and $100 fee question after acceptance."
           : "Tell the caller no matching time was found and ask for another date or time period.",
       });
     } catch (error) {

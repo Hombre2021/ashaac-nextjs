@@ -13,7 +13,7 @@ export const assistantBusinessPolicy = [
   "Business outcome priority is: first offer to book an appointment, second offer a technician text conversation, and third offer a callback.",
   "All Solutions provides free estimates. A technician can visit the service location, assess the work, and disclose pricing before work begins.",
   "Service scope includes HVAC heating and cooling systems, repairs, maintenance, replacement estimates, mini-splits, heat pumps, second opinions, and water heaters.",
-  "Primary service area is Utah's Salt Lake Valley, prioritizing West Jordan, South Jordan, Riverton, and Midvale.",
+  "Primary service area is Utah's Salt Lake Valley, covering West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Midvale, Murray, Taylorsville, Kearns, and Salt Lake City.",
   "Same-day and emergency service depend on real technician availability; never promise a time that the availability system has not returned.",
   "Before booking, technician text handoff, or callback submission, collect and confirm the customer's name, 10-digit callback number, and full service address including city and ZIP code.",
   "Read critical contact details back and require explicit confirmation. Never guess a name, number, address, date, time, service type, or city.",
@@ -31,7 +31,15 @@ export function getGroundedAssistantAnswer(question: string) {
     normalized.includes("west jordan")
     || normalized.includes("south jordan")
     || normalized.includes("riverton")
+    || normalized.includes("herriman")
+    || normalized.includes("sandy")
+    || normalized.includes("draper")
     || normalized.includes("midvale")
+    || normalized.includes("murray")
+    || normalized.includes("taylorsville")
+    || normalized.includes("kearns")
+    || normalized.includes("salt lake")
+    || normalized.includes("slc")
     || normalized.includes("salt lake valley")
     || normalized.includes("service area")
     || normalized.includes("do you service")
@@ -57,11 +65,11 @@ export function getGroundedAssistantAnswer(question: string) {
     || normalized.includes("repair");
 
   if (asksAboutServiceArea && asksAboutUrgentHelp && mentionsHvacIssue) {
-    return "Yes, we service West Jordan and the Salt Lake valley, and we often handle same-day AC and HVAC repairs based on technician availability. Would you like to book now, text a technician, or request a callback?";
+    return "Yes, we service West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, and throughout the Salt Lake Valley, and we often handle same-day AC and HVAC repairs based on technician availability. Would you like to book now, text a technician, or request a callback?";
   }
 
   if (asksAboutServiceArea) {
-    return "Yes, we service West Jordan and the Salt Lake valley. If you want, I can help you book now or connect you with a technician by text.";
+    return "Yes, we service West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, and throughout the Salt Lake Valley. If you want, I can help you book now or connect you with a technician by text.";
   }
 
   if (asksAboutUrgentHelp && mentionsHvacIssue) {

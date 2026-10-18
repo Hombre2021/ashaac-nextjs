@@ -20,7 +20,7 @@ export default function HomepageHero() {
           Mobile HVAC Repair, Installation &amp; Maintenance in West Jordan &amp; Salt Lake County
         </h1>
         <p className={styles.professionalSubtitle} data-label="HeroSubtitle">
-          Prompt on-site heating and cooling services for homeowners in West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, and Salt Lake City.
+          Prompt on-site heating and cooling services for homeowners in West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, Kearns, and Salt Lake City.
         </p>
         <div className={styles.heroActions} data-label="HeroActionButtons">
           <a className={styles.callAction} href="tel:8017553040">Call 801-755-3040</a>

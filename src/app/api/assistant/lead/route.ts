@@ -55,10 +55,15 @@ function normalizeCity(value: string) {
     "west jordan": "West Jordan",
     "south jordan": "South Jordan",
     riverton: "Riverton",
+    herriman: "Herriman",
     midvale: "Midvale",
     sandy: "Sandy",
     draper: "Draper",
+    murray: "Murray",
+    taylorsville: "Taylorsville",
+    kearns: "Kearns",
     "salt lake city": "Salt Lake City",
+    slc: "Salt Lake City",
   };
 
   return map[raw] || String(value || "").trim();
@@ -71,7 +76,14 @@ function scoreLead(input: LeadInput): { score: number; priority: "P1" | "P2" | "
     "West Jordan": 30,
     "South Jordan": 25,
     Riverton: 22,
-    Midvale: 15,
+    Herriman: 22,
+    Sandy: 20,
+    Draper: 20,
+    Midvale: 18,
+    Murray: 18,
+    Taylorsville: 18,
+    Kearns: 18,
+    "Salt Lake City": 18,
   };
 
   score += cityPriority[input.city] || 8;
@@ -438,8 +450,6 @@ export async function POST(req: Request) {
     bookingActions: {
       bookingUrl: process.env.BOOKING_DESTINATION_URL || "https://ashaac.com/book",
       callUrl: "tel:+18017553040",
-      textUrl:
-        "sms:+18017553040?body=Hi%20All%20Solutions%20HVAC%2C%20I%20just%20submitted%20a%20request%20from%20the%20AI%20assistant.",
     },
   });
 }

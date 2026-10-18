@@ -2,6 +2,7 @@ const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com";
 
 export const siteUrl = rawSiteUrl.replace(/\/$/, "");
 export const siteName = "All Solutions Heating and Air Conditioning";
+export const alternateSiteName = "All Solutions HVAC";
 export const legalBusinessName = "All Solutions Heating and Air Conditioning LLC";
 export const siteDescription =
   "Trusted HVAC installation, replacement, maintenance, and repair in West Jordan and Salt Lake County. Affordable, efficient, reliable service since 2012.";
@@ -39,6 +40,7 @@ export function buildLocalBusinessSchema() {
     "@type": "HVACBusiness",
     "@id": absoluteUrl("/#business"),
     name: siteName,
+    alternateName: alternateSiteName,
     legalName: legalBusinessName,
     url: siteUrl,
     image: absoluteUrl("/images/homepage/van2.png"),
@@ -46,6 +48,19 @@ export function buildLocalBusinessSchema() {
     description: siteDescription,
     telephone: primaryPhone,
     email: businessEmail,
+    hasMap: "https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "West Jordan",
+      addressRegion: "UT",
+      postalCode: "84088",
+      addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 40.5985,
+      longitude: -111.9969,
+    },
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -84,6 +99,8 @@ export function buildLocalBusinessSchema() {
       })),
     },
     sameAs: [
+      "https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
+      "https://www.facebook.com/Warrior2021Q",
       "https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709",
     ],
     priceRange: "$$",
