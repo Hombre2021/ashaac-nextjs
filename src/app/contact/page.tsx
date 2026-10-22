@@ -147,7 +147,7 @@ export default function ContactPage() {
             </h2>
             <p style={{ margin: "0 0 8px", color: "#1e293b", lineHeight: 1.6 }}>
               <strong>Phone / SMS:</strong> <a href="tel:801-755-3040" style={{ color: "#095f91", fontWeight: 600 }}>801-755-3040</a><br />
-              <strong>Email:</strong> <a href="mailto:ashaacutah@gmail.com" style={{ color: "#095f91", fontWeight: 600 }}>ashaacutah@gmail.com</a>
+              <strong>Email:</strong> <a href="mailto:ashaacutah@gmail.com?subject=HVAC%20Service%20Inquiry%20-%20All%20Solutions" style={{ color: "#095f91", fontWeight: 600 }}>ashaacutah@gmail.com</a>
             </p>
             <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 10 }}>
               <Link
