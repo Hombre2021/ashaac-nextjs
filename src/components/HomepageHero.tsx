@@ -9,7 +9,8 @@ export default function HomepageHero() {
         src="/images/homepage/commercial.jpg"
         alt="All Solutions Heating and Air Conditioning Mobile HVAC Van and Equipment"
         fill
-        sizes="100vw"
+        sizes="(max-width: 768px) 100vw, 1920px"
+        fetchPriority="high"
         className={styles.commercialImage}
         priority
       />

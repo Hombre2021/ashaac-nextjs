@@ -7,7 +7,7 @@ export default function MobileCallAction() {
     <a
       className={styles.callAction}
       href="tel:8017553040"
-      aria-label="Call All Solutions Heating and Air Conditioning at 801-755-3040"
+      aria-label="Call now: 801-755-3040 - All Solutions Heating and Air Conditioning"
     >
       Call now: 801-755-3040
     </a>

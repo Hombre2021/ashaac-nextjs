@@ -13,14 +13,16 @@ export default function HomepageDesktop() {
   return (
     <>
       <HomepageHeader />
-      <HomepageHero />
-      <ServiceAreasSection />
-      <HomepageSection />
-      <HomepageSubtitle />
-      <HomepageDualFeature />
-      <HomepageServicesButton />
-      <HomepageTestimonials />
-      <HomepageEstimateButton />
+      <main id="main-content">
+        <HomepageHero />
+        <ServiceAreasSection />
+        <HomepageSection />
+        <HomepageSubtitle />
+        <HomepageDualFeature />
+        <HomepageServicesButton />
+        <HomepageTestimonials />
+        <HomepageEstimateButton />
+      </main>
       <HomepageFooter />
     </>
   );

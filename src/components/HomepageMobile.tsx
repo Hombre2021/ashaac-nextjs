@@ -14,14 +14,16 @@ export default function HomepageMobile() {
   return (
     <div className={styles.homepageMobile}>
       <HomepageHeader />
-      <HomepageHero />
-      <ServiceAreasSection />
-      <HomepageSection />
-      <HomepageSubtitle />
-      <HomepageDualFeature />
-      <HomepageServicesButton />
-      <HomepageTestimonials />
-      <HomepageEstimateButton />
+      <main id="main-content">
+        <HomepageHero />
+        <ServiceAreasSection />
+        <HomepageSection />
+        <HomepageSubtitle />
+        <HomepageDualFeature />
+        <HomepageServicesButton />
+        <HomepageTestimonials />
+        <HomepageEstimateButton />
+      </main>
       <HomepageFooter />
     </div>
   );

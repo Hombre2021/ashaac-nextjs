@@ -51,6 +51,7 @@
 }
 
 .commercialImage {
+  object-fit: cover;
   object-position: center;
   filter: brightness(0.52);
 }

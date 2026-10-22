@@ -51,7 +51,7 @@ export default function HomepageHeader() {
       <div className={`${styles.whitestripeImageWrap} ${nestHubMax ? styles.whitestripeImageWrapNesthubMax : ''}`}>
         <Image
           src="/images/homepage/White-stripe.png"
-          alt="White stripe"
+          alt="" role="presentation"
           fill
           sizes="100vw"
           priority

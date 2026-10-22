@@ -1176,7 +1176,7 @@ export default function WebsiteAIAssistant() {
           className={`${styles.launcher} ${isHomepage ? styles.launcherHome : styles.launcherDefault}`}
           onClick={() => setOpen(true)}
           type="button"
-          aria-label="Open AI HVAC Assistant"
+          aria-label="AI HVAC Assistant - Get help here right away! Open chat"
         >
           <span className={styles.launcherAvatarWrap} aria-hidden="true">
             <Image

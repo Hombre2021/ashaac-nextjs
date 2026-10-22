@@ -125,6 +125,8 @@
   font-size: clamp(0.95rem, 1.8vw, 1.02rem);
   transition: color 0.2s;
   line-height: 1.4;
+  display: inline-block;
+  min-height: 24px;
 }
 
 .footerLinksCol a:hover {
