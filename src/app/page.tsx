@@ -41,5 +41,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <HomepageResponsive />;
+  return (
+    <main id="main-content">
+      <HomepageResponsive />
+    </main>
+  );
 }
