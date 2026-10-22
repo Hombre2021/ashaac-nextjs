@@ -1473,15 +1473,6 @@ function getMauricioMaxAttempts(session: MauricioTransferRecord) {
 }
 
 export async function POST(request: Request) {
-  const phoneAssistantPaused = /^(1|true|yes|on)$/i.test(String(process.env.PHONE_ASSISTANT_PAUSED || "").trim())
-    || /^(0|false|no|off|disabled)$/i.test(String(process.env.PHONE_ASSISTANT_ENABLED || "").trim());
-
-  if (phoneAssistantPaused) {
-    return new NextResponse("<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Reject/></Response>", {
-      headers: { "Content-Type": "text/xml" },
-    });
-  }
-
   const url = new URL(request.url);
   const payload = await readTwilioPayload(request);
   const mode = String(url.searchParams.get("mode") || "").trim();
