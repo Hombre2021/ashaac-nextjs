@@ -71,6 +71,42 @@ export default function HomepageFooter() {
           <div data-label="Address">Based in West Jordan, UT 84088<br /><span style={{ fontSize: "0.88em", color: "#bbb" }}>Mobile Service Across Salt Lake County</span></div>
           <Link href="/contact" data-label="LinkContact">Contact &amp; Dispatch Details</Link>
           <a
+            href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-label="GoogleMapsLink"
+            style={{ color: "#38bdf8", fontSize: "0.88rem" }}
+          >
+            📍 Google Maps Pin
+          </a>
+          <a
+            href="https://maps.apple.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-label="AppleMapsLink"
+            style={{ color: "#38bdf8", fontSize: "0.88rem" }}
+          >
+            🗺️ Apple Maps Pin
+          </a>
+          <a
+            href="https://www.bing.com/maps?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-label="BingMapsLink"
+            style={{ color: "#38bdf8", fontSize: "0.88rem" }}
+          >
+            🧭 Bing Maps Pin
+          </a>
+          <a
+            href="https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-label="BbbLink"
+            style={{ color: "#38bdf8", fontSize: "0.88rem" }}
+          >
+            🛡️ BBB Accredited Profile
+          </a>
+          <a
             href="https://www.facebook.com/Warrior2021Q"
             target="_blank"
             rel="noopener noreferrer"

@@ -85,6 +85,77 @@ export default function ValleyPage() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
+
+          <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid #e2e8f0", textAlign: "center" }}>
+            <p style={{ margin: "0 0 10px", fontSize: "0.95rem", color: "#475569", fontWeight: 600 }}>
+              📍 Open Service Location in Your Preferred Maps App:
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#1e293b",
+                  border: "1px solid #cbd5e1",
+                  padding: "8px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>📍</span> Google Maps
+              </a>
+              <a
+                href="https://maps.apple.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#1e293b",
+                  border: "1px solid #cbd5e1",
+                  padding: "8px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>🍏</span> Apple Maps
+              </a>
+              <a
+                href="https://www.bing.com/maps?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#1e293b",
+                  border: "1px solid #cbd5e1",
+                  padding: "8px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>🗺️</span> Bing Maps
+              </a>
+            </div>
+          </div>
         </div>
       </section>
       <section style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px 56px" }}>

@@ -47,7 +47,7 @@ const localBusinessSchema = {
   url: siteUrl,
   telephone: "+1-801-755-3040",
   email: "ashaacutah@gmail.com",
-  hasMap: "https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
+  hasMap: "https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
   address: {
     "@type": "PostalAddress",
     addressLocality: "West Jordan",
@@ -167,11 +167,14 @@ export default function ContactPage() {
                 Book An Appointment Online
               </Link>
               <a
-                href="https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 style={{
-                  display: "inline-block",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 6,
                   background: "#ffffff",
                   color: "#095f91",
                   border: "1px solid #cbd5e1",
@@ -183,14 +186,14 @@ export default function ContactPage() {
                   textAlign: "center"
                 }}
               >
-                📍 View on Google Local Maps
+                📍 Drop Pin in Google Maps
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Google Local Maps Service Area Embed */}
+      {/* Local Maps & Service Area Embed */}
       <section style={{ maxWidth: 1000, margin: "0 auto 48px auto", padding: "0 24px" }}>
         <div style={{
           background: "#ffffff",
@@ -203,7 +206,7 @@ export default function ContactPage() {
             🗺️ Salt Lake County Mobile Service Territory
           </h2>
           <p style={{ color: "#64748b", margin: "0 0 16px 0", fontSize: "0.95rem" }}>
-            Our fully equipped service vans are dispatched daily across the entire Salt Lake Valley.
+            Our fully equipped service vans are dispatched daily across the entire Salt Lake Valley. View our service hub pin or navigate directly using any maps app:
           </p>
           <div style={{ position: "relative", width: "100%", height: 380, borderRadius: 12, overflow: "hidden" }}>
             <iframe
@@ -216,6 +219,119 @@ export default function ContactPage() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
+          </div>
+
+          <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
+            <h3 style={{ fontSize: "1rem", color: "#334155", margin: "0 0 12px 0", fontWeight: 600 }}>
+              📍 Open Service Location in Your Preferred Navigation App:
+            </h3>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#1e293b",
+                  border: "1px solid #cbd5e1",
+                  padding: "10px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>📍</span> Google Maps
+              </a>
+              <a
+                href="https://maps.apple.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#1e293b",
+                  border: "1px solid #cbd5e1",
+                  padding: "10px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>🍏</span> Apple Maps
+              </a>
+              <a
+                href="https://www.bing.com/maps?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#1e293b",
+                  border: "1px solid #cbd5e1",
+                  padding: "10px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>🗺️</span> Bing Maps
+              </a>
+              <a
+                href="https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#095f91",
+                  border: "1px solid #93c5fd",
+                  padding: "10px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>🛡️</span> BBB Accredited Profile
+              </a>
+              <a
+                href="https://www.yelp.com/search?find_desc=All+Solutions+Heating+and+Air+Conditioning&find_loc=West+Jordan%2C+UT"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "#ffffff",
+                  color: "#b91c1c",
+                  border: "1px solid #fca5a5",
+                  padding: "10px 16px",
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  fontSize: "0.9rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span>⭐</span> Yelp Directory
+              </a>
+            </div>
           </div>
         </div>
       </section>
