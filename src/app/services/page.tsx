@@ -205,13 +205,22 @@ export default function ServicesPage() {
         For spaces where a full central air system is not necessary, we offer the installation of through-the-window or wall units. These units are efficient and cost-effective options for cooling or heating specific areas. Our technicians will recommend the most suitable through-the-window or wall unit for your needs and ensure proper installation for optimal performance.
       </div>
 
-      <div style={{ maxWidth: 900, margin: '0 auto 56px auto', padding: '0 24px', textAlign: 'center' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto 36px auto', padding: '0 24px', textAlign: 'center' }}>
         <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.7 }}>
           Looking for city-specific service? Explore our service areas in{' '}
           <Link href="/emergency-hvac-repair-west-jordan" style={{ color: '#095f91', fontWeight: 600 }}>West Jordan</Link>,{' '}
           <Link href="/emergency-hvac-repair-south-jordan" style={{ color: '#095f91', fontWeight: 600 }}>South Jordan</Link>, and{' '}
           <Link href="/emergency-hvac-repair-riverton" style={{ color: '#095f91', fontWeight: 600 }}>Riverton</Link>.
         </p>
+      </div>
+
+      <div style={{ maxWidth: 600, margin: '0 auto 64px auto', padding: '0 24px', textAlign: 'center', display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <Link href="/book" style={{ padding: '14px 28px', backgroundColor: '#d32f2f', color: '#fff', borderRadius: '8px', textDecoration: 'none', fontWeight: 700, fontSize: '1.05rem', boxShadow: '0 4px 12px rgba(211,47,47,0.3)' }}>
+          Schedule Service Online
+        </Link>
+        <a href="tel:801-755-3040" style={{ padding: '14px 28px', border: '2px solid #095f91', color: '#095f91', borderRadius: '8px', textDecoration: 'none', fontWeight: 700, fontSize: '1.05rem' }}>
+          Call / Text 801-755-3040
+        </a>
       </div>
 
       <HomepageFooter />

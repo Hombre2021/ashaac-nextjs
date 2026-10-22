@@ -28,14 +28,14 @@ export default function ServicesContent() {
       </div>
       <div className={styles.furnaceTextBlock} data-label="FurnaceBlock">
         <p className={styles.furnaceDescription} data-label="FurnaceDescription">
-          We specialize in the installation and replacement of your furnace. Don’t have the cash for it? We offer financing options. Just call us or talk to us when we come to do your free estimate.
+          We specialize in the installation and replacement of your furnace. Don&apos;t have the cash for it? We offer <Link href="/financing" style={{ color: "#095f91", fontWeight: 600 }}>financing options</Link>. Just <a href="tel:8017553040" style={{ color: "#095f91", fontWeight: 600 }}>call us</a> or talk to us when we come to do your <Link href="/book" style={{ color: "#095f91", fontWeight: 600 }}>free estimate</Link>.
         </p>
         <div className={styles.heatingServicesBlock} data-label="HeatingServices">
           <h3 className={styles.heatingServicesTitle} data-label="HeatingServicesTitle">Heating Services: Furnace Installation, Repair, and Maintenance</h3>
           <p className={styles.heatingServicesDescription} data-label="HeatingServicesDescription">
-            We know everything about furnaces. We’re experts at installing them and keeping them working well. If you need heating services at home or work, or your current one needs a check-up, we’re the people for the job. We make sure it runs smoothly, so you stay cozy when it’s cold.
+            We know everything about furnaces. We&apos;re experts at installing them and keeping them working well. If you need heating services at home or work, or your current one needs a check-up, we&apos;re the people for the job. We make sure it runs smoothly, so you stay cozy when it&apos;s cold.
             <br /><br />
-            Not only do we install and maintain furnaces, but we also fix them if something’s wrong. Sometimes furnaces can act up, especially after a long time. We’ve got the skills to figure out the issue and make it work like it should. So, if your furnace is acting strange, don’t worry—we’ve got your back! We’ll have it up and running in no time, keeping you warm and cozy.
+            Not only do we install and maintain furnaces, but we also fix them if something&apos;s wrong. Sometimes furnaces can act up, especially after a long time. We&apos;ve got the skills to figure out the issue and make it work like it should. So, if your furnace is acting strange, don&apos;t worry—we&apos;ve got your back! We&apos;ll have it up and running in no time, keeping you warm and cozy.
           </p>
           <Link className={styles.emergencyServiceLink} href="/emergency-hvac-repair-west-jordan">
             Need urgent heating or cooling help in West Jordan? Review emergency HVAC repair options.
@@ -47,9 +47,9 @@ export default function ServicesContent() {
           <div className={styles.heatingExperienceBlock} data-label="HeatingExperience">
             <h3 className={styles.heatingExperienceTitle} data-label="HeatingExperienceTitle">Heating Services Experience</h3>
             <p className={styles.heatingExperienceDescription} data-label="HeatingExperienceDescription">
-              We’re all about making your heating services experience smooth and worry-free. Our team is friendly and reliable, so you can count on us to be there when you need help. We understand that well-functioning heating services are vital, especially during freezing times. That’s why we always go the extra mile to ensure your heating system is in top-notch condition, running efficiently and keeping you snug.
+              We&apos;re all about making your heating services experience smooth and worry-free. Our team is friendly and reliable, so you can count on us to be there when you need help. We understand that well-functioning heating services are vital, especially during freezing times. That&apos;s why we always go the extra mile to ensure your heating system is in top-notch condition, running efficiently and keeping you snug.
               <br /><br />
-              Safety is a big deal to us too. When we work on heating services, we double-check everything to make sure it’s safe. We want your home or workplace to be a secure and comfy place. So, you can trust us to not only do a great job with your heating services but also to do it safely and with care. Your peace of mind matters, and we’ve got you covered.
+              Safety is a big deal to us too. When we work on heating services, we double-check everything to make sure it&apos;s safe. We want your home or workplace to be a secure and comfy place. So, you can trust us to not only do a great job with your heating services but also to do it safely and with care. Your peace of mind matters, and we&apos;ve got you covered.
             </p>
           </div>
           <div className={styles.redStripe} data-label="QualityPledge">
@@ -71,7 +71,7 @@ export default function ServicesContent() {
             <div className={styles.maintenanceTextCol} data-label="MaintenanceText">
               <h3 className={styles.maintenanceTitle} data-label="MaintenanceTitle">Comprehensive HVAC Maintenance</h3>
               <p className={styles.maintenanceDescription} data-label="MaintenanceDescription">
-                Regular maintenance is essential to keep your heating and cooling systems running smoothly and efficiently. Our comprehensive HVAC maintenance services include thorough inspections, and tune-ups for furnaces, AC units, heat pumps, mini split systems, and through-the-window or wall units. With routine maintenance, we can identify and address potential issues before they become major problems, ensuring reliable and energy-efficient operation. Don’t wait to have to pay a large bill and call us to do regular maintenance on your system.
+                Regular maintenance is essential to keep your heating and cooling systems running smoothly and efficiently. Our comprehensive HVAC maintenance services include thorough inspections, and tune-ups for furnaces, AC units, heat pumps, mini split systems, and through-the-window or wall units. With routine maintenance, we can identify and address potential issues before they become major problems, ensuring reliable and energy-efficient operation. Don&apos;t wait to have to pay a large bill—<a href="tel:8017553040" style={{ color: "#095f91", fontWeight: 600 }}>call us</a> or <Link href="/book" style={{ color: "#095f91", fontWeight: 600 }}>schedule regular maintenance</Link> on your system.
               </p>
             </div>
           </div>

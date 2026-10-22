@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import HomepageHeader from "@/components/HomepageHeader";
 import HomepageFooter from "@/components/HomepageFooter";
 import BlueOverlayImage from "@/components/BlueOverlayImage";
@@ -94,29 +95,73 @@ export default function ValleyPage() {
             background: "#ffffff",
             border: "1px solid #d9e1ee",
             borderRadius: 12,
-            padding: "18px 20px",
+            padding: "24px 20px",
             textAlign: "center",
           }}
         >
-          <h1 style={{ fontSize: 30, marginBottom: 8 }}>Salt Lake Valley HVAC Service Area</h1>
-          <p style={{ fontSize: 17, lineHeight: 1.6, marginBottom: 14 }}>
+          <h2 style={{ fontSize: 30, marginBottom: 8 }}>Salt Lake Valley HVAC Service Area</h2>
+          <p style={{ fontSize: 17, lineHeight: 1.6, marginBottom: 20 }}>
             We provide installation, replacement, maintenance, and HVAC repair services across these cities.
           </p>
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10, marginBottom: 28 }}>
             {serviceAreas.map((area) => (
               <span
                 key={area.city}
                 style={{
                   border: "1px solid #d9e1ee",
                   borderRadius: 999,
-                  padding: "8px 12px",
+                  padding: "8px 14px",
                   color: "#111827",
-                  background: "#ffffff",
+                  background: "#f9fafb",
+                  fontWeight: 500,
                 }}
               >
                 {area.city}
               </span>
             ))}
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap" }}>
+            <Link
+              href="/book"
+              style={{
+                textDecoration: "none",
+                padding: "12px 24px",
+                borderRadius: 8,
+                background: "#d32f2f",
+                color: "#ffffff",
+                fontWeight: 700,
+                boxShadow: "0 4px 12px rgba(211,47,47,0.25)",
+              }}
+            >
+              Schedule Service Online
+            </Link>
+            <Link
+              href="/service-areas"
+              style={{
+                textDecoration: "none",
+                padding: "12px 24px",
+                borderRadius: 8,
+                background: "#095f91",
+                color: "#ffffff",
+                fontWeight: 700,
+              }}
+            >
+              Browse Detailed City Pages
+            </Link>
+            <a
+              href="tel:801-755-3040"
+              style={{
+                textDecoration: "none",
+                padding: "12px 24px",
+                borderRadius: 8,
+                border: "2px solid #095f91",
+                color: "#095f91",
+                fontWeight: 700,
+              }}
+            >
+              Call / Text 801-755-3040
+            </a>
           </div>
         </div>
       </section>

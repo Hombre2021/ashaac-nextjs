@@ -1,15 +1,8 @@
 "use client";
 
 import styles from "./MobileCallAction.module.css";
-import { usePathname } from "next/navigation";
 
 export default function MobileCallAction() {
-  const pathname = usePathname();
-
-  if (pathname === "/") {
-    return null;
-  }
-
   return (
     <a
       className={styles.callAction}

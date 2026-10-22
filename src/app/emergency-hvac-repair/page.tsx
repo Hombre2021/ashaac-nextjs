@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import HomepageHeader from "@/components/HomepageHeader";
 import AboutHero from "@/components/AboutHero";
 import HomepageFooter from "@/components/HomepageFooter";
@@ -82,12 +83,15 @@ export default function EmergencyHVACRepairPage() {
         </p>
 
         <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: 28 }}>
-          <a href="tel:8017553040" style={{ textDecoration: "none", padding: "12px 18px", borderRadius: 8, background: "#b91c1c", color: "#fff", fontWeight: 700 }}>
+          <a href="tel:8017553040" style={{ textDecoration: "none", padding: "12px 20px", borderRadius: 8, background: "#b91c1c", color: "#fff", fontWeight: 700 }}>
             Emergency Call: 801-755-3040
           </a>
-          <a href="/contact" style={{ textDecoration: "none", padding: "12px 18px", borderRadius: 8, border: "1px solid #0f172a", color: "#0f172a", fontWeight: 700 }}>
-            Request Fast Response
-          </a>
+          <Link href="/book" style={{ textDecoration: "none", padding: "12px 20px", borderRadius: 8, background: "#095f91", color: "#fff", fontWeight: 700 }}>
+            Schedule Urgent Visit
+          </Link>
+          <Link href="/contact" style={{ textDecoration: "none", padding: "12px 20px", borderRadius: 8, border: "1px solid #0f172a", color: "#0f172a", fontWeight: 700 }}>
+            Contact &amp; Dispatch Details
+          </Link>
         </div>
 
         <div style={{ border: "1px solid #d9e1ee", borderRadius: 10, padding: "18px 20px" }}>
@@ -95,10 +99,16 @@ export default function EmergencyHVACRepairPage() {
           <ul style={{ lineHeight: 1.8, fontSize: 17, paddingLeft: 20, margin: 0 }}>
             <li>AC blowing warm air during high heat</li>
             <li>Furnace not producing heat in winter</li>
-            <li>System won’t turn on or keeps shutting off</li>
+            <li>System won&apos;t turn on or keeps shutting off</li>
             <li>Unusual burning smell or loud HVAC noises</li>
             <li>Urgent thermostat or airflow failures</li>
           </ul>
+        </div>
+
+        <div style={{ marginTop: 28, textAlign: "center" }}>
+          <p style={{ fontSize: 16, color: "#4b5563" }}>
+            Need non-emergency maintenance or replacement? Compare our <Link href="/services" style={{ color: "#095f91", fontWeight: 600 }}>HVAC services</Link> or view <Link href="/service-areas" style={{ color: "#095f91", fontWeight: 600 }}>service areas across Salt Lake County</Link>.
+          </p>
         </div>
       </section>
       <HomepageFooter />

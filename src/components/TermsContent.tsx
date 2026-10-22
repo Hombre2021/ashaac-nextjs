@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./PrivacyPolicyContent.module.css";
 
 export default function TermsContent() {
@@ -89,7 +90,7 @@ export default function TermsContent() {
         </ul>
         <p>We reserve the right to modify or discontinue website features at any time.</p>
         <h2>11. Privacy</h2>
-        <p>Your use of our website and services is also governed by our Privacy Policy, which explains how we collect, use, and protect your information.</p>
+        <p>Your use of our website and services is also governed by our <Link href="/privacy-policy" style={{ color: "#095f91", fontWeight: 600 }}>Privacy Policy</Link>, which explains how we collect, use, and protect your information.</p>
         <h2>12. Third&#8209;Party Links</h2>
         <p>Our website may contain links to third&#8209;party websites.<br />We are not responsible for the content, policies, or practices of those websites.</p>
         <h2>13. Changes to Terms</h2>

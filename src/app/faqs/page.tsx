@@ -168,7 +168,7 @@ export default function FaqsPage() {
           Looking for city-specific service? Review our <Link href="/service-areas">HVAC service areas</Link>, <Link href="/emergency-hvac-repair-west-jordan">emergency repair in West Jordan</Link>, or <Link href="/services/south-jordan/hvac-maintenance">HVAC maintenance in South Jordan</Link>.
         </p>
         <h2>1. What areas do you serve?</h2>
-        <p>We proudly serve West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, Kearns, Salt Lake City, and surrounding Salt Lake County communities. If you&apos;re unsure whether we service your area, feel free to call or text us at 801-755-3040.</p>
+        <p>We proudly serve West Jordan, South Jordan, Riverton, Herriman, Sandy, Draper, Taylorsville, Murray, Midvale, Kearns, Salt Lake City, and surrounding Salt Lake County communities. If you&apos;re unsure whether we service your area, feel free to call or text us at <a href="tel:801-755-3040" style={{ color: "#d32f2f", fontWeight: 600 }}>801-755-3040</a>.</p>
         
         <h2>2. What HVAC services do you provide?</h2>
         <p>We specialize in:</p>
@@ -182,10 +182,10 @@ export default function FaqsPage() {
         </ul>
 
         <h2>3. Do you offer free estimates?</h2>
-        <p>Yes. We provide free estimates for new installations and replacements. You can request one anytime through our website or by calling/texting us at 801-755-3040.</p>
+        <p>Yes. We provide free estimates for new installations and replacements. You can request one anytime through <Link href="/book" style={{ color: "#095f91", fontWeight: 600 }}>our website booking</Link> or by calling/texting us at <a href="tel:801-755-3040" style={{ color: "#d32f2f", fontWeight: 600 }}>801-755-3040</a>.</p>
 
         <h2>4. Do you offer financing?</h2>
-        <p>Yes. We offer financing options (including 0% interest promotional terms) to help make your HVAC installation affordable. If you pay cash or ACH, you also receive a $500 discount.</p>
+        <p>Yes. We offer <Link href="/financing" style={{ color: "#095f91", fontWeight: 600 }}>financing options</Link> (including 0% interest promotional terms) to help make your HVAC installation affordable. If you pay cash or ACH, you also receive a $500 discount.</p>
 
         <h2>5. Are you licensed and insured?</h2>
         <p>Yes. All Solutions Heating and Air Conditioning LLC is fully licensed and insured in the state of Utah for your complete safety and peace of mind.</p>
@@ -197,7 +197,7 @@ export default function FaqsPage() {
         <p>Most installations can be scheduled within 24–72 hours, depending on equipment availability and your location. We always aim to accommodate your schedule promptly.</p>
 
         <h2>8. Do you offer emergency service?</h2>
-        <p>Yes. We provide urgent and same-day service across West Jordan and Salt Lake County. Call or text us immediately for emergency no-heat or no-cooling issues.</p>
+        <p>Yes. We provide urgent and same-day service across West Jordan and Salt Lake County. <a href="tel:801-755-3040" style={{ color: "#d32f2f", fontWeight: 600 }}>Call or text us immediately at 801-755-3040</a> for emergency no-heat or no-cooling issues, or check our <Link href="/emergency-hvac-repair-west-jordan" style={{ color: "#095f91", fontWeight: 600 }}>emergency HVAC repair service</Link>.</p>
 
         <h2>9. Do you provide warranties?</h2>
         <p>Yes. We provide a 1-year labor warranty on our workmanship, in addition to full manufacturer warranties on equipment and parts.</p>
@@ -222,9 +222,18 @@ export default function FaqsPage() {
         <h2>13. How can I contact you?</h2>
         <p>You can reach us anytime:<br />
         &bull; <strong>Phone:</strong> <a href="tel:801-755-3040">801-755-3040</a><br />
-        &bull; <strong>Email:</strong> <a href="mailto:ashaacutah@gmail.com">ashaacutah@gmail.com</a><br />
+        &bull; <strong>Email:</strong> <a href="mailto:ashaacutah@gmail.com?subject=HVAC%20Service%20Inquiry%20-%20All%20Solutions">ashaacutah@gmail.com</a><br />
         &bull; <strong>Location:</strong> Based in West Jordan, UT 84088 (Mobile dispatch serving all of Salt Lake County)
         </p>
+
+        <div style={{ marginTop: 40, textAlign: "center", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/book" style={{ padding: "12px 24px", backgroundColor: "#d32f2f", color: "#fff", borderRadius: "6px", textDecoration: "none", fontWeight: 700 }}>
+            Book Service Online
+          </Link>
+          <a href="tel:801-755-3040" style={{ padding: "12px 24px", border: "2px solid #095f91", color: "#095f91", borderRadius: "6px", textDecoration: "none", fontWeight: 700 }}>
+            Call / Text 801-755-3040
+          </a>
+        </div>
       </ContentContainer>
       <HomepageFooter />
     </>

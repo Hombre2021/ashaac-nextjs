@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import styles from "./DIYHelpCenterContent.module.css";
 
 const videoResources = [
@@ -122,6 +123,16 @@ export default function DIYHelpCenterContent() {
           Explore quick-fix video resources for common HVAC issues, submit your question online,
           and request live help when you need direct support.
         </p>
+        <p style={{ marginTop: 12, lineHeight: 1.6, color: "#374151" }}>
+          Need quick HVAC guidance before a service visit? Call or text{" "}
+          <a href="tel:8017553040" style={{ color: "#d32f2f", fontWeight: 700 }}>
+            801-755-3040
+          </a>{" "}
+          and our team can help. For professional service, explore{" "}
+          <Link href="/services" style={{ color: "#095f91", fontWeight: 600 }}>our HVAC services</Link>, view{" "}
+          <Link href="/service-areas" style={{ color: "#095f91", fontWeight: 600 }}>service areas</Link>, or{" "}
+          <Link href="/book" style={{ color: "#095f91", fontWeight: 600 }}>book an appointment online</Link>.
+        </p>
       </div>
 
       <div className={styles.panel}>
@@ -139,7 +150,7 @@ export default function DIYHelpCenterContent() {
 
       <div className={styles.panel}>
         <h2>Ask an Online Question</h2>
-        <p>Send your HVAC question and we’ll respond through your preferred channel.</p>
+        <p>Send your HVAC question and we&apos;ll respond through your preferred channel.</p>
         <form name="diy_question_form" className={styles.form} onSubmit={handleQuestionSubmit}>
           <input name="name" type="text" placeholder="Your name" required />
           <input name="email" type="email" placeholder="Your email" required />
@@ -155,13 +166,13 @@ export default function DIYHelpCenterContent() {
             {isQuestionSubmitting ? "Sending..." : "Send Question"}
           </button>
         </form>
-        {questionSent ? <p className={styles.successMsg}>Your question was submitted successfully. We’ll follow up soon.</p> : null}
+        {questionSent ? <p className={styles.successMsg}>Your question was submitted successfully. We&apos;ll follow up soon.</p> : null}
         {questionError ? <p className={styles.errorMsg}>{questionError}</p> : null}
       </div>
 
       <div className={styles.panel}>
         <h2>Request Live Help</h2>
-        <p>Need more direct support? Request a live video help session and we’ll follow up with scheduling details.</p>
+        <p>Need more direct support? Request a live video help session and we&apos;ll follow up with scheduling details.</p>
         <form name="diy_live_help_form" className={styles.form} onSubmit={handleLiveHelpSubmit}>
           <input name="name" type="text" placeholder="Your name" required />
           <input name="email" type="email" placeholder="Your email" required />
@@ -173,8 +184,17 @@ export default function DIYHelpCenterContent() {
             {isLiveHelpSubmitting ? "Sending..." : "Request Live Help"}
           </button>
         </form>
-        {liveHelpSent ? <p className={styles.successMsg}>Your live help request was submitted successfully. We’ll follow up with scheduling.</p> : null}
+        {liveHelpSent ? <p className={styles.successMsg}>Your live help request was submitted successfully. We&apos;ll follow up with scheduling.</p> : null}
         {liveHelpError ? <p className={styles.errorMsg}>{liveHelpError}</p> : null}
+      </div>
+
+      <div style={{ textAlign: "center", margin: "16px 0 0", display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+        <Link href="/book" style={{ padding: "12px 24px", backgroundColor: "#d32f2f", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}>
+          Book a Professional Technician
+        </Link>
+        <a href="tel:801-755-3040" style={{ padding: "12px 24px", border: "2px solid #095f91", color: "#095f91", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}>
+          Call / Text 801-755-3040
+        </a>
       </div>
     </section>
   );
