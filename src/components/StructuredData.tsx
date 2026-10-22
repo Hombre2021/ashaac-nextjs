@@ -17,7 +17,7 @@ const localBusinessSchema = {
     `${siteUrl}/images/services/Heat-pump-WJ.webp`,
   ],
   description:
-    "Mobile HVAC contractor based in West Jordan, UT providing on-site emergency AC repair, furnace replacement, heat pump installation, mini-splits, and maintenance across Salt Lake County.",
+    "Mobile HVAC contractor based in West Jordan, UT providing on-site emergency AC repair, furnace repair, heating diagnostics, furnace replacement, heat pump installation, mini-splits, and maintenance across Salt Lake County.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "West Jordan",
@@ -105,6 +105,11 @@ const localBusinessSchema = {
     { "@type": "AdministrativeArea", name: "Salt Lake Valley" },
   ],
   knowsAbout: [
+    "Furnace repair near me",
+    "Furnace repair service",
+    "Emergency furnace repair",
+    "Heating contractor",
+    "Gas furnace troubleshooting",
     "HVAC installation",
     "Air conditioning repair",
     "Furnace installation and replacement",
@@ -124,6 +129,16 @@ const localBusinessSchema = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
+          name: "Furnace Repair Near Me & Emergency Heating Service",
+          serviceType: "Furnace Repair",
+          url: `${siteUrl}/furnace-repair`,
+          description: "Same-day furnace repair, no-heat diagnostics, blower motor fixes, and emergency heating repairs across West Jordan and Salt Lake County.",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
           name: "HVAC Installation & Replacement",
           description: "Complete heating and air conditioning system replacement and new installations.",
         },
@@ -134,14 +149,6 @@ const localBusinessSchema = {
           "@type": "Service",
           name: "Air Conditioning Repair",
           description: "Prompt troubleshooting, refrigerant leak detection, compressor repair, and AC service.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Furnace Installation and Repair",
-          description: "High-efficiency furnace replacements, emergency heater repair, and seasonal tune-ups.",
         },
       },
       {

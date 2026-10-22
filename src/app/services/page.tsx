@@ -11,9 +11,11 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com").repla
 export const metadata: Metadata = {
   title: "HVAC Services: AC, Furnace & Heat Pump Installation & Repair | West Jordan, UT",
   description:
-    "Complete HVAC services in West Jordan and Salt Lake County: central AC repair & installation, high-efficiency furnaces, heat pumps, ductless mini-splits, and maintenance.",
+    "Complete HVAC services in West Jordan and Salt Lake County: furnace repair near me, central AC repair & installation, high-efficiency furnaces, heat pumps, ductless mini-splits, and maintenance.",
   keywords: [
     "HVAC services West Jordan",
+    "furnace repair near me",
+    "furnace repair West Jordan UT",
     "AC installation West Jordan",
     "furnace installation Salt Lake County",
     "HVAC maintenance Utah",
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     url: `${siteUrl}/services`,
     title: "HVAC Services: AC, Furnace & Heat Pump Installation & Repair | West Jordan, UT",
-    description: "Complete HVAC services in West Jordan and Salt Lake County: AC repair, furnace installation, heat pumps, mini-splits, and maintenance.",
+    description: "Complete HVAC services in West Jordan and Salt Lake County: furnace repair near me, AC repair, furnace installation, heat pumps, mini-splits, and maintenance.",
   },
 };
 
@@ -48,17 +50,17 @@ const servicesSchema = {
     {
       "@type": "Service",
       position: 1,
-      name: "Air Conditioning Installation & Repair",
-      description: "High-efficiency central air conditioning installation, troubleshooting, freon recharge, and condenser repair.",
-      url: `${siteUrl}/ac-repair-west-jordan`,
+      name: "Furnace Repair Near Me & Emergency Heating Service",
+      description: "Prompt troubleshooting, no-heat diagnostics, blower motor repair, and safety inspections across Salt Lake County.",
+      url: `${siteUrl}/furnace-repair`,
       provider: { "@id": `${siteUrl}/#business` },
     },
     {
       "@type": "Service",
       position: 2,
-      name: "Furnace Installation & Repair",
-      description: "Residential and commercial furnace replacement, diagnostic troubleshooting, and safety inspections.",
-      url: `${siteUrl}/furnace-repair-west-jordan`,
+      name: "Air Conditioning Installation & Repair",
+      description: "High-efficiency central air conditioning installation, troubleshooting, freon recharge, and condenser repair.",
+      url: `${siteUrl}/ac-repair-west-jordan`,
       provider: { "@id": `${siteUrl}/#business` },
     },
     {
@@ -194,7 +196,7 @@ export default function ServicesPage() {
 
       <div style={{
         maxWidth: 800,
-        margin: '0 auto 56px auto',
+        margin: '0 auto 32px auto',
         padding: '0 24px',
         fontSize: 20,
         lineHeight: 1.6,
@@ -205,12 +207,41 @@ export default function ServicesPage() {
         For spaces where a full central air system is not necessary, we offer the installation of through-the-window or wall units. These units are efficient and cost-effective options for cooling or heating specific areas. Our technicians will recommend the most suitable through-the-window or wall unit for your needs and ensure proper installation for optimal performance.
       </div>
 
+      <div style={{
+        maxWidth: 800,
+        margin: '0 auto 56px auto',
+        padding: '0 24px',
+        fontSize: 20,
+        lineHeight: 1.6,
+        color: '#222',
+        textAlign: 'center',
+        background: '#f8fafc',
+        borderRadius: 12,
+        border: '1px solid #e2e8f0',
+      }}>
+        <h2 style={{ fontSize: 24, margin: '20px 0 10px 0', color: '#0f172a' }}>
+          Furnace Repair &amp; Emergency Heating Diagnostics
+        </h2>
+        <p style={{ margin: '0 0 16px 0', fontSize: 17, color: '#334155' }}>
+          When your furnace stops heating or blows cold air, we offer rapid same-day diagnostic service across Salt Lake County. From burner ignition issues and dirty flame sensors to noisy blower motors and faulty safety switches, our licensed technicians carry the parts and equipment to restore warmth quickly.
+        </p>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 20 }}>
+          <Link href="/furnace-repair" style={{ color: '#095f91', fontWeight: 700, textDecoration: 'underline' }}>
+            Furnace Repair Near Me Hub &rarr;
+          </Link>
+          <Link href="/furnace-repair-west-jordan" style={{ color: '#095f91', fontWeight: 700, textDecoration: 'underline' }}>
+            West Jordan Furnace Repair &rarr;
+          </Link>
+        </div>
+      </div>
+
       <div style={{ maxWidth: 900, margin: '0 auto 36px auto', padding: '0 24px', textAlign: 'center' }}>
         <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.7 }}>
-          Looking for city-specific service? Explore our service areas in{' '}
-          <Link href="/emergency-hvac-repair-west-jordan" style={{ color: '#095f91', fontWeight: 600 }}>West Jordan</Link>,{' '}
-          <Link href="/emergency-hvac-repair-south-jordan" style={{ color: '#095f91', fontWeight: 600 }}>South Jordan</Link>, and{' '}
-          <Link href="/emergency-hvac-repair-riverton" style={{ color: '#095f91', fontWeight: 600 }}>Riverton</Link>.
+          Looking for city-specific heating and cooling service? Explore our service areas in{' '}
+          <Link href="/furnace-repair-west-jordan" style={{ color: '#095f91', fontWeight: 600 }}>West Jordan</Link>,{' '}
+          <Link href="/furnace-repair-south-jordan" style={{ color: '#095f91', fontWeight: 600 }}>South Jordan</Link>,{' '}
+          <Link href="/furnace-repair-riverton" style={{ color: '#095f91', fontWeight: 600 }}>Riverton</Link>, and across{' '}
+          <Link href="/valley" style={{ color: '#095f91', fontWeight: 600 }}>Salt Lake County</Link>.
         </p>
       </div>
 

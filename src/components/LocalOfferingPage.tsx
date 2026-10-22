@@ -18,6 +18,17 @@ type LocalOfferingPageProps = {
 
 export default function LocalOfferingPage({ city, citySlug, offering }: LocalOfferingPageProps) {
   const pageUrl = `https://ashaac.com/services/${citySlug}/${offering.slug}`;
+  const directRepairCities = ["west-jordan", "south-jordan", "riverton"];
+  const emergencyHref = directRepairCities.includes(citySlug)
+    ? `/emergency-hvac-repair-${citySlug}`
+    : `/emergency-hvac-repair`;
+  const acHref = directRepairCities.includes(citySlug)
+    ? `/ac-repair-${citySlug}`
+    : `/services/${citySlug}/ac-installation`;
+  const furnaceHref = directRepairCities.includes(citySlug)
+    ? `/furnace-repair-${citySlug}`
+    : `/services/${citySlug}/furnace-repair`;
+
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -94,9 +105,10 @@ export default function LocalOfferingPage({ city, citySlug, offering }: LocalOff
           </section>
           <div className={styles.links}>
             <h2>Related HVAC services</h2>
-            <Link href={`/emergency-hvac-repair-${citySlug}`}>Emergency HVAC repair in {city}</Link>
-            <Link href={`/ac-repair-${citySlug}`}>AC repair in {city}</Link>
-            <Link href={`/furnace-repair-${citySlug}`}>Furnace repair in {city}</Link>
+            <Link href={emergencyHref}>Emergency HVAC repair in {city}</Link>
+            <Link href={acHref}>AC repair &amp; cooling in {city}</Link>
+            <Link href={furnaceHref}>Furnace repair in {city}</Link>
+            <Link href="/furnace-repair">Furnace Repair Near Me (Salt Lake County)</Link>
             <Link href="/services">View all HVAC services</Link>
           </div>
         </section>

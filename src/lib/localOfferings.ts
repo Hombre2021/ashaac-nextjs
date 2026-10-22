@@ -41,6 +41,23 @@ export const cityContext: Record<LocalCitySlug, string> = {
 
 export const localOfferings = [
   {
+    slug: "furnace-repair",
+    title: "Furnace Repair",
+    summary: "Same-day diagnostic and furnace repair for no-heat emergencies, cold air blowing, and short-cycling systems across Salt Lake County.",
+    details: [
+      "Rapid diagnostic troubleshooting for furnaces blowing cold air or failing to ignite",
+      "Safety inspections: gas valves, flame sensors, hot surface ignitors, and cracked heat exchangers",
+      "Repairs on all major furnace brands: Lennox, Carrier, Trane, Goodman, Rheem, York, Amana, and Bryant",
+      "Emergency heating service, blower motor replacements, and electronic thermostat repairs",
+    ],
+    faqs: [
+      ["Why is my furnace blowing cold air?", "Cold air from supply vents usually points to a dirty air filter causing the high-limit switch to trip, a faulty hot-surface ignitor, a dirty flame sensor, or a tripped circuit breaker. If changing the filter does not restore heat, request service immediately."],
+      ["How quickly can you arrive for emergency furnace repair near me?", "We offer fast same-day furnace diagnostic dispatch across West Jordan and Salt Lake County. Call or text 801-755-3040 for urgent no-heat situations."],
+      ["What brands of furnaces do you service?", "We service, repair, and maintain all major residential and commercial furnace brands including Lennox, Carrier, Trane, Goodman, Rheem, York, Amana, Bryant, Daikin, and American Standard."],
+      ["How much does furnace repair typically cost in Salt Lake County?", "Typical furnace repairs range from simple part replacements (sensors, ignitors, capacitors) to blower motors and circuit boards. We provide transparent upfront diagnostic assessments before any work begins."],
+    ],
+  },
+  {
     slug: "hvac-installation",
     title: "HVAC Installation & Replacement",
     summary: "Plan a new heating and cooling system with practical options for your home, current equipment, and comfort needs.",

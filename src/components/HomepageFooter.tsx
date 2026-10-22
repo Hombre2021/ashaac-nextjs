@@ -49,8 +49,9 @@ export default function HomepageFooter() {
         </div>
         <div className={styles.footerLinksCol} data-label="ServicesCol">
           <div className={styles.footerLinksTitle} data-label="ServicesTitle">Popular Services</div>
-          <Link href="/ac-repair-west-jordan">AC Repair West Jordan</Link>
+          <Link href="/furnace-repair">Furnace Repair Near Me</Link>
           <Link href="/furnace-repair-west-jordan">Furnace Repair West Jordan</Link>
+          <Link href="/ac-repair-west-jordan">AC Repair West Jordan</Link>
           <Link href="/emergency-hvac-repair-west-jordan">Emergency HVAC Repair</Link>
           <Link href="/services/west-jordan/heat-pump-installation">Heat Pump Installation</Link>
           <Link href="/services/west-jordan/mini-split-installation">Ductless Mini-Splits</Link>
