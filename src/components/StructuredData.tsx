@@ -12,6 +12,7 @@ const localBusinessSchema = {
   hasMap: "https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
   logo: `${siteUrl}/images/homepage/van2-no-phone.png`,
   image: [
+    `${siteUrl}/images/about/leandro-van.jpg`,
     `${siteUrl}/images/homepage/van2-no-phone.png`,
     `${siteUrl}/images/homepage/commercial.jpg`,
     `${siteUrl}/images/services/Heat-pump-WJ.webp`,
@@ -59,7 +60,7 @@ const localBusinessSchema = {
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "5.0",
-    reviewCount: "10",
+    reviewCount: "30",
     bestRating: "5",
     worstRating: "1",
   },
@@ -100,6 +101,8 @@ const localBusinessSchema = {
     { "@type": "City", name: "Taylorsville" },
     { "@type": "City", name: "Draper" },
     { "@type": "City", name: "Kearns" },
+    { "@type": "City", name: "Cottonwood Heights" },
+    { "@type": "City", name: "Holladay" },
     { "@type": "City", name: "Salt Lake City" },
     { "@type": "AdministrativeArea", name: "Salt Lake County" },
     { "@type": "AdministrativeArea", name: "Salt Lake Valley" },
@@ -110,6 +113,9 @@ const localBusinessSchema = {
     "Emergency furnace repair",
     "Heating contractor",
     "Gas furnace troubleshooting",
+    "AC repair near me",
+    "Air conditioning repair service",
+    "Central air conditioning maintenance",
     "HVAC installation",
     "Air conditioning repair",
     "Furnace installation and replacement",
@@ -139,16 +145,18 @@ const localBusinessSchema = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "HVAC Installation & Replacement",
-          description: "Complete heating and air conditioning system replacement and new installations.",
+          name: "AC Repair Near Me & Emergency Cooling Service",
+          serviceType: "Air Conditioning Repair",
+          url: `${siteUrl}/ac-repair`,
+          description: "Same-day AC repair, refrigerant leak detection, compressor diagnostics, and emergency cooling service across West Jordan and Salt Lake County.",
         },
       },
       {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Air Conditioning Repair",
-          description: "Prompt troubleshooting, refrigerant leak detection, compressor repair, and AC service.",
+          name: "HVAC Installation & Replacement",
+          description: "Complete heating and air conditioning system replacement and new installations.",
         },
       },
       {

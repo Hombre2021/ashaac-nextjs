@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     "West Jordan HVAC company",
     "Salt Lake County HVAC contractor",
     "All Solutions Heating and Air Conditioning",
+    "Leandro Garcia HVAC Utah",
   ],
   alternates: {
     canonical: "/about",
@@ -25,6 +26,14 @@ export const metadata: Metadata = {
     url: `${siteUrl}/about`,
     title: "About Our HVAC Company in West Jordan, UT | All Solutions Heating & AC",
     description: "Learn about All Solutions Heating and Air Conditioning, a trusted West Jordan HVAC company serving Salt Lake County.",
+    images: [
+      {
+        url: `${siteUrl}/images/about/leandro-van.jpg`,
+        width: 1200,
+        height: 900,
+        alt: "Leandro Garcia with All Solutions HVAC service van in Utah",
+      },
+    ],
   },
 };
 
@@ -37,12 +46,39 @@ const breadcrumbSchema = {
   ],
 };
 
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": `${siteUrl}/about#webpage`,
+      url: `${siteUrl}/about`,
+      name: "About All Solutions Heating and Air Conditioning",
+      about: { "@id": `${siteUrl}/#business` },
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#founder`,
+      name: "Leandro Garcia",
+      jobTitle: "Founder & Lead HVAC Technician",
+      worksFor: { "@id": `${siteUrl}/#business` },
+      image: `${siteUrl}/images/about/leandro-van.jpg`,
+      description:
+        "Licensed EPA-certified HVAC technician and founder of All Solutions Heating and Air Conditioning serving West Jordan and Salt Lake County since 2008.",
+    },
+  ],
+};
+
 export default function AboutPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
       />
       <HomepageHeader />
       <AboutHero />

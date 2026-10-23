@@ -11,11 +11,13 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com").repla
 export const metadata: Metadata = {
   title: "HVAC Services: AC, Furnace & Heat Pump Installation & Repair | West Jordan, UT",
   description:
-    "Complete HVAC services in West Jordan and Salt Lake County: furnace repair near me, central AC repair & installation, high-efficiency furnaces, heat pumps, ductless mini-splits, and maintenance.",
+    "Complete HVAC services in West Jordan and Salt Lake County: furnace repair near me, AC repair near me, high-efficiency heat pumps, ductless mini-splits, and maintenance.",
   keywords: [
     "HVAC services West Jordan",
     "furnace repair near me",
+    "AC repair near me",
     "furnace repair West Jordan UT",
+    "AC repair West Jordan",
     "AC installation West Jordan",
     "furnace installation Salt Lake County",
     "HVAC maintenance Utah",
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     url: `${siteUrl}/services`,
     title: "HVAC Services: AC, Furnace & Heat Pump Installation & Repair | West Jordan, UT",
-    description: "Complete HVAC services in West Jordan and Salt Lake County: furnace repair near me, AC repair, furnace installation, heat pumps, mini-splits, and maintenance.",
+    description: "Complete HVAC services in West Jordan and Salt Lake County: furnace repair near me, AC repair near me, heat pumps, mini-splits, and maintenance.",
   },
 };
 
@@ -58,9 +60,9 @@ const servicesSchema = {
     {
       "@type": "Service",
       position: 2,
-      name: "Air Conditioning Installation & Repair",
-      description: "High-efficiency central air conditioning installation, troubleshooting, freon recharge, and condenser repair.",
-      url: `${siteUrl}/ac-repair-west-jordan`,
+      name: "AC Repair Near Me & Cooling Diagnostics",
+      description: "High-efficiency central air conditioning installation, troubleshooting, freon leak detection, capacitor replacement, and compressor service.",
+      url: `${siteUrl}/ac-repair`,
       provider: { "@id": `${siteUrl}/#business` },
     },
     {
@@ -146,7 +148,7 @@ export default function ServicesPage() {
         textAlign: 'center',
       }}>
         <strong>Air Conditioning (AC) Units and Heat Pumps</strong><br />
-        We offer professional installation and maintenance of air conditioning (AC) units and heat pumps. Our team will assess your cooling needs and recommend the most suitable AC unit or heat pump for your space. Whether it&apos;s a central air conditioning system or a heat pump that provides both heating and cooling, we ensure proper installation and optimal performance to keep your indoor environment ideally comfortable.
+        We offer professional installation and maintenance of air conditioning (AC) units and heat pumps. Our team will assess your cooling needs and recommend the most suitable AC unit or heat pump for your space. Need prompt troubleshooting? Visit our <Link href="/ac-repair" style={{ color: '#095f91', fontWeight: 600, textDecoration: 'underline' }}>AC Repair Near Me Hub</Link> or our <Link href="/ac-repair-west-jordan" style={{ color: '#095f91', fontWeight: 600, textDecoration: 'underline' }}>West Jordan AC Repair</Link> page.
       </div>
 
       <div style={{

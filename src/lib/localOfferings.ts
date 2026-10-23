@@ -58,6 +58,23 @@ export const localOfferings = [
     ],
   },
   {
+    slug: "ac-repair",
+    title: "AC Repair & Cooling Service",
+    summary: "Same-day diagnostic and air conditioning repair for cooling emergencies, warm air blowing, frozen evaporator coils, and leaking systems.",
+    details: [
+      "Prompt troubleshooting for AC units blowing warm air or failing to start",
+      "Comprehensive diagnostic inspections: refrigerant levels, dual-run capacitors, fan motors, and contactors",
+      "Repairs on all major air conditioning brands: Lennox, Carrier, Trane, Goodman, Rheem, York, Amana, and Bryant",
+      "Emergency same-day cooling dispatch, condensate drain unclogging, and compressor service",
+    ],
+    faqs: [
+      ["Why is my AC running but blowing warm air?", "Warm air usually indicates a blown dual-run capacitor, a tripped circuit breaker, dirty condenser coils, or low refrigerant from a leak. Call us for a same-day diagnostic visit."],
+      ["How fast can you arrive for emergency AC repair near me?", "Our mobile service vans are dispatched daily across Salt Lake County. We provide rapid same-day diagnostic service during summer heat emergencies."],
+      ["What AC brands do you repair?", "We service and repair all residential and commercial AC manufacturers including Lennox, Carrier, Trane, Goodman, Rheem, York, Amana, Bryant, Daikin, and American Standard."],
+      ["What should I do if my air conditioner is frozen with ice?", "Turn the system OFF immediately at the thermostat to protect the compressor, switch the fan setting to ON to thaw the coils, and call 801-755-3040 for professional service."],
+    ],
+  },
+  {
     slug: "hvac-installation",
     title: "HVAC Installation & Replacement",
     summary: "Plan a new heating and cooling system with practical options for your home, current equipment, and comfort needs.",
