@@ -71,6 +71,9 @@ export default function HomepageFooter() {
           <a href="tel:801-755-3040" data-label="Phone">801-755-3040</a>
           <a href="mailto:ashaacutah@gmail.com" data-label="EmailLink">ashaacutah@gmail.com</a>
           <div data-label="Address">Based in West Jordan, UT 84088<br /><span style={{ fontSize: "0.88em", color: "#bbb" }}>Mobile Service Across Salt Lake County</span></div>
+          <div style={{ color: "#38bdf8", fontSize: "0.88rem", fontWeight: 600, margin: "6px 0 2px 0" }}>
+            ⏰ Open 24 Hours &bull; 24/7 Emergency Dispatch
+          </div>
           <Link href="/contact" data-label="LinkContact">Contact &amp; Dispatch Details</Link>
           <a
             href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
