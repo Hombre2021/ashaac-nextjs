@@ -18,7 +18,7 @@ const localBusinessSchema = {
     `${siteUrl}/images/services/Heat-pump-WJ.webp`,
   ],
   description:
-    "Mobile HVAC contractor based in West Jordan, UT providing on-site emergency AC repair, furnace repair, heating diagnostics, furnace replacement, heat pump installation, mini-splits, and maintenance across Salt Lake County.",
+    "Mobile HVAC contractor based in West Jordan, UT providing on-site 24/7 emergency AC repair, furnace repair, heating diagnostics, furnace replacement, heat pump installation, mini-splits, and maintenance across Salt Lake County.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "West Jordan",
@@ -43,15 +43,9 @@ const localBusinessSchema = {
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "07:00",
-      closes: "20:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Sunday"],
-      opens: "08:00",
-      closes: "18:00",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "00:00",
+      closes: "23:59",
     },
   ],
   priceRange: "$$",
@@ -112,6 +106,7 @@ const localBusinessSchema = {
     "Furnace repair service",
     "Emergency furnace repair",
     "Heating contractor",
+    "Heating system repairs",
     "Gas furnace troubleshooting",
     "AC repair near me",
     "Air conditioning repair service",
