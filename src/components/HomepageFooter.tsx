@@ -112,7 +112,7 @@ export default function HomepageFooter() {
             🛡️ BBB Accredited Profile
           </a>
           <a
-            href="https://www.facebook.com/Warrior2021Q"
+            href="https://www.facebook.com/AllSolutionsHVACUtah"
             target="_blank"
             rel="noopener noreferrer"
             data-label="FacebookLink"

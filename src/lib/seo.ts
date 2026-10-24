@@ -99,7 +99,7 @@ export function buildLocalBusinessSchema() {
     },
     sameAs: [
       "https://maps.google.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
-      "https://www.facebook.com/Warrior2021Q",
+      "https://www.facebook.com/AllSolutionsHVACUtah",
       "https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709",
     ],
     priceRange: "$$",
