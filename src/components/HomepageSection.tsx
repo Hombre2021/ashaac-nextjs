@@ -14,7 +14,7 @@ export default function HomepageSection() {
             sizes="(max-width: 480px) 100vw, (max-width: 1199px) 360px, 400px"
             className={styles.wjChineseAcImage}
           />
-                 </div>
+        </div>
         <div className={styles.hvacText}>
           <h2 className={styles.weTitle} data-label="HVACTitle">We specialize in HVAC Professional installation and replacements.</h2>
           <p data-label="HVACIntro">
@@ -33,9 +33,11 @@ export default function HomepageSection() {
             </Link>
           </div>
           <nav className={styles.localServiceLinks} aria-label="Local HVAC service areas">
-            <strong>Local HVAC service areas</strong>
-            <Link href="/emergency-hvac-repair-west-jordan">West Jordan emergency HVAC repair</Link>
-            <Link href="/ac-repair-south-jordan">South Jordan AC repair</Link>
+            <strong>Local HVAC service areas:</strong>
+            <Link href="/furnace-repair">Furnace Repair Near Me</Link>
+            <Link href="/furnace-repair-west-jordan">West Jordan furnace repair</Link>
+            <Link href="/emergency-hvac-repair-west-jordan">West Jordan emergency HVAC</Link>
+            <Link href="/furnace-repair-south-jordan">South Jordan furnace repair</Link>
             <Link href="/furnace-repair-riverton">Riverton furnace repair</Link>
           </nav>
         </div>

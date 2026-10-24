@@ -4,15 +4,18 @@ import HomepageResponsive from "../components/HomepageResponsive";
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://ashaac.com").replace(/\/$/, "");
 
 export const metadata: Metadata = {
-  title: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
+  title: "24/7 Furnace Repair & HVAC in West Jordan, UT | All Solutions Heating & Air",
   description:
-    "Professional HVAC contractor in West Jordan, UT serving Salt Lake County with AC repair, furnace replacement, heat pump installation, and maintenance.",
+    "Top-rated 24/7 furnace repair, heating system repairs, emergency HVAC diagnostics, and AC installation in West Jordan, UT & Salt Lake County. Call (801) 755-3040.",
   keywords: [
+    "furnace repair near me",
+    "furnace repair West Jordan UT",
+    "heating system repairs Salt Lake County",
+    "emergency furnace repair Utah",
     "HVAC contractor West Jordan UT",
     "HVAC company West Jordan",
-    "air conditioning repair West Jordan",
-    "furnace repair West Jordan",
     "furnace replacement Salt Lake County",
+    "air conditioning repair West Jordan",
     "heat pump installation Utah",
     "mini split installation West Jordan",
     "emergency HVAC repair Utah",
@@ -23,8 +26,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
-    description: "Professional HVAC contractor in West Jordan, UT serving Salt Lake County with AC repair, furnace replacement, heat pump installation, and maintenance.",
+    title: "24/7 Furnace Repair & HVAC in West Jordan, UT | All Solutions Heating & Air",
+    description: "Top-rated 24/7 furnace repair, heating system repairs, emergency HVAC diagnostics, and AC installation in West Jordan, UT & Salt Lake County. Call (801) 755-3040.",
     images: [{
       url: new URL("/images/homepage/van2-no-phone.png", siteUrl),
       width: 1200,
@@ -34,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HVAC Installation & Repair in West Jordan, UT | All Solutions Heating and Air Conditioning",
-    description: "Professional HVAC contractor in West Jordan, UT serving Salt Lake County with AC repair, furnace replacement, heat pump installation, and maintenance.",
+    title: "24/7 Furnace Repair & HVAC in West Jordan, UT | All Solutions Heating & Air",
+    description: "Top-rated 24/7 furnace repair, heating system repairs, emergency HVAC diagnostics, and AC installation in West Jordan, UT & Salt Lake County. Call (801) 755-3040.",
     images: [new URL("/images/homepage/van2-no-phone.png", siteUrl)],
   },
 };
