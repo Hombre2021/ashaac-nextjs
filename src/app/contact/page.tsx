@@ -72,15 +72,9 @@ const localBusinessSchema = {
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "07:00",
-      closes: "20:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Sunday"],
-      opens: "08:00",
-      closes: "18:00",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "00:00",
+      closes: "23:59",
     },
   ],
 };
@@ -130,8 +124,8 @@ export default function ContactPage() {
               Operating Hours &amp; Emergency Dispatch
             </h2>
             <p style={{ margin: "0 0 6px", color: "#1e293b", lineHeight: 1.6 }}>
-              <strong>Monday &ndash; Saturday:</strong> 7:00 AM &ndash; 8:00 PM<br />
-              <strong>Sunday:</strong> 8:00 AM &ndash; 6:00 PM
+              <strong>Hours:</strong> Open 24 Hours / 7 Days a Week<br />
+              <strong>Emergency Service:</strong> 24/7 Rapid On-Site Heating &amp; AC Dispatch
             </p>
             <p style={{ margin: "12px 0 0", color: "#b91c1c", fontWeight: 600, fontSize: "0.95rem" }}>
               &bull; 24/7 Emergency Service Available
