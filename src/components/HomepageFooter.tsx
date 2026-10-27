@@ -76,13 +76,13 @@ export default function HomepageFooter() {
           </div>
           <Link href="/contact" data-label="LinkContact">Contact &amp; Dispatch Details</Link>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+            href="https://maps.google.com/?cid=15985401040376566214"
             target="_blank"
             rel="noopener noreferrer"
             data-label="GoogleMapsLink"
             style={{ color: "#38bdf8", fontSize: "0.88rem" }}
           >
-            📍 Google Maps Pin
+            📍 Google Maps Profile
           </a>
           <a
             href="https://maps.apple.com/?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
@@ -94,13 +94,13 @@ export default function HomepageFooter() {
             🗺️ Apple Maps Pin
           </a>
           <a
-            href="https://www.bing.com/maps?cp=40.591745~-111.997078&lvl=16&sp=point.40.591745_-111.997078_All%20Solutions%20Heating%20and%20Air%20Conditioning_Mobile%20HVAC%20Service%20Hub%20-%20West%20Jordan%2C%20UT_https%3A%2F%2Fashaac.com"
+            href="https://www.bing.com/maps?q=West+Jordan%2C+UT+84088"
             target="_blank"
             rel="noopener noreferrer"
             data-label="BingMapsLink"
             style={{ color: "#38bdf8", fontSize: "0.88rem" }}
           >
-            🧭 Bing Maps Pin
+            🧭 Bing Maps Service Area
           </a>
           <a
             href="https://www.bbb.org/us/ut/west-jordan/profile/heating-and-air-conditioning/all-solutions-heating-and-air-conditioning-llc-1166-90042709"

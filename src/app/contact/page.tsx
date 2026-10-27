@@ -47,7 +47,7 @@ const localBusinessSchema = {
   url: siteUrl,
   telephone: "+1-801-755-3040",
   email: "ashaacutah@gmail.com",
-  hasMap: "https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT",
+  hasMap: "https://maps.google.com/?cid=15985401040376566214",
   address: {
     "@type": "PostalAddress",
     addressLocality: "West Jordan",
@@ -161,7 +161,7 @@ export default function ContactPage() {
                 Book An Appointment Online
               </Link>
               <a
-                href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                href="https://maps.google.com/?cid=15985401040376566214"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -180,7 +180,7 @@ export default function ContactPage() {
                   textAlign: "center"
                 }}
               >
-                📍 Drop Pin in Google Maps
+                📍 View Google Maps Profile
               </a>
             </div>
           </div>
@@ -221,7 +221,7 @@ export default function ContactPage() {
             </h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
               <a
-                href="https://www.google.com/maps/search/?api=1&query=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                href="https://maps.google.com/?cid=15985401040376566214"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -263,7 +263,7 @@ export default function ContactPage() {
                 <span>🍏</span> Apple Maps
               </a>
               <a
-                href="https://www.bing.com/maps?cp=40.591745~-111.997078&lvl=16&sp=point.40.591745_-111.997078_All%20Solutions%20Heating%20and%20Air%20Conditioning_Mobile%20HVAC%20Service%20Hub%20-%20West%20Jordan%2C%20UT_https%3A%2F%2Fashaac.com"
+                href="https://www.bing.com/maps?q=West+Jordan%2C+UT+84088"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
