@@ -263,7 +263,7 @@ export default function ContactPage() {
                 <span>🍏</span> Apple Maps
               </a>
               <a
-                href="https://www.bing.com/maps?q=All+Solutions+Heating+and+Air+Conditioning+West+Jordan+UT"
+                href="https://www.bing.com/maps?cp=40.591745~-111.997078&lvl=16&sp=point.40.591745_-111.997078_All%20Solutions%20Heating%20and%20Air%20Conditioning_Mobile%20HVAC%20Service%20Hub%20-%20West%20Jordan%2C%20UT_https%3A%2F%2Fashaac.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
